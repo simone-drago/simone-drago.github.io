@@ -1,0 +1,14 @@
+# Fields: title, date (required); details, url (optional).
+
+- title: Top Reviewer, NeurIPS 2026
+  date: 2026
+  details: Top reviewers at Advances on Neural Information Processing Systems.
+- title: Gold Reviewer, ICML 2026
+  date: 2026
+  details: Top 25% of reviewers at the International Conference on Machine Learning.
+- title: Young Researcher Best Publication Award
+  date: 2025
+  details: Politecnico di Milano, for the best journal publications of the year.
+- title: Best Freshman Award
+  date: 2018
+  details: Politecnico di Milano scholarship for the best first-year students (A.Y. 2017/18).

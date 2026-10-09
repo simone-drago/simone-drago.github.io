@@ -1,0 +1,26 @@
+# Theses you supervised, shown in the Teaching section under "Thesis supervision".
+# Fields: student (required); title, topic, date, degree, role (default: Co-supervisor),
+# supervisor, details, url (optional). Sorted newest first.
+# A thesis still in progress: leave out title and date. It is listed first, marked
+# "In progress", and shows the topic if you give one (otherwise "Thesis in progress").
+# When it is finished, add its title and date (topic can then go).
+
+- student: Mattia Centrella
+  degree: M.Sc. in Computer Science and Engineering
+  supervisor: Prof. Alberto Maria Metelli
+  topic: Online RLHF from Multi-Objective Feedback
+- student: Leonardo Bianconi
+  title: Multi-Dimensional Reward Learning from Preference Feedback
+  degree: M.Sc. in Computer Science and Engineering
+  supervisor: Prof. Alberto Maria Metelli
+  date: 2025-12
+- student: Michele Simeone
+  title: A Theory-Driven Approach to Large Language Models Alignment with Human Feedback
+  degree: M.Sc. in Computer Science and Engineering
+  supervisor: Prof. Alberto Maria Metelli
+  date: 2025-04
+- student: Tomaso Castellani
+  title: A Novel Approach for Path Planning with Goal Position Uncertainty
+  degree: M.Sc. in Mathematical Engineering
+  supervisor: Prof. Nicola Gatti
+  date: 2024-04

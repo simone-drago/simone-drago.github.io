@@ -1,0 +1,40 @@
+# One entry per item; they are sorted by date, newest first.
+#   date: 2026-10 (or 2026-10-09, or just 2026)
+#   text: Markdown allowed. Quote it if it contains a colon.
+
+- date: 2026-09
+  text: |
+    Nominated among Top Reviewers at NeurIPS 2026.
+- date: 2026-07
+  text: |
+    New preprint on preference-based RL when outcomes can be incomparable: [Generalizing Preference-based Reinforcement Learning](https://arxiv.org/abs/2607.11432).
+- date: 2026-06
+  text: |
+    Co-organized the Reinforcement Learning Summer School (RLSS 2026), ten days with about 150 participants from industry and academia.
+- date: 2026-05
+  text: |
+    *Modeling Incomparability: A New Rationality Paradigm for Preference-Based Reinforcement Learning* accepted at EIML Workshop at ICML 2026.
+- date: 2026-05
+  text: |
+    Nominated as Gold Reviewer at ICML 2026 (top 25% of reviewers).
+- date: 2026-04
+  text: |
+    *Online Compatible Reward Identification from Preference Feedback* accepted at ICML 2026.
+- date: 2025-12
+  text: |
+    Received the *Young Researcher Best Publication Award* from Politecnico di Milano.
+- date: 2025-05
+  text: |
+    *Factored-Reward Bandits with Intermediate Observations: Regret Minimization and Best Arm Identification* accepted for publication at AIJ.
+- date: 2025-05
+  text: |
+    **Three papers** accepted at ICML 2025.
+- date: 2024-09
+  text: |
+    Started my Ph.D. studies at Politecnico di Milano.
+- date: 2024-06
+  text: |
+    *Open Problem: Tight Bounds for Bernoulli Rewards in Kernelized Multi-Armed Bandits* accepted at ARLET Workshop at ICML 2024.
+- date: 2024-05
+  text: |
+    *Factored-Reward Bandits with Intermediate Observations* accepted at ICML 2024.

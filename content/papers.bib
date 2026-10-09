@@ -1,0 +1,162 @@
+% Publications for the website. Normal BibTeX: you can reuse this file in papers.
+%
+% How each entry is classified (labels C1, J1, W1, P1, U1):
+%   inproceedings           -> conference, or workshop if the booktitle contains "Workshop"
+%   article                 -> journal, or preprint if the journal is arXiv/CoRR
+%   misc, unpublished       -> preprint
+%   pubtype = {...}         -> forces it: conference, journal, workshop, preprint
+%   status  = {underreview} -> Under review (venue never shown; no BibTeX download)
+% Numbering: oldest = 1 within each category, by year, then month, then order in this file.
+%
+% Optional fields used only by the website (removed from the downloadable BibTeX):
+%   venue    = {NeurIPS 2025}       short name to display (default: booktitle/journal + year)
+%   award    = {Spotlight}          highlighted next to the venue
+%   equal    = {1,2}                equal contribution: author positions, from 1
+%   arxiv    = {2501.01234}         also read from eprint + archivePrefix
+%   pdf, code, openreview, slides, poster, video, project = {URL}  (pdf can be static/papers/x.pdf;
+%                                  without pdf, the arXiv PDF is used when there is an arXiv id)
+%   abstract = {...}                adds an "Abstract" button; $...$ math is rendered
+%   selected = {true}               for publications.selected_only in config.yml
+%   hidden   = {true}               keep the entry here but leave it off the site
+%
+% ----------------------------------------------------------------------------
+% Conferences
+% ----------------------------------------------------------------------------
+
+@inproceedings{mussi2024factored,
+  title     = {Factored-Reward Bandits with Intermediate Observations},
+  author    = {Mussi, Marco and Drago, Simone and Restelli, Marcello and Metelli, Alberto Maria},
+  booktitle = {Proceedings of the Forty-first International Conference on Machine Learning (ICML)},
+  volume    = {235},
+  pages     = {36911--36952},
+  year      = {2024},
+  series    = {Proceedings of Machine Learning Research},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v235/mussi24a.html},
+  venue     = {ICML 2024},
+  equal     = {1,2},
+  pdf       = {https://raw.githubusercontent.com/mlresearch/v235/main/assets/mussi24a/mussi24a.pdf},
+  abstract  = {In several real-world sequential decision problems, at every step, the learner is required to select different actions. Every action affects a specific part of the system and generates an observable intermediate effect. In this paper, we introduce the Factored-Reward Bandits (FRBs), a novel setting able to effectively capture and exploit the structure of this class of scenarios, where the reward is computed as the product of the action intermediate observations. We characterize the statistical complexity of the learning problem in the FRBs, by deriving worst-case and asymptotic instance-dependent regret lower bounds. Then, we devise and analyze two regret minimization algorithms. The former, F-UCB, is an anytime optimistic approach matching the worst-case lower bound (up to logarithmic factors) but fails to perform optimally from the instance-dependent perspective. The latter, F-Track, is a bound-tracking approach, that enjoys optimal asymptotic instance-dependent regret guarantees.},
+}
+
+@inproceedings{drago2025sleeping,
+  title     = {Sleeping Reinforcement Learning},
+  author    = {Drago, Simone and Mussi, Marco and Metelli, Alberto Maria},
+  booktitle = {Proceedings of the Forty-second International Conference on Machine Learning (ICML)},
+  volume    = {267},
+  year      = {2025},
+  series    = {Proceedings of Machine Learning Research},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v267/drago25a.html},
+  venue     = {ICML 2025},
+  equal     = {1,2},
+  pdf       = {https://raw.githubusercontent.com/mlresearch/v267/main/assets/drago25a/drago25a.pdf},
+  abstract  = {In the standard Reinforcement Learning (RL) paradigm, the action space is assumed to be fixed and immutable throughout the learning process. However, in many real-world scenarios, not all actions are available at every decision stage. The available action set may depend on the current environment state, domain-specific constraints, or other (potentially stochastic) factors outside the agent’s control. To address these realistic scenarios, we introduce a novel paradigm called \emph{Sleeping Reinforcement Learning}, where the available action set varies during the interaction with the environment. We start with the simpler scenario in which the available action sets are revealed at the beginning of each episode. We show that a modification of UCBVI achieves regret of order $\widetilde{\mathcal{O}}(H\sqrt{SAT})$, where $H$ is the horizon, $S$ and $A$ are the cardinalities of the state and action spaces, respectively, and $T$ is the learning horizon. Next, we address the more challenging and realistic scenario in which the available actions are disclosed only at each decision stage. By leveraging a novel construction, we establish a minimax lower bound of order $\Omega(\sqrt{T 2^{A/2}})$ when the availability of actions is governed by a Markovian process, establishing a statistical barrier of the problem. Focusing on the statistically tractable case where action availability depends only on the current state and stage, we propose a new optimistic algorithm that achieves regret guarantees of order $\widetilde{\mathcal{O}}(H\sqrt{SAT})$, showing that the problem shares the same complexity of standard RL.},
+}
+
+@inproceedings{drago2025towards,
+  title     = {Towards Theoretical Understanding of Sequential Decision Making with Preference Feedback},
+  author    = {Drago, Simone and Mussi, Marco and Metelli, Alberto Maria},
+  booktitle = {Proceedings of the Forty-second International Conference on Machine Learning (ICML)},
+  volume    = {267},
+  pages     = {14499--14514},
+  year      = {2025},
+  series    = {Proceedings of Machine Learning Research},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v267/drago25b.html},
+  venue     = {ICML 2025},
+  pdf       = {https://raw.githubusercontent.com/mlresearch/v267/main/assets/drago25b/drago25b.pdf},
+  abstract  = {The success of sequential decision-making approaches, such as \emph{reinforcement learning} (RL), is closely tied to the availability of a reward feedback. However, designing a reward function that encodes the desired objective is a challenging task. In this work, we address a more realistic scenario: sequential decision making with preference feedback provided, for instance, by a human expert. We aim to build a theoretical basis linking \emph{preferences}, (non-Markovian) \emph{utilities}, and (Markovian) \emph{rewards}, and we study the connections between them. First, we model preference feedback using a partial (pre)order over trajectories, enabling the presence of incomparabilities that are common when preferences are provided by humans but are surprisingly overlooked in existing works. Second, to provide a theoretical justification for a common practice, we investigate how a preference relation can be approximated by a multi-objective utility. We introduce a notion of preference-utility compatibility and analyze the computational complexity of this transformation, showing that constructing the minimum-dimensional utility is NP-hard. Third, we propose a novel concept of preference-based policy dominance that does not rely on utilities or rewards and discuss the computational complexity of assessing it. Fourth, we develop a computationally efficient algorithm to approximate a utility using (Markovian) rewards and quantify the error in terms of the suboptimality of the optimal policy induced by the approximating reward. This work aims to lay the foundation for a principled approach to sequential decision making from preference feedback, with promising potential applications in RL from human feedback.},
+}
+
+@inproceedings{drago2025position,
+  title     = {Position: Constants are Critical in Regret Bounds for Reinforcement Learning},
+  author    = {Drago, Simone and Mussi, Marco and Metelli, Alberto Maria},
+  booktitle = {Proceedings of the Forty-second International Conference on Machine Learning (ICML)},
+  volume    = {267},
+  year      = {2025},
+  series    = {Proceedings of Machine Learning Research},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v267/drago25c.html},
+  venue     = {ICML 2025, Position Paper Track},
+  pdf       = {https://raw.githubusercontent.com/mlresearch/v267/main/assets/drago25c/drago25c.pdf},
+  abstract  = {Mainstream research in theoretical RL is currently focused on designing online learning algorithms with regret bounds that match the corresponding regret lower bound up to multiplicative constants (and, sometimes, logarithmic terms). In this position paper, we constructively question this trend, arguing that algorithms should be designed to at least minimize the amount of unnecessary exploration, and we highlight the significant role constants play in algorithms’ actual performances. This trend also exacerbates the misalignment between theoretical researchers and practitioners. As an emblematic example, we consider the case of regret minimization in finite-horizon tabular MDPs. Starting from the well-known UCBVI algorithm, we improve the bonus terms and the corresponding regret analysis. Additionally, we compare our version of UCBVI with both its original version and the state-of-the-art MVP algorithm. Our empirical validation successfully demonstrates how improving the multiplicative constants has significant positive effects on the actual empirical performances of the algorithm under analysis. This raises the question of whether ignoring constants when assessing whether algorithms match is the proper approach.},
+}
+
+@inproceedings{drago2026online,
+  title     = {Online Compatible Reward Identification from Preference Feedback},
+  author    = {Drago, Simone and Mussi, Marco and Metelli, Alberto Maria},
+  booktitle = {Proceedings of the Forty-third International Conference on Machine Learning (ICML)},
+  volume    = {306},
+  pages     = {26365--26389},
+  year      = {2026},
+  series    = {Proceedings of Machine Learning Research},
+  publisher = {PMLR},
+  url       = {https://proceedings.mlr.press/v306/drago26a.html},
+  venue     = {ICML 2026},
+  pdf       = {https://raw.githubusercontent.com/mlresearch/v306/main/assets/drago26a/drago26a.pdf},
+  abstract  = {In reinforcement learning, human preference feedback is emerging as a viable alternative to expert-designed reward functions, which can be difficult to engineer in real-world problems. However, despite the growing importance of preference feedback, how to effectively \emph{elicit} preferences remains a fundamental open problem. This work focuses on the \emph{compatible reward identification} task. The aim is to derive, starting from preference feedback, a reward function compatible with the observed preferences and accurate across the \emph{entire} state-action space, ensuring higher transferability, safety, and interpretability. Indeed, the most common \emph{reinforcement learning from human feedback} objective is to learn the \emph{optimal policy}, requiring accuracy only in the portion of the state-action space that the agent visits. However, this goal cannot provide the same guarantees as compatible reward identification. First, we discuss commonalities and differences between the two goals. Then, we consider deterministic preferences, deriving the minimum number of interactions needed to identify the set of compatible rewards, and showing that using fewer queries may lead to arbitrarily large suboptimality. Finally, we focus on stochastic preferences generated via the Bradley-Terry (BT) model. We introduce the concepts of \emph{query basis} and its \emph{index}, relating them to the problem complexity. Upon this, we discuss the connection between the index of a basis and the BT model, as well as the limitations that the model induces in this setting. Additionally, we devise an algorithm to identify a nearly-optimal query basis with polynomial human query complexity.},
+}
+
+% ----------------------------------------------------------------------------
+% Journals
+% ----------------------------------------------------------------------------
+
+@article{mussi2025factored,
+  title    = {Factored-Reward Bandits with Intermediate Observations: Regret Minimization and Best Arm Identification},
+  author   = {Mussi, Marco and Drago, Simone and Restelli, Marcello and Metelli, Alberto Maria},
+  journal  = {Artificial Intelligence},
+  volume   = {347},
+  pages    = {104362},
+  year     = {2025},
+  doi      = {10.1016/j.artint.2025.104362},
+  equal    = {1,2},
+  abstract = {In several real-world sequential decision problems, at every step, the learner is required to select different actions. Every action affects a specific part of the system and generates an observable intermediate effect. In this paper, we introduce the Factored-Reward Bandits (FRBs), a novel setting able to effectively capture and exploit the structure of this class of scenarios, where the reward is computed as the product of the action intermediate observations. We characterize the statistical complexity of the learning problem in the FRBs, by deriving worst-case and asymptotic instance-dependent regret lower bounds. Then, we devise and analyze two regret minimization algorithms. The former, F-UCB, is an anytime optimistic approach matching the worst-case lower bound (up to logarithmic factors) but fails to perform optimally from the instance-dependent perspective. The latter, F-Track, is a bound-tracking approach, that enjoys optimal asymptotic instance-dependent regret guarantees. Finally, we study the problem of performing best arm identification in this setting. We derive an error probability lower bound, and we develop F-SR, a nearly optimal rejection-based algorithm for identifying the best action vector, given a time budget.}
+}
+
+% ----------------------------------------------------------------------------
+% Workshops
+% ----------------------------------------------------------------------------
+
+% Non-archival workshops (no proceedings): cited as the arXiv version, listed under Workshops.
+
+@article{mussi2024open,
+  title    = {Open Problem: Tight Bounds for Kernelized Multi-Armed Bandits with {B}ernoulli Rewards},
+  author   = {Mussi, Marco and Drago, Simone and Metelli, Alberto Maria},
+  journal  = {arXiv preprint arXiv:2407.06321},
+  year     = {2024},
+  pubtype  = {workshop},
+  venue    = {ARLET Workshop at ICML 2024},
+  abstract = {We consider Kernelized Bandits (KBs) to optimize a function $f : \mathcal{X} \rightarrow [0,1]$ belonging to the Reproducing Kernel Hilbert Space (RKHS) $\mathcal{H}_k$. Mainstream works on kernelized bandits focus on a subgaussian noise model in which observations of the form $f(\xs_t)+\epsilon_t$, being $\epsilon_t$ a subgaussian noise, are available~\citep{chowdhury2017kernelized}. Differently, we focus on the case in which we observe realizations $y_t \sim \text{Ber}(f(\xs_t))$ sampled from a Bernoulli distribution with parameter $f(\xs_t)$. While the Bernoulli model has been investigated successfully in multi-armed bandits~\citep{garivier2011kl}, logistic bandits~\citep{FauryAJC22}, bandits in metric spaces~\citep{magureanu2014lipschitz}, it remains an open question whether tight results can be obtained for KBs. The goal of this work is to raise the attention of the online learning community on this gap in the literature.}
+}
+
+@article{drago2026generalizing,
+  title    = {Generalizing Preference-based Reinforcement Learning: a Rationality Model for Incomparability},
+  author   = {Drago, Simone and Mussi, Marco and Bianconi, Leonardo and Metelli, Alberto Maria},
+  journal  = {arXiv preprint arXiv:2607.11432},
+  year     = {2026},
+  pubtype  = {workshop},
+  venue    = {EIML Workshop at ICML 2026},
+  abstract = {In this work, we study the reinforcement learning (RL) problem from pairwise trajectory comparisons provided by a human expert. We generalize preference-based RL by formalizing a novel setting in which the expert can also label trajectory pairs as incomparable, i.e., when neither trajectory dominates the other. We introduce the learning problem and the desiderata that its solution should satisfy. Then, we propose a novel Bradley-Terry-inspired rationality model that effectively captures incomparabilities and infers a multi-dimensional reward function, and we study its properties. We provide a sample complexity analysis for learning the model parameters when a dataset is available. Finally, we evaluate our model's ability to reconstruct a reward function that aligns with the expert's comparisons in simulated environments and to recover the Pareto frontier of policies, along with a robustness analysis across varying levels of expert rationality.}
+}
+
+% ----------------------------------------------------------------------------
+% Preprints (month = arXiv submission month, which sets the order within a year)
+% ----------------------------------------------------------------------------
+
+@article{drago2025refined,
+  title   = {A Refined Analysis of {UCBVI}},
+  author  = {Drago, Simone and Mussi, Marco and Metelli, Alberto Maria},
+  journal = {arXiv preprint arXiv:2502.17370},
+  year    = {2025},
+  month   = feb,
+  abstract  = {In this work, we provide a refined analysis of the UCBVI algorithm (Azar et al., 2017), improving both the bonus terms and the regret analysis. Additionally, we compare our version of UCBVI with both its original version and the state-of-the-art MVP algorithm. Our empirical validation demonstrates that improving the multiplicative constants in the bounds has significant positive effects on the empirical performance of the algorithms.},
+}
+
+@article{metelli2025generalized,
+  title    = {Generalized Kernelized Bandits: A Novel Self-Normalized {B}ernstein-Like Dimension-Free Inequality and Regret Bounds},
+  author   = {Metelli, Alberto Maria and Drago, Simone and Mussi, Marco},
+  journal  = {arXiv preprint arXiv:2508.01681},
+  year     = {2025},
+  abstract = {We study the regret minimization problem in the novel setting of *generalized kernelized bandits* (GKBs), where we optimize an unknown function $f^{*}$ belonging to a *reproducing kernel Hilbert space* (RKHS) having access to samples generated by an *exponential family* (EF) reward model whose mean is a non-linear function $\mu(f^*)$. This setting extends both *kernelized bandits* (KBs) and *generalized linear bandits* (GLBs), providing a *unified view* of both settings. We propose an optimistic regret minimization algorithm, $\texttt{GKB-UCB}$, and we explain why existing self-normalized concentration inequalities used for KBs and GLBs do not allow to provide tight regret guarantees. For this reason, we devise a novel self-normalized Bernstein-like dimension-free inequality that applies to a Hilbert space of functions with bounded norm, representing a contribution of independent interest. Based on it, we analyze $\texttt{GKB-UCB}$, deriving a regret bound of order $\widetilde{O}( \gamma_T \sqrt{T/\kappa_*})$, being $T$ the learning horizon, ${\gamma}_T$ the maximal information gain, and $\kappa_*$ a term characterizing the magnitude of the expected reward non-linearity. Our result is tight in its dependence on $T$, $\gamma_T$, and $\kappa_*$ for both KBs and GLBs. Finally, we present a tractable version $\texttt{GKB-UCB}$, $\texttt{Trac-GKB-UCB}$, which attains similar regret guarantees, and we discuss its time and space complexity.}
+}

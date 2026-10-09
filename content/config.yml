@@ -1,0 +1,66 @@
+# Site settings. After any edit, run `python build.py`: it stops with a clear
+# message if something is wrong, and lists the lines you still need to fill in.
+# Text values accept Markdown: [link text](https://...), **bold**, *italic*.
+# Quote a value ("...") if it contains a colon.
+
+name: Simone Drago
+position: "Ph.D. student in Information Technology, [Politecnico di Milano](https://www.polimi.it)"
+description: "Simone Drago, Ph.D. student at Politecnico di Milano working on reinforcement learning from human feedback and multi-objective decision-making."
+
+# Written like this so the address isn't in plain text in the (public) repository either.
+# The page shows it the same way; clicking it opens a normal email to the real address.
+email: simone [dot] drago [at] polimi [dot] it
+links:
+  - label: Google Scholar
+    url: https://scholar.google.com/citations?user=TMHon60AAAAJ&hl=en
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/drago-simone/
+
+photo: static/img/photo.jpg     # a square photo, shown in a circle. Empty: shows the Pareto-front drawing.
+cv_pdf: static/cv_simone_drago.pdf   # empty: no CV link
+
+# The Quick facts panel next to your bio. Remove all entries to hide it.
+# In values, {publications} is replaced by the number of publications (the categories listed in
+# publications.count below); also available: {conference}, {journal}, {workshop}, {preprint},
+# {underreview}, and {all} for every paper on the site. Quote values that start with {.
+facts_title: Quick facts
+facts:
+  - label: Position
+    value: Ph.D. student (expected Dec. 2027)
+  - label: Location
+    value: Milan, Italy
+  - label: Publications
+    value: "{publications} papers ({conference} conference, {journal} journal)"
+  - label: Teaching
+    value: 3 years as teaching assistant & 4 co-supervised students
+
+# How your name is written in papers.bib, so it is highlighted in author lists.
+# Matching uses surname + first initial and ignores accents.
+me:
+  - Drago, Simone
+
+# Sections, in page order; the top bar follows this list.
+#  - Hide one: remove it from the list (its file can stay).
+#  - Add your own: create content/<name>.yml and add <name> here. Each entry can have
+#    title (required), subtitle, date or start/end, location, details, url. Give it a
+#    heading under `titles`, e.g. a content/service.yml with
+#        - title: Reviewer
+#          subtitle: ICML, NeurIPS
+#          start: 2025
+#          end: present
+sections: [research, publications, education, experience, teaching, news] # extracurricula, awards
+titles: {}        # e.g. {service: Academic service, extracurricular: Beyond research}
+bands: [research, news]     # sections drawn on a tinted band; the others are split by a thin divider
+news_ticker: 5       # latest items, rotating under your bio (0 turns it off)
+news_limit: 10       # items in the News section; news.html lists them all
+
+# The "Get in touch" section at the bottom of every page.
+contact: Feel free to reach out about research and collaboration opportunities.
+
+publications:
+  show_under_review: true
+  selected_only: false     # true: only entries with selected = {true}
+  author_names: full       # full ("Simone Drago") or initials ("S. Drago")
+  order: [conference, journal, workshop, preprint, underreview]
+  count: [conference, journal]   # what {publications} counts in the Quick facts
+  layout: category-year    # category-year (by type, then year) or year (by year; preprints last)

@@ -1,0 +1,55 @@
+{#- Shared page shell: <head>, top bar, contact footer. -#}
+{% from "_icons.html.j2" import icon %}
+{% from "_macros.html.j2" import link_list %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.name }}{% endblock %}</title>
+  <meta name="description" content="{{ site.description or site.name }}">
+  <meta property="og:title" content="{{ site.name }}">
+  <meta property="og:description" content="{{ site.description or site.position or site.name }}">
+  <meta property="og:type" content="profile">
+  {% if site.photo %}<meta property="og:image" content="{{ site.photo }}">{% endif %}
+  <script>
+    /* Apply the saved light/dark choice before the page paints. */
+    try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="icon" href="data:,">  {# no tab icon (also stops browsers asking for /favicon.ico) #}
+  <link rel="preload" href="static/fonts/newsreader-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="static/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="static/style.css?v={{ version }}">
+  <script src="static/site.js?v={{ version }}" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="topbar-name" href="{{ home or '#about' }}">{{ site.name }}</a>
+    <nav class="topbar-nav" aria-label="Sections">
+      <ul role="list">
+        {% for s in sections %}<li><a href="{{ home }}#{{ s.id }}">{{ s.nav }}</a></li>{% endfor %}
+        <li><a href="{{ home }}#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <button type="button" class="theme-toggle" aria-label="Switch to dark theme" title="Switch between light and dark">
+      {{ icon("moon", "icon icon-moon") }}{{ icon("sun", "icon icon-sun") }}
+    </button>
+  </div>
+</header>
+
+{% block body %}{% endblock %}
+
+<footer class="contact" id="contact">
+  <div class="contact-inner">
+    <h2 class="section-title">Get in touch</h2>
+    {% if site.contact %}<p class="contact-text">{{ site.contact }}</p>{% endif %}
+    {{ link_list(site, "links links-center", full_email=true) }}
+    <p class="updated">Last updated {{ updated }}.</p>
+    <p class="copyright">&copy; {{ year }} {{ site.name }}</p>
+  </div>
+</footer>
+</body>
+</html>

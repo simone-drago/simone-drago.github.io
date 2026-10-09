@@ -1,0 +1,26 @@
+# Fields: degree, institution, start (required); end, location, details, url (optional).
+# Dates: 2024, 2024-11, or present. Entries are sorted newest first.
+
+- degree: Ph.D. in Information Technology
+  institution: Politecnico di Milano
+  location: Milan, Italy
+  start: 2024-09
+  end: present
+  details: |
+    Multi-objective reinforcement learning from human feedback\
+    *Supervisor*: Prof. Alberto Maria Metelli
+- degree: M.Sc. in Computer Science and Engineering
+  institution: Politecnico di Milano
+  location: Milan, Italy
+  start: 2020-09
+  end: 2023-05
+  details: |
+    110/110 with honors\
+    Thesis: *Leveraging Machine Learning for UAV Trajectory Planning and Performance Estimation*\
+    Supervisor: Prof. Marcello Restelli
+- degree: B.Sc. in Engineering of Computing Systems
+  institution: Politecnico di Milano
+  location: Milan, Italy
+  start: 2017-09
+  end: 2020-09
+  details: 109/110

@@ -1,0 +1,6 @@
+Jinja2>=3.1,<4
+markdown-it-py>=3.0,<5
+pybtex>=0.24,<1
+pylatexenc>=2.10,<3
+PyYAML>=6.0,<7
+latex2mathml>=3.76,<4

@@ -1,0 +1,21 @@
+# Fields: course, role, institution, start (required); end, details, url (optional).
+# For an academic year, use start: 2025 and end: 2026.
+
+- course: Fondamenti di Informatica
+  role: Teaching assistant
+  institution: Politecnico di Milano
+  start: 2026
+  end: 2027
+  details: B.Sc.-level Course (20 hours). Exercise sessions on programming in C.
+- course: Fondamenti di Informatica
+  role: Teaching assistant
+  institution: Politecnico di Milano
+  start: 2025
+  end: 2026
+  details: B.Sc.-level Course (20 hours). Exercise sessions on programming in C.
+- course: Sistemi Informatici
+  role: Teaching assistant
+  institution: Politecnico di Milano
+  start: 2024
+  end: 2025
+  details: B.Sc.-level Course (32 hours). Exercise sessions on scheduling of processes, and programming in Java.

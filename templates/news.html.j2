@@ -1,0 +1,15 @@
+{#- All news, newest first: _site/news.html -#}
+{% extends "base.html.j2" %}
+{% from "_macros.html.j2" import news_list, divider %}
+{% block title %}News | {{ site.name }}{% endblock %}
+{% block body %}
+<main id="main">
+  <section class="section">
+    <div class="section-inner">
+      <h1 class="section-title page-title">All news</h1>
+      {{ news_list(news) }}
+    </div>
+  </section>
+</main>
+{{ divider() }}
+{% endblock %}

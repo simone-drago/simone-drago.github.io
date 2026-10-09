@@ -1,0 +1,14 @@
+# Fields per item: title, text (required); icon (optional): pareto, preference, theory,
+# safety, interpretability, robot, data, teaching.
+
+intro: |
+  **"How can we learn when humans provide feedback on multi-objective problems?"**\
+  I am addressing this research question by introducing *incomparability* in RLHF, from theoretical guarantees to deployable algorithms.
+
+items:
+  - title: Reinforcement Learning from Human Feedback
+    icon: preference
+    text: Learning from comparisons instead of rewards. Rationality models, incomparable outcomes, and identifying rewards compatible with the observed preferences.
+  - title: Multi-Objective Reinforcement Learning
+    icon: pareto
+    text: Policies and rewards for problems with several, possibly conflicting, objectives, and recovering the trade-offs people actually care about.

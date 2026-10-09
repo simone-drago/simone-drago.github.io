@@ -1,0 +1,33 @@
+{% from "_icons.html.j2" import icon %}
+
+{% macro gutter_date(parts) -%}
+  {%- for p in parts %}<span class="nowrap">{{ p }}</span>{% if not loop.last %} &ndash; {% endif %}{% endfor -%}
+{%- endmacro %}
+
+{% macro maybe_link(text, url) -%}
+  {%- if url %}<a href="{{ url }}">{{ text }}</a>{% else %}{{ text }}{% endif -%}
+{%- endmacro %}
+
+{#- News as a timeline: date in the gutter, a dot and a line on the axis, text on the right. -#}
+{#- Items with the same date (e.g. two in Oct 2026) share one date and one dot. -#}
+{% macro news_list(items) -%}
+<ol class="timeline" role="list">
+  {% for group in items | groupby_date %}
+  <li class="row"><span class="when">{{ gutter_date(group.when) }}</span><div class="what">{% for n in group["items"] %}<p>{{ n.text }}</p>{% endfor %}</div></li>
+  {% endfor %}
+</ol>
+{%- endmacro %}
+
+{#- Email, CV and profile links with icons. -#}
+{% macro link_list(site, cls, full_email=false) -%}
+<ul class="{{ cls }}" role="list">
+  {% if site.email_parts %}<li><a class="email-link" href="#contact" data-u="{{ site.email_parts[0] }}" data-d="{{ site.email_parts[1] }}">{{ icon("mail") }}<span>{{ site.email_display if full_email else "Email" }}</span></a></li>{% endif %}
+  {% if site.cv_pdf %}<li><a href="{{ site.cv_pdf }}">{{ icon("cv") }}<span>CV</span></a></li>{% endif %}
+  {% for link in site.links %}<li><a href="{{ link.url }}">{{ icon(link.icon) }}<span>{{ link.label }}</span></a></li>{% endfor %}
+</ul>
+{%- endmacro %}
+
+{#- A faint accent line with a dot in the middle, between two sections that share a background. -#}
+{% macro divider() -%}
+<div class="divider" aria-hidden="true"></div>
+{%- endmacro %}

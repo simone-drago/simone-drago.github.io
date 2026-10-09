@@ -1,0 +1,18 @@
+# Fields: activity, start (required); role, end, location, details, url (optional).
+
+- activity: Reinforcement Learning Summer School (RLSS 2026)
+  role: Co-organizer
+  start: 2026
+  details: A ten-day summer school with about 150 participants from industry and academia. Coordinated the selection, communication, and onboarding of the speakers.
+- activity: PoliMi Data Scientists
+  role: Team member, then team manager
+  start: 2021
+  end: 2023
+  details: Student association at Politecnico di Milano. Organized its activities, edited the newsletter, and produced podcasts promoting AI and data science among students.
+- activity: First Ascent, Bending Spoons
+  start: 2021
+  details: Selected among the top 20 computer science students in Italy.
+- activity: Hackathon services4migrants
+  role: Participant
+  start: 2017
+  details: Organized by the Municipality of Milan. Applied gamification to make public services easier for migrants in the city to access.

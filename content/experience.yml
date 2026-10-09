@@ -1,0 +1,16 @@
+# Fields: role, organization, start (required); end, location, details, url (optional).
+
+- role: Research Assistant
+  organization: Artificial Intelligence Research and Innovation Center, Politecnico di Milano
+  location: Milan, Italy
+  start: 2023-06
+  end: 2024-09
+  details: |
+    Planning and control for autonomous swarms of quadcopters; PoC on gas distribution network topology estimation from data; data-driven prediction of company behavior.
+- role: AI Specialist (M.Sc. Internship)
+  organization: ML cube
+  location: Milan, Italy
+  start: 2022-07
+  end: 2023-05
+  details: |
+    ML pipeline for autonomous UAV trajectory planning trained on simulator data, cutting planning time from hours to seconds.

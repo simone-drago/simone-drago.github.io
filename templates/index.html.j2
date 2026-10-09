@@ -1,0 +1,190 @@
+{#- The home page. Content comes from content/; you rarely need to edit this file. -#}
+{% extends "base.html.j2" %}
+{% from "_icons.html.j2" import icon %}
+{% from "_macros.html.j2" import gutter_date, maybe_link, news_list, link_list, divider %}
+{% block body %}
+<div class="hero">
+<header class="masthead" id="about">
+  <div class="masthead-mark">
+    {% if site.photo %}
+    <img class="portrait" src="{{ site.photo }}" alt="Portrait of {{ site.name }}" width="300" height="300">
+    {% else %}
+    {% include "pareto.svg.j2" %}
+    {% endif %}
+  </div>
+  <div class="masthead-text">
+    <h1 class="name">{{ site.name }}</h1>
+    {% if site.position %}<p class="position">{{ site.position | md }}</p>{% endif %}
+    <div class="intro{% if facts %} has-facts{% endif %}">
+      <div class="bio">{{ bio }}</div>
+      {% if facts %}
+      <aside class="card facts" aria-labelledby="facts-title">
+        <h2 class="facts-title" id="facts-title">{{ site.facts_title or "Quick facts" }}</h2>
+        <dl>
+          {% for f in facts %}<div><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>{% endfor %}
+        </dl>
+      </aside>
+      {% endif %}
+    </div>
+    {{ link_list(site, "links") }}
+  </div>
+</header>
+
+{% if ticker %}
+<section class="ticker" aria-label="Latest news" aria-roledescription="carousel">
+  <div class="ticker-head row">
+    <a class="ticker-label" href="#news">Latest news</a>
+    {% if ticker | length > 1 %}
+    <div class="ticker-controls">
+      <span class="ticker-steps">
+        {% for n in ticker %}<button type="button" class="ticker-step" aria-label="Show news {{ loop.index }} of {{ ticker | length }}"><span></span></button>{% endfor %}
+      </span>
+      <button type="button" class="ticker-pause" aria-pressed="false">Pause</button>
+    </div>
+    {% endif %}
+  </div>
+  <div class="ticker-items">
+    {% for n in ticker %}
+    <div class="ticker-item row{% if loop.first %} is-active{% endif %}" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ ticker | length }}">
+      <span class="when">{{ gutter_date(n.when) }}</span>
+      <p class="what">{{ n.text }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+</div>
+
+<main id="main">
+{% for s in sections %}
+  {% if not s.band and (loop.first or not loop.previtem.band) %}{{ divider() }}{% endif %}
+  <section class="section{% if s.band %} band{% endif %}" id="{{ s.id }}" aria-labelledby="{{ s.id }}-title">
+   <div class="section-inner">
+    <h2 class="section-title" id="{{ s.id }}-title">{{ s.title }}{% if s.count %} <span class="count">{{ s.count }}</span>{% endif %}</h2>
+
+  {% if s.id == "research" %}
+    {% if s.research.intro %}<p class="lede">{{ s.research.intro }}</p>{% endif %}
+    <ul class="interests" role="list">
+      {% for it in s.research["items"] %}
+      <li class="card interest">
+        {{ icon(it.icon, "icon interest-icon") }}
+        <h3 class="interest-title">{{ it.title }}</h3>
+        <p class="interest-text">{{ it.text }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+
+  {% elif s.id == "publications" %}
+    {% for g in pubs %}
+    <div class="pub-group" id="pub-{{ g.key }}">
+      {% if g.heading %}<h3 class="group-title">{{ g.heading }}</h3>{% endif %}
+      {% for y in g.years %}
+      {% if y.year %}<h4 class="pub-year">{{ y.year }}</h4>{% endif %}
+      <ol class="pubs" role="list">
+        {% for p in y["items"] %}
+        <li class="pub row" id="{{ p.label }}">
+          <a class="pub-label" href="#{{ p.label }}" aria-label="{{ p.label }}">{{ p.label }}</a>
+          <div class="pub-body">
+            <p class="pub-title">{{ p.title }}</p>
+            <p class="pub-authors">
+              {%- for a in p.authors -%}
+                {%- if a.me %}<strong class="me">{{ a.name }}</strong>{% else %}{{ a.name }}{% endif -%}
+                {%- if a.equal %}<span class="eq" title="Equal contribution">*</span>{% endif -%}
+                {%- if not loop.last %}, {% endif -%}
+              {%- endfor -%}
+            </p>
+            <p class="pub-meta">
+              <span class="venue">{{ p.venue }}</span>
+              {%- if p.award %} <span class="award">{{ p.award }}</span>{% endif %}
+              {% if p.links or p.abstract or p.bibtex %}
+              <span class="pub-links">
+                {% for l in p.links %}<a href="{{ l.url }}">{{ l.label }}</a>{% endfor %}
+                {% if p.abstract %}<button type="button" class="toggle" aria-expanded="false" aria-controls="{{ p.label }}-abs">Abstract</button>{% endif %}
+                {% if p.bibtex %}<a href="{{ p.bibfile }}" download title="Download the BibTeX citation">BibTeX</a>{% endif %}
+              </span>
+              {% endif %}
+            </p>
+            {% if p.abstract %}<div class="panel abstract" id="{{ p.label }}-abs" hidden><p>{{ p.abstract }}</p></div>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    <p class="pub-foot">
+      {% if any_equal %}<span><span class="eq">*</span> Equal contribution</span>{% endif %}
+      <a href="bib/publications.bib" download>All publications as BibTeX</a>
+    </p>
+
+  {% elif s.id == "teaching" %}
+    {% if s["items"] and s.supervision %}<h3 class="group-title">Courses</h3>{% endif %}
+    <ul class="cards" role="list">
+      {% for e in s["items"] %}
+      <li class="card teach">
+        <div class="teach-head">
+          <div>
+            <p class="headline">{{ maybe_link(e.course, e.url) }}</p>
+            <p class="where">{{ e.role }}, {{ e.institution }}</p>
+          </div>
+          <span class="pill">{{ gutter_date(e.when) }}</span>
+        </div>
+        {% if e.details %}<p class="details">{{ e.details }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% if s.supervision %}
+    <h3 class="group-title supervision-title">Thesis supervision</h3>
+    <ul class="entries" role="list">
+      {% for t in s.supervision %}
+      <li class="row">
+        <span class="when">{{ gutter_date(t.when) }}</span>
+        <div class="what">
+          {% if t.title %}<p class="thesis-title">{{ maybe_link(t.title, t.url) }}</p>
+          {% else %}<p class="thesis-title in-progress">{% if t.topic %}{{ t.topic }}{% else %}Thesis in progress{% endif %}</p>{% endif %}
+          <p class="where">{{ t.student }}{% if t.degree %}, {{ t.degree }}{% endif %}</p>
+          <p class="details">{{ t.role or "Co-supervisor" }}{% if t.supervisor %}, with {{ t.supervisor }}{% endif %}{% if t.details %}. {{ t.details }}{% endif %}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+  {% elif s.id == "news" %}
+    {{ news_list(s["items"]) }}
+    <p class="more"><a href="news.html">All news{% if news_total > s["items"] | length %} ({{ news_total }}){% endif %}</a></p>
+
+  {% else %}
+    <ul class="entries" role="list">
+      {% for e in s["items"] %}
+      <li class="row">
+        <span class="when">{{ gutter_date(e.when) }}</span>
+        <div class="what">
+          {% if s.id == "education" %}
+          <p class="headline">{{ e.degree }}</p>
+          <p class="where">{{ maybe_link(e.institution, e.url) }}{% if e.location %}, {{ e.location }}{% endif %}</p>
+          {% elif s.id == "experience" %}
+          <p class="headline">{{ e.role }}</p>
+          <p class="where">{{ maybe_link(e.organization, e.url) }}{% if e.location %}, {{ e.location }}{% endif %}</p>
+          {% elif s.id == "awards" %}
+          <p class="headline">{{ maybe_link(e.title, e.url) }}</p>
+          {% elif s.id == "extracurricular" %}
+          <p class="headline">{{ maybe_link(e.activity, e.url) }}</p>
+          {% if e.role or e.location %}<p class="where">{{ e.role }}{% if e.role and e.location %}, {% endif %}{{ e.location }}</p>{% endif %}
+          {% else %}
+          {#- Any section you add yourself: title, subtitle, location, details, url -#}
+          <p class="headline">{{ maybe_link(e.title, e.url) }}</p>
+          {% if e.subtitle or e.location %}<p class="where">{{ e.subtitle }}{% if e.subtitle and e.location %}, {% endif %}{{ e.location }}</p>{% endif %}
+          {% endif %}
+          {% if e.details %}<p class="details">{{ e.details }}</p>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+   </div>
+  </section>
+{% endfor %}
+</main>
+{% if sections and not sections[-1].band %}{{ divider() }}{% endif %}
+{% endblock %}
