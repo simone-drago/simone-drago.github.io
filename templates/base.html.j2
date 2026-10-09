@@ -11,7 +11,6 @@
   <meta property="og:title" content="{{ site.name }}">
   <meta property="og:description" content="{{ site.description or site.position or site.name }}">
   <meta property="og:type" content="profile">
-  {% if site.photo %}<meta property="og:image" content="{{ site.photo }}">{% endif %}
   <script>
     /* Apply the saved light/dark choice before the page paints. */
     try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
