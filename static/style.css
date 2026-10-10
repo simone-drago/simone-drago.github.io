@@ -62,7 +62,7 @@
   --gap: 2rem;
   --measure: 45rem;
   --page: calc(var(--gutter) + var(--gap) + var(--measure));
-  --edge: 1.25rem;
+  --edge: max(1.25rem, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); /* keeps text clear of the notch in landscape */
   --bar: 3.75rem;      /* height of the top bar */
 }
 
@@ -100,7 +100,7 @@
    Base
    ------------------------------------------------------------------ */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: var(--bar); }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + env(safe-area-inset-top, 0px)); }
 body {
   margin: 0;
   background: var(--bg);
@@ -148,8 +148,11 @@ a:hover { text-decoration-color: currentColor; }
 /* ------------------------------------------------------------------
    Top bar: name, sections, light/dark switch
    ------------------------------------------------------------------ */
+/* On iPhones the bar also reaches up under the status bar (env() is 0 everywhere else),
+   so the page never shows above it while scrolling. */
 .topbar {
   position: sticky; top: 0; z-index: 10;
+  padding-top: env(safe-area-inset-top, 0px);
   background: color-mix(in srgb, var(--bg) 86%, transparent);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--faint);
@@ -257,40 +260,65 @@ a:hover { text-decoration-color: currentColor; }
 .links a:hover { color: var(--accent); }
 .links-center { justify-content: center; }
 
-.ticker-head { align-items: center; margin-bottom: 0.55rem; }
+/* Latest news: one item at a time. On wide screens a vertical bar beside the text fills while
+   an item is shown and items slide up; on phones (see the 760px block) the bar lies in the
+   header and items slide sideways. --tick is how long each item stays. */
+.ticker { position: relative; --tick: 7s; --head: 2rem; --head-gap: 0.6rem; --slide-x: 0px; --slide-y: 0.8rem; }
+.ticker-head { height: var(--head); align-items: center; margin-bottom: var(--head-gap); }
 .ticker-label {
   justify-self: end;
   font-size: 0.88rem; font-weight: 600; color: var(--ink); text-decoration: none;
 }
 .ticker-label:hover { text-decoration: underline; }
-.ticker-controls { display: none; align-items: center; gap: 1rem; }
+.ticker-controls { grid-column: 2; display: none; align-items: center; gap: 0.4rem; padding-left: 1.1rem; }
 .ticker.is-ready .ticker-controls { display: flex; }
-.ticker-steps { display: flex; gap: 0.3rem; }
-.ticker-step {
-  width: 1.9rem; height: 1.1rem; padding: 0; border: 0; background: none; cursor: pointer;
-  display: flex; align-items: center;
+.ticker-nav {
+  display: grid; place-items: center; flex: none;
+  width: 1.75rem; height: 1.75rem; padding: 0;
+  color: var(--ink); background: transparent;
+  border: 1px solid var(--faint); border-radius: 999px; cursor: pointer;
+  transition: border-color .2s, background-color .2s;
 }
-.ticker-step > span {
-  display: block; width: 100%; height: 3px; border-radius: 2px;
-  background: linear-gradient(var(--accent), var(--accent)) left / 0% 100% no-repeat, var(--faint);
+.ticker-nav:hover { border-color: var(--accent); background: var(--accent-soft); }
+.ticker-nav .icon { width: 0.95rem; height: 0.95rem; }
+/* The middle button shows a pause symbol while the news rotates and a play symbol once paused. */
+.ticker-pause .icon { grid-area: 1 / 1; }
+.ticker-pause .icon-play, .ticker-pause.is-off .icon-pause { display: none; }
+.ticker-pause.is-off .icon-play { display: block; }
+.ticker-count {
+  margin-left: 0.5rem; font-size: 0.82rem; color: var(--muted);
+  font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0.04em;
 }
-.ticker-step.is-done > span { background-size: 100% 100%; }
-.ticker-step.is-active > span { background-size: 100% 100%; animation: tick var(--tick, 7s) linear; }
-.ticker.is-paused .ticker-step.is-active > span { animation-play-state: paused; }
-@keyframes tick { from { background-size: 0% 100%; } }
-.ticker-pause {
-  font: 550 0.82rem/1 var(--sans); color: var(--muted);
-  background: none; border: 0; padding: 0.3rem 0; cursor: pointer;
+
+.ticker-bar {
+  display: none; position: absolute;
+  left: calc(var(--gutter) + var(--gap)); top: calc(var(--head) + var(--head-gap)); bottom: 0.15rem;
+  width: 3px; border-radius: 2px; overflow: hidden;
+  background: var(--faint);
 }
-.ticker-pause:hover { color: var(--ink); }
+.ticker.is-ready .ticker-bar { display: block; }
+.ticker-bar > span {
+  display: block; width: 100%; height: 100%;
+  background: var(--accent); transform-origin: top;
+  animation: tick-down var(--tick) linear;
+}
+.ticker.is-paused .ticker-bar > span { animation-play-state: paused; }
+@keyframes tick-down { from { transform: scaleY(0); } }
+@keyframes tick-across { from { transform: scaleX(0); } }
+
 .ticker-items { display: grid; }
 .ticker-item {
   grid-area: 1 / 1;
+  --side: 1;   /* 1: waits below (or right), -1: has left upwards (or left), 0: shown */
+  transform: translate(calc(var(--side) * var(--slide-x)), calc(var(--side) * var(--slide-y)));
   opacity: 0; visibility: hidden;
-  transition: opacity .35s ease, visibility 0s linear .35s;
+  transition: opacity .4s ease, transform .4s ease, visibility 0s linear .4s;
 }
-.ticker-item.is-active { opacity: 1; visibility: visible; transition: opacity .35s ease; }
+.ticker-item[data-side="before"] { --side: -1; }
+.ticker-item.is-active { --side: 0; opacity: 1; visibility: visible; transition: opacity .4s ease, transform .4s ease; }
+.ticker-item.is-instant { transition: none; }
 .ticker-item .what { max-width: 38em; }
+.ticker.is-ready .ticker-item .what { padding-left: 1.1rem; }
 
 /* ------------------------------------------------------------------
    Sections: tinted bands alternate with plain ones, split by a divider
@@ -476,7 +504,7 @@ a:hover { text-decoration-color: currentColor; }
    Get in touch, and the news archive page
    ------------------------------------------------------------------ */
 .contact {
-  padding: 4.5rem 0 3rem;
+  padding: 4.5rem 0 calc(3rem + env(safe-area-inset-bottom, 0px));
   text-align: center;
   background: radial-gradient(50rem 22rem at 50% 100%, var(--glow), transparent 70%);
 }
@@ -515,7 +543,7 @@ a:hover { text-decoration-color: currentColor; }
     -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
     mask-image: linear-gradient(to right, #000 85%, transparent);
   }
-  html { scroll-padding-top: 6rem; }
+  html { scroll-padding-top: calc(6rem + env(safe-area-inset-top, 0px)); }
   .masthead { display: block; padding-top: 2.25rem; }
   .masthead-mark { width: 8.5rem; padding: 0; margin-bottom: 1.4rem; }
   .topbar-name { font-size: 1.25rem; }
@@ -523,7 +551,14 @@ a:hover { text-decoration-color: currentColor; }
   .section-title, .lede, .interests, .cards, .group-title, .pub-year, .pub-foot, .more { margin-left: 0; }
   .entries .row, .ticker-item.row { display: block; }
   .when { display: block; text-align: left; padding: 0; margin-bottom: 0.1rem; }
-  .ticker-head { display: flex; justify-content: space-between; }
+  .ticker { --slide-x: 1.25rem; --slide-y: 0px; }
+  .ticker-head { display: flex; gap: 0.9rem; }
+  .ticker-bar { position: static; flex: 1; height: 3px; width: auto; min-width: 2rem; }
+  .ticker-bar > span { transform-origin: left; animation-name: tick-across; }
+  .ticker-controls { padding-left: 0; gap: 0.4rem; }
+  .ticker-prev .icon, .ticker-next .icon { transform: rotate(-90deg); }   /* up/down become left/right */
+  .ticker-count { display: none; }
+  .ticker.is-ready .ticker-item .what { padding-left: 0; }
   .timeline > li { display: block; padding-left: 1.5rem; }
   .timeline > li::before { left: 4px; top: 0.7rem; }
   .timeline > li::after { left: 0; top: 0.45rem; }
@@ -534,6 +569,7 @@ a:hover { text-decoration-color: currentColor; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  .ticker-bar > span { display: none; }   /* nothing advances on its own */
 }
 
 @media print {

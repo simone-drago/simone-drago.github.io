@@ -20,15 +20,21 @@ document.addEventListener("DOMContentLoaded", () => {
   setUpNav(document.querySelector(".topbar-nav"));
 });
 
-// Shows one news item at a time and moves on when the active step's bar fills
-// (its duration is --tick in style.css). Hovering or focusing the ticker pauses it,
-// and so does the Pause button. With reduced motion it never advances on its own.
+// Shows one news item at a time and moves on when the bar fills (its duration is --tick in
+// style.css). The arrows step back and forth and restart the bar; they never pause it.
+// It pauses with the Pause button, while a mouse is over the news text, or while a keyboard
+// user is inside the ticker. Taps on a phone never pause it. With reduced motion it never
+// advances on its own.
 function setUpTicker(ticker) {
   if (!ticker) return;
   const items = [...ticker.querySelectorAll(".ticker-item")];
-  const steps = [...ticker.querySelectorAll(".ticker-step")];
+  const list = ticker.querySelector(".ticker-items");
+  const bar = ticker.querySelector(".ticker-bar > span");
   const pause = ticker.querySelector(".ticker-pause");
-  if (items.length < 2 || !pause) return;
+  const prev = ticker.querySelector(".ticker-prev");
+  const next = ticker.querySelector(".ticker-next");
+  const index = ticker.querySelector(".ticker-index");
+  if (items.length < 2 || !bar || !pause || !prev || !next) return;
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let current = 0;
@@ -36,35 +42,42 @@ function setUpTicker(ticker) {
   let hovered = false;
   let focused = false;
 
-  const show = (n) => {
-    current = (n + items.length) % items.length;
-    items.forEach((el, k) => el.classList.toggle("is-active", k === current));
-    steps.forEach((el, k) => {
-      el.classList.toggle("is-active", k === current);
-      el.classList.toggle("is-done", k < current);
-      el.setAttribute("aria-current", String(k === current));
-      // Restart the fill animation of the active step.
-      const bar = el.firstElementChild;
-      bar.style.animation = "none";
-      void bar.offsetWidth;
-      bar.style.animation = "";
-    });
+  const restartBar = () => {
+    bar.style.animation = "none";
+    void bar.offsetWidth;
+    bar.style.animation = "";
+  };
+  // step = +1 (next: the old item leaves upwards / to the left) or -1 (previous).
+  const go = (step) => {
+    const from = items[current];
+    current = (current + step + items.length) % items.length;
+    const to = items[current];
+    // Park the incoming item on the side it enters from, without animating that jump.
+    to.classList.add("is-instant");
+    to.dataset.side = step > 0 ? "after" : "before";
+    void to.offsetWidth;
+    to.classList.remove("is-instant");
+    from.dataset.side = step > 0 ? "before" : "after";
+    from.classList.remove("is-active");
+    to.classList.add("is-active");
+    if (index) index.textContent = String(current + 1);
+    restartBar();
   };
   const sync = () => {
     ticker.classList.toggle("is-paused", userPaused || hovered || focused);
-    pause.textContent = userPaused ? "Play" : "Pause";
-    pause.setAttribute("aria-pressed", String(userPaused));
+    pause.classList.toggle("is-off", userPaused);
+    pause.setAttribute("aria-label", userPaused ? "Resume news" : "Pause news");
+    pause.title = userPaused ? "Resume" : "Pause";
   };
 
-  steps.forEach((el, k) => {
-    el.addEventListener("click", () => show(k));
-    el.firstElementChild.addEventListener("animationend", () => show(current + 1));
-  });
+  bar.addEventListener("animationend", () => go(1));
+  prev.addEventListener("click", () => go(-1));
+  next.addEventListener("click", () => go(1));
   pause.addEventListener("click", () => { userPaused = !userPaused; sync(); });
-  ticker.addEventListener("mouseenter", () => { hovered = true; sync(); });
-  ticker.addEventListener("mouseleave", () => { hovered = false; sync(); });
-  // Pause while a keyboard user is inside the ticker. A mouse click also moves focus
-  // there, but must not pause it: rotation resumes as soon as the pointer leaves.
+  // Only a real mouse pauses on hover: a tap on a phone also "enters", but never leaves.
+  list.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hovered = true; sync(); } });
+  list.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") { hovered = false; sync(); } });
+  // Keyboard focus pauses; a mouse click on a button does not (it is not :focus-visible).
   ticker.addEventListener("focusin", (e) => { focused = e.target.matches(":focus-visible"); sync(); });
   ticker.addEventListener("focusout", (e) => {
     if (!ticker.contains(e.relatedTarget)) { focused = false; sync(); }
@@ -72,7 +85,7 @@ function setUpTicker(ticker) {
 
   if (reduced) pause.hidden = true;
   ticker.classList.add("is-ready");
-  show(0);
+  restartBar();
   sync();
 }
 
@@ -92,9 +105,17 @@ function setUpThemeToggle(btn) {
     root.dataset.theme = next;
     try { localStorage.setItem("theme", next); } catch (e) { /* private mode: still switches */ }
     label();
+    tintBrowser();
   });
+  // Phone browsers colour their own bars from <meta name="theme-color">; keep it on the chosen theme.
+  const tintBrowser = () => {
+    if (!root.dataset.theme) return;   // no choice made: the two media-specific tags already apply
+    const bg = getComputedStyle(root).getPropertyValue("--bg").trim();
+    for (const m of document.querySelectorAll('meta[name="theme-color"]')) m.content = bg;
+  };
   systemDark.addEventListener("change", label);
   label();
+  tintBrowser();
 }
 
 // Underline the top-bar link of the section currently in view.

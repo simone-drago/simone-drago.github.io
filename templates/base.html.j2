@@ -5,7 +5,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  {#- viewport-fit=cover: on iPhones the page also fills the strip under the status bar, and the top bar
+      covers it (see .topbar in style.css). Without it, in-app browsers such as Telegram's showed the
+      page scrolling above the top bar. theme-color tints the browser's own bars to match. -#}
+  <meta name="theme-color" content="#fbfbfe" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1b1f31" media="(prefers-color-scheme: dark)">
   <title>{% block title %}{{ site.name }}{% endblock %}</title>
   <meta name="description" content="{{ site.description or site.name }}">
   <meta property="og:title" content="{{ site.name }}">

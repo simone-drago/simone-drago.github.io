@@ -31,15 +31,18 @@
 </header>
 
 {% if ticker %}
+{#- One item at a time. The bar fills while an item is shown (vertical beside the news on wide
+    screens, horizontal in the header on phones); the arrows step back and forth. -#}
 <section class="ticker" aria-label="Latest news" aria-roledescription="carousel">
   <div class="ticker-head row">
     <a class="ticker-label" href="#news">Latest news</a>
     {% if ticker | length > 1 %}
+    <span class="ticker-bar" aria-hidden="true"><span></span></span>
     <div class="ticker-controls">
-      <span class="ticker-steps">
-        {% for n in ticker %}<button type="button" class="ticker-step" aria-label="Show news {{ loop.index }} of {{ ticker | length }}"><span></span></button>{% endfor %}
-      </span>
-      <button type="button" class="ticker-pause" aria-pressed="false">Pause</button>
+      <button type="button" class="ticker-nav ticker-prev" aria-label="Previous news">{{ icon("chevron-up") }}</button>
+      <button type="button" class="ticker-nav ticker-pause" aria-label="Pause news">{{ icon("pause", "icon icon-pause") }}{{ icon("play", "icon icon-play") }}</button>
+      <button type="button" class="ticker-nav ticker-next" aria-label="Next news">{{ icon("chevron-down") }}</button>
+      <span class="ticker-count" aria-hidden="true"><span class="ticker-index">1</span>/{{ ticker | length }}</span>
     </div>
     {% endif %}
   </div>
