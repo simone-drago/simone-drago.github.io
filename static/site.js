@@ -18,7 +18,22 @@ document.addEventListener("DOMContentLoaded", () => {
   setUpTicker(document.querySelector(".ticker"));
   setUpThemeToggle(document.querySelector(".theme-toggle"));
   setUpNav(document.querySelector(".topbar-nav"));
+  setUpFigure(document.querySelector(".research-figure"));
 });
+
+// The research figure draws its front the first time it scrolls into view (see style.css).
+// Without IntersectionObserver, or with reduced motion, it stays fully drawn from the start.
+function setUpFigure(fig) {
+  if (!fig || !("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (fig.getBoundingClientRect().top < innerHeight) return;   // already on screen: no surprise motion
+  fig.classList.add("will-draw");
+  const seen = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    fig.classList.add("is-drawn");
+    seen.disconnect();
+  }, { threshold: 0.5 });
+  seen.observe(fig);
+}
 
 // Shows one news item at a time and moves on when the bar fills (its duration is --tick in
 // style.css). The arrows step back and forth and restart the bar; they never pause it.

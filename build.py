@@ -632,11 +632,14 @@ def load_research() -> dict | None:
     if not isinstance(data, dict) or not isinstance(data.get("items"), list):
         error(f"{rel}: expected an optional 'question' and 'intro', and a list of 'items'")
         return None
-    unknown = set(data) - {"question", "intro", "items"}
+    allowed = ("question", "intro", "figure", "figure_caption", "items")
+    unknown = set(data) - set(allowed)
     if unknown:
-        error(f"{rel}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: question, intro, items")
+        error(f"{rel}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: {', '.join(allowed)}")
+    if data.get("figure") not in (None, True, False):
+        error(f"{rel}: figure must be true or false")
     text = {}
-    for field in ("question", "intro"):
+    for field in ("question", "intro", "figure_caption"):
         if data.get(field) and check_text(data[field], f"{rel}, {field}"):
             text[field] = md_inline(str(data[field]).strip())
     items = []
@@ -656,7 +659,8 @@ def load_research() -> dict | None:
             items.append({"title": md_inline(str(raw["title"]).strip()),
                           "text": md_inline(str(raw["text"]).strip()), "icon": icon})
     # The question is shown in the masthead even when there are no cards.
-    return {"question": text.get("question"), "intro": text.get("intro"), "items": items}
+    return {"question": text.get("question"), "intro": text.get("intro"), "items": items,
+            "figure": data.get("figure") is True, "figure_caption": text.get("figure_caption")}
 
 
 SECTION_TITLES = {

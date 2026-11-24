@@ -371,7 +371,7 @@ a:hover { text-decoration-color: currentColor; }
   margin-left: 0.3rem;
   font-variant-numeric: lining-nums tabular-nums;
 }
-.lede, .interests, .group-title, .pub-year, .pub-foot, .more {
+.lede, .research, .group-title, .pub-year, .pub-foot, .more {
   margin-left: calc(var(--gutter) + var(--gap));
 }
 
@@ -399,6 +399,38 @@ a:hover { text-decoration-color: currentColor; }
 .interest-icon { width: 1.6rem; height: 1.6rem; color: var(--muted); margin-bottom: 0.7rem; }
 .interest-title { font: 600 1rem/1.35 var(--sans); margin-bottom: 0.3rem; }
 .interest-text { font-size: 0.93rem; color: var(--muted); }
+
+/* With the figure: the Pareto front on the left, the topics as plain text beside it. */
+.research.has-figure {
+  display: grid; grid-template-columns: 16rem minmax(0, 1fr);
+  gap: 2rem 3rem; align-items: start;
+}
+.has-figure .interests { grid-template-columns: 1fr; gap: 1.6rem; padding-top: 0.6rem; }
+.has-figure .interest-title {
+  font: 500 1.25rem/1.25 var(--serif); font-variation-settings: "opsz" 24;
+  letter-spacing: -0.005em; margin-bottom: 0.4rem;
+}
+.has-figure .interest-text { font-size: 0.97rem; max-width: 34em; }
+.research-figure { margin: 0; }
+.figure-plot { width: 100%; height: auto; overflow: visible; }
+.figure-plot .axis, .figure-plot .axis-tip { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.55; }
+.figure-plot .axis-label { font: 500 11px var(--sans); fill: var(--muted); }
+.figure-plot .dom circle { fill: var(--muted); opacity: 0.4; }
+.figure-plot .front circle { fill: var(--accent); }
+.figure-plot .stair { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.figure-plot .ring { fill: none; stroke: var(--ink); stroke-width: 1.3; }
+.figure-plot .link { fill: none; stroke: var(--ink); stroke-width: 1.1; stroke-dasharray: 3 3.5; opacity: 0.7; }
+.figure-plot .mark { font: 600 14px var(--sans); fill: var(--ink); }
+.figure-plot .query { font: italic 500 20px var(--serif); fill: var(--ink); }
+.research-figure figcaption { margin-top: 0.9rem; font-size: 0.88rem; line-height: 1.5; color: var(--muted); }
+/* The one moment of motion: when the figure scrolls into view, the front draws itself and
+   A, B and the question appear. Without JavaScript, or with reduced motion, it is simply there. */
+.research-figure.will-draw .stair { stroke-dashoffset: 1; }
+.research-figure.will-draw :is(.ring, .link, .mark, .query) { opacity: 0; }
+.research-figure.is-drawn .stair { stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s cubic-bezier(.16, 1, .3, 1); }
+.research-figure.is-drawn :is(.ring, .mark) { opacity: 1; transition: opacity .5s ease-out 1s; }
+.research-figure.is-drawn .link { opacity: 0.7; transition: opacity .5s ease-out 1.3s; }
+.research-figure.is-drawn .query { opacity: 1; transition: opacity .5s ease-out 1.5s; }
 
 /* Teaching: courses, then thesis supervision, both as rows on the date column */
 .group-title + .entries { margin-top: 0.8rem; }
@@ -553,7 +585,9 @@ a:hover { text-decoration-color: currentColor; }
   .masthead-mark { width: 8.5rem; padding: 0; margin-bottom: 1.4rem; }
   .topbar-name { font-size: 1.25rem; }
   .section { padding-block: 3.25rem; }
-  .section-title, .lede, .interests, .group-title, .pub-year, .pub-foot, .more { margin-left: 0; }
+  .section-title, .lede, .research, .group-title, .pub-year, .pub-foot, .more { margin-left: 0; }
+  .research.has-figure { grid-template-columns: 1fr; gap: 2rem; }
+  .research-figure { max-width: 21rem; }
   .entries .row, .ticker-item.row { display: block; }
   .when { display: block; text-align: left; padding: 0; margin-bottom: 0.1rem; }
   .ticker { --slide-x: 1.25rem; --slide-y: 0px; }
@@ -578,6 +612,8 @@ a:hover { text-decoration-color: currentColor; }
 
 @media print {
   :root { --bg: #fff; --band: #fff; --card: #fff; --ink: #000; --muted: #333; --accent: #000; }
+  .research-figure.will-draw .stair { stroke-dashoffset: 0; }   /* printed before it scrolled into view */
+  .research-figure.will-draw :is(.ring, .link, .mark, .query) { opacity: 1; }
   body { font-size: 10.5pt; }
   .topbar, .skip, .toggle, .panel, .ticker, .pub-foot, .more, .masthead-mark, .divider, .contact { display: none !important; }
   .masthead { display: block; padding-top: 0; }

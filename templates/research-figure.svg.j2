@@ -1,0 +1,25 @@
+{#- Research figure: outcomes of a two-objective problem (higher is better on both axes).
+    Grey points are dominated; the staircase joins the Pareto front. A and B both sit on the
+    front: each is better on one objective, so neither dominates the other. -#}
+<svg class="figure-plot" viewBox="0 0 240 196" role="img" aria-label="Chart of a problem with two objectives. Most outcomes are dominated; the best ones form a staircase, the Pareto front. Two outcomes on the front are marked: A, higher on objective 2, and B, higher on objective 1, joined by a question mark.">
+  <path class="axis" d="M28 4 V172 H236" />
+  <path class="axis-tip" d="M24.5 9 L28 3 L31.5 9 M231 168.5 L237 172 L231 175.5" />
+  <text class="axis-label" x="236" y="190" text-anchor="end">Objective 1</text>
+  <text class="axis-label" x="13" y="4" text-anchor="end" transform="rotate(-90 13 4)">Objective 2</text>
+  <g class="dom">
+    <circle cx="44" cy="70" r="3.2" /><circle cx="72" cy="60" r="3.2" /><circle cx="62" cy="104" r="3.2" />
+    <circle cx="40" cy="128" r="3.2" /><circle cx="96" cy="118" r="3.2" /><circle cx="110" cy="88" r="3.2" />
+    <circle cx="130" cy="110" r="3.2" /><circle cx="84" cy="150" r="3.2" /><circle cx="120" cy="140" r="3.2" />
+    <circle cx="150" cy="154" r="3.2" /><circle cx="162" cy="136" r="3.2" /><circle cx="188" cy="162" r="3.2" />
+  </g>
+  <path class="stair" pathLength="1" d="M28 30 H52 V52 H88 V64 H118 V92 H150 V122 H178 V150 H204 V172" />
+  <g class="front">
+    <circle cx="52" cy="30" r="4" /><circle cx="88" cy="52" r="4" /><circle cx="118" cy="64" r="4" />
+    <circle cx="150" cy="92" r="4" /><circle cx="178" cy="122" r="4" /><circle cx="204" cy="150" r="4" />
+  </g>
+  <path class="link" d="M95 47 Q168 36 176 112" />
+  <circle class="ring" cx="88" cy="52" r="8" /><circle class="ring" cx="178" cy="122" r="8" />
+  <text class="mark" x="78" y="40" text-anchor="end">A</text>
+  <text class="mark" x="192" y="128">B</text>
+  <text class="query" x="152" y="40" text-anchor="middle">?</text>
+</svg>

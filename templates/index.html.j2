@@ -68,15 +68,24 @@
 
   {% if s.id == "research" %}
     {% if s.research.intro %}<p class="lede">{{ s.research.intro }}</p>{% endif %}
-    <ul class="interests" role="list">
-      {% for it in s.research["items"] %}
-      <li class="card interest">
-        {{ icon(it.icon, "icon interest-icon") }}
-        <h3 class="interest-title">{{ it.title }}</h3>
-        <p class="interest-text">{{ it.text }}</p>
-      </li>
-      {% endfor %}
-    </ul>
+    {% set fig = s.research.figure %}
+    <div class="research{% if fig %} has-figure{% endif %}">
+      {% if fig %}
+      <figure class="research-figure">
+        {% include "research-figure.svg.j2" %}
+        {% if s.research.figure_caption %}<figcaption>{{ s.research.figure_caption }}</figcaption>{% endif %}
+      </figure>
+      {% endif %}
+      <ul class="interests" role="list">
+        {% for it in s.research["items"] %}
+        <li class="interest{% if not fig %} card{% endif %}">
+          {% if not fig %}{{ icon(it.icon, "icon interest-icon") }}{% endif %}
+          <h3 class="interest-title">{{ it.title }}</h3>
+          <p class="interest-text">{{ it.text }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
   {% elif s.id == "publications" %}
     {% for g in pubs %}

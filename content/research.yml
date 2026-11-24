@@ -1,9 +1,14 @@
 # question (optional): your research question, shown in large type under your name and position.
 # intro (optional): a line under the "Research interests" heading.
-# Fields per item: title, text (required); icon (optional): pareto, preference, theory,
-# safety, interpretability, robot, data, teaching.
+# figure (optional): true shows a Pareto-front figure beside the topics, with figure_caption
+#   under it (Markdown allowed). The topics are then plain text; without it they are cards with icons.
+# Fields per item: title, text (required); icon (optional, only shown without the figure):
+# pareto, preference, theory, safety, interpretability, robot, data, teaching.
 
 question: How can we learn when humans provide feedback on multi-objective problems?
+
+figure: true
+figure_caption: "A is better on objective 2, B on objective 1: neither dominates the other. Asked which is better, a person may reasonably answer *incomparable*."
 
 items:
   - title: Reinforcement Learning from Human Feedback
