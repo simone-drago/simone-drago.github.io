@@ -39,21 +39,25 @@
 
 
 /* ------------------------------------------------------------------
-   Colour tokens. Light and dark share the same indigo family.
-   Change --accent (in both themes) to recolour the site.
+   Colour tokens: a near-white page with pale-mint bands, and a deep petrol night.
+   One accent, deep teal, kept to a few jobs: links (always underlined), the CV button,
+   your name in author lists, award badges, the current section in the top bar, focus
+   and selection. Everything else is ink or muted.
+   To recolour the site, change the tokens in all three blocks (light, and the two dark
+   ones, which must match) and the two theme-color tags in templates/base.html.j2.
+   Keep links and muted text at 4.5:1 or more against bg, band and card in both themes.
    ------------------------------------------------------------------ */
 :root {
   color-scheme: light;
-  --bg: #fbfbfe;
-  --band: #f1f2fa;
+  --bg: #fbfdfd;
+  --band: #e6f5f5;
   --card: #ffffff;
-  --ink: #161b2e;
-  --muted: #555d74;
-  --faint: #dfe2ee;
-  --accent: #3138c4;
-  --accent-strong: #2329a3;
-  --accent-soft: #e8e9fb;
-  --glow: rgba(49, 56, 196, 0.07);
+  --ink: #101d21;
+  --muted: #4f5e62;
+  --faint: #d4dfdf;
+  --accent: #006967;
+  --accent-strong: #005553;
+  --accent-soft: #d5f2f0;
 
   --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -66,33 +70,31 @@
   --bar: 3.75rem;      /* height of the top bar */
 }
 
-/* Dark: an indigo night rather than black. Kept in sync in the two blocks below. */
+/* Dark: a deep petrol night rather than black. Kept in sync in the two blocks below. */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #1b1f31;
-  --band: #21263b;
-  --card: #272c44;
-  --ink: #e8e9f4;
-  --muted: #a5abc5;
-  --faint: #373d5a;
-  --accent: #a9afff;
-  --accent-strong: #c9ccff;
-  --accent-soft: #2e3366;
-  --glow: rgba(140, 150, 255, 0.16);
+  --bg: #09171c;
+  --band: #0d1f24;
+  --card: #12262c;
+  --ink: #e4edef;
+  --muted: #a3b9bd;
+  --faint: #293e45;
+  --accent: #77d4cc;
+  --accent-strong: #a2e7e0;
+  --accent-soft: #093b3b;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #1b1f31;
-    --band: #21263b;
-    --card: #272c44;
-    --ink: #e8e9f4;
-    --muted: #a5abc5;
-    --faint: #373d5a;
-    --accent: #a9afff;
-    --accent-strong: #c9ccff;
-    --accent-soft: #2e3366;
-    --glow: rgba(140, 150, 255, 0.16);
+    --bg: #09171c;
+    --band: #0d1f24;
+    --card: #12262c;
+    --ink: #e4edef;
+    --muted: #a3b9bd;
+    --faint: #293e45;
+    --accent: #77d4cc;
+    --accent-strong: #a2e7e0;
+    --accent-soft: #093b3b;
   }
 }
 
@@ -120,7 +122,7 @@ a {
   text-decoration-line: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
-  text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
 }
 a:hover { text-decoration-color: currentColor; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
@@ -192,8 +194,8 @@ a:hover { text-decoration-color: currentColor; }
 .topbar-cv {
   flex: none; display: inline-flex; align-items: center; gap: 0.4rem;
   height: 2.25rem; padding: 0 0.95rem 0 0.8rem;
-  font: 550 0.92rem/1 var(--sans); color: var(--ink); text-decoration: none;
-  border: 1px solid var(--faint); border-radius: 999px;
+  font: 550 0.92rem/1 var(--sans); color: var(--accent); text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--faint)); border-radius: 999px;
   transition: border-color .2s, background-color .2s;
 }
 .topbar-cv .icon { width: 1rem; height: 1rem; }
@@ -211,18 +213,14 @@ a:hover { text-decoration-color: currentColor; }
 /* ------------------------------------------------------------------
    Masthead and latest news
    ------------------------------------------------------------------ */
-.hero {
-  background: radial-gradient(60rem 28rem at 18% 0%, var(--glow), transparent 70%);
-  padding-bottom: 3rem;
-}
+.hero { padding-bottom: 3rem; }
 .masthead { padding-block: clamp(2.75rem, 7vw, 5rem) 2.5rem; align-items: start; }
 /* The photo is wider than the date column and hangs into the left margin. */
 .masthead-mark { padding-top: 0.4rem; width: calc(100% + 2.5rem); margin-left: -2.5rem; }
 .portrait {
   width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
   border-radius: 50%;
-  padding: 5px;
-  border: 1.5px solid var(--accent);
+  border: 1px solid var(--faint);
 }
 .pareto { width: 100%; height: auto; overflow: visible; }
 .pareto .axis { fill: none; stroke: var(--faint); stroke-width: 1.5; }
@@ -263,7 +261,7 @@ a:hover { text-decoration-color: currentColor; }
 /* Bio and links, with the Quick facts panel beside them on wide screens */
 .intro.has-facts { display: grid; grid-template-columns: minmax(0, 1fr) 16rem; gap: 2.5rem; align-items: start; }
 .facts { padding: 1.1rem 1.2rem 1.2rem; }
-.facts-title { font: 600 0.88rem/1.3 var(--sans); color: var(--accent); margin-bottom: 0.85rem; }
+.facts-title { font: 500 1.1rem/1.2 var(--serif); font-variation-settings: "opsz" 20; color: var(--ink); margin-bottom: 0.85rem; }
 .facts dl { display: grid; gap: 0.75rem; margin: 0; }
 .facts dt { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
 .facts dd { margin: 0.05rem 0 0; font-size: 0.92rem; line-height: 1.45; color: var(--muted); }
@@ -278,7 +276,8 @@ a:hover { text-decoration-color: currentColor; }
   display: inline-flex; align-items: center; gap: 0.45rem;
   color: var(--ink); text-decoration: none;
 }
-.links a .icon { color: var(--accent); }
+.links a .icon { color: var(--muted); }
+.links a:hover .icon { color: inherit; }
 .links a:hover { color: var(--accent); }
 .links-center { justify-content: center; }
 
@@ -321,7 +320,7 @@ a:hover { text-decoration-color: currentColor; }
 .ticker.is-ready .ticker-bar { display: block; }
 .ticker-bar > span {
   display: block; width: 100%; height: 100%;
-  background: var(--accent); transform-origin: top;
+  background: var(--muted); transform-origin: top;
   animation: tick-down var(--tick) linear;
 }
 .ticker.is-paused .ticker-bar > span { animation-play-state: paused; }
@@ -353,12 +352,12 @@ a:hover { text-decoration-color: currentColor; }
 }
 .divider {
   position: relative; height: 1px;
-  background: color-mix(in srgb, var(--accent) 30%, transparent);
+  background: var(--faint);
 }
 .divider::after {
   content: ""; position: absolute; left: 50%; top: 50%;
   width: 7px; height: 7px; border-radius: 50%;
-  background: var(--accent);
+  background: var(--muted);
   transform: translate(-50%, -50%);
   box-shadow: 0 0 0 5px var(--bg);
 }
@@ -390,8 +389,6 @@ a:hover { text-decoration-color: currentColor; }
 .headline { font-weight: 600; }
 .details { color: var(--muted); font-size: 0.95rem; margin-top: 0.15rem; }
 .more { margin-top: 0.4rem; font-weight: 550; font-size: 0.95rem; }
-.more a { text-decoration: none; }
-.more a:hover { text-decoration: underline; }
 
 /* Cards: research interests and teaching */
 .card {
@@ -402,7 +399,7 @@ a:hover { text-decoration-color: currentColor; }
 }
 .lede { max-width: 38em; color: var(--muted); margin-top: -0.6rem; margin-bottom: 1.6rem; }
 .interests { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; }
-.interest-icon { width: 1.6rem; height: 1.6rem; color: var(--accent); margin-bottom: 0.7rem; }
+.interest-icon { width: 1.6rem; height: 1.6rem; color: var(--muted); margin-bottom: 0.7rem; }
 .interest-title { font: 600 1rem/1.35 var(--sans); margin-bottom: 0.3rem; }
 .interest-text { font-size: 0.93rem; color: var(--muted); }
 
@@ -410,8 +407,8 @@ a:hover { text-decoration-color: currentColor; }
 .teach-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
 .pill {
   flex: none;
-  font: 600 0.8rem/1 var(--sans); color: var(--accent);
-  background: var(--accent-soft);
+  font: 600 0.8rem/1 var(--sans); color: var(--muted);
+  background: var(--band);
   padding: 0.42rem 0.7rem; border-radius: 999px;
   font-variant-numeric: tabular-nums lining-nums;
 }
@@ -436,7 +433,7 @@ a:hover { text-decoration-color: currentColor; }
   content: ""; position: absolute;
   left: calc(var(--gutter) + var(--gap) / 2 - 4.5px);
   top: 0.5rem; width: 9px; height: 9px; border-radius: 50%;
-  background: var(--accent);
+  background: var(--muted);
   box-shadow: 0 0 0 3px var(--ring, var(--bg));
 }
 .timeline .what { max-width: 38em; }
@@ -452,7 +449,7 @@ a:hover { text-decoration-color: currentColor; }
   display: flex; align-items: center; gap: 0.75rem;
   margin-top: 1rem; margin-bottom: 1rem;
   font: 650 0.85rem/1 var(--sans); letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--muted);
   font-variant-numeric: tabular-nums lining-nums;
 }
 .pub-year::after { content: ""; flex: 1; height: 1px; background: var(--faint); }
@@ -464,7 +461,7 @@ a:hover { text-decoration-color: currentColor; }
   font: 650 0.86rem/1 var(--sans);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
-  color: var(--accent);
+  color: var(--muted);
   text-decoration: none;
   padding: 0.28rem 0.4rem;
   margin-right: -0.4rem;
@@ -496,10 +493,10 @@ a:hover { text-decoration-color: currentColor; }
 .pub-links a, .toggle {
   font: 550 0.9rem/1.4 var(--sans);
   color: var(--accent);
-  text-decoration: none;
 }
-.pub-links a:hover { text-decoration: underline; }
+/* The links keep their underline, so they never depend on colour alone; the toggle has its chevron. */
 .toggle {
+  text-decoration: none;
   background: none; border: 0; padding: 0; cursor: pointer;
   display: inline-flex; align-items: baseline; gap: 0.25rem;
 }
@@ -512,15 +509,14 @@ a:hover { text-decoration-color: currentColor; }
 .panel { margin-top: 0.75rem; }
 .abstract p {
   font-size: 0.95rem; color: var(--muted); max-width: 40em;
-  padding-left: 0.9rem; border-left: 2px solid var(--accent-soft);
+  padding-left: 0.9rem; border-left: 2px solid var(--faint);
 }
 .pub-foot {
   margin-top: 2rem;
   display: flex; flex-wrap: wrap; gap: 0.3rem 1.5rem;
   font-size: 0.9rem; color: var(--muted);
 }
-.pub-foot a { font-weight: 550; text-decoration: none; }
-.pub-foot a:hover { text-decoration: underline; }
+.pub-foot a { font-weight: 550; }
 
 /* ------------------------------------------------------------------
    Get in touch, and the news archive page
@@ -528,7 +524,6 @@ a:hover { text-decoration-color: currentColor; }
 .contact {
   padding: 4.5rem 0 calc(3rem + env(safe-area-inset-bottom, 0px));
   text-align: center;
-  background: radial-gradient(50rem 22rem at 50% 100%, var(--glow), transparent 70%);
 }
 .contact .section-title { margin-left: 0; margin-bottom: 0.8rem; }
 .contact-text { color: var(--muted); max-width: 32em; margin: 0 auto 1.6rem; }
@@ -595,7 +590,7 @@ a:hover { text-decoration-color: currentColor; }
 }
 
 @media print {
-  :root { --bg: #fff; --band: #fff; --card: #fff; --ink: #000; --muted: #333; --accent: #000; --glow: transparent; }
+  :root { --bg: #fff; --band: #fff; --card: #fff; --ink: #000; --muted: #333; --accent: #000; }
   body { font-size: 10.5pt; }
   .topbar, .skip, .toggle, .panel, .ticker, .pub-foot, .more, .masthead-mark, .divider, .contact { display: none !important; }
   .masthead { display: block; padding-top: 0; }
