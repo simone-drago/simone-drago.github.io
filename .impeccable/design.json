@@ -292,19 +292,23 @@
       },
       "subtitle": {
         "displayName": "Subtitle",
-        "purpose": "The italic position line under your name."
+        "purpose": "The italic position line under your name; the same size, roman 500, sets your name in the top bar."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Paper, thesis and research-topic titles; the Quick facts heading."
+        "purpose": "Every title of a work: papers, theses and research topics; also the Quick facts heading. 1.2rem, stepping to 1.125rem on phones."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Bio, details and all running text."
+        "purpose": "Bio, entries, news and all running text. Item headings (role, degree, course, group titles) use this size at weight 600."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Secondary text: authors, the venue line, details, abstracts, research-topic text, link rows, navigation and the CV button. Links and controls at weight 500."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Paper labels (C5), year rules, dates on the spine; tabular figures."
+        "purpose": "Dates on the spine, paper labels (C5), year rules, Quick facts terms, the figure caption and small print. Weight 600 for labels and terms, 400 for dates and captions; tabular figures."
       }
     },
     "shadows": [],
@@ -355,7 +359,7 @@
       "refersTo": "button-cv",
       "description": "The page's one primary action, in the top bar next to the theme switch; the only accent on the first screen.",
       "html": "<a class=\"ds-btn-cv\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z\"/><path d=\"M14 3v5h5\"/><path d=\"M9 13h6M9 16.5h4\"/></svg><span>CV</span></a>",
-      "css": ".ds-btn-cv{display:inline-flex;align-items:center;gap:.4rem;height:2.25rem;padding:0 .95rem 0 .8rem;font:550 .92rem/1 var(--sans,'Hanken Grotesk',system-ui,sans-serif);color:var(--accent,#006967);text-decoration:none;border:1px solid color-mix(in srgb,var(--accent,#006967) 70%,var(--bg,#fbfdfd));border-radius:999px;transition:border-color .2s,background-color .2s}.ds-btn-cv:hover{border-color:var(--accent,#006967);background:var(--accent-soft,#d5f2f0)}.ds-btn-cv:focus-visible{outline:2px solid var(--accent,#006967);outline-offset:3px}"
+      "css": ".ds-btn-cv{display:inline-flex;align-items:center;gap:.4rem;height:2.25rem;padding:0 .95rem 0 .8rem;font-weight:500;font-size:var(--text-small,.9375rem);line-height:1;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif);color:var(--accent,#006967);text-decoration:none;border:1px solid color-mix(in srgb,var(--accent,#006967) 70%,var(--bg,#fbfdfd));border-radius:999px;transition:border-color .2s,background-color .2s}.ds-btn-cv:hover{border-color:var(--accent,#006967);background:var(--accent-soft,#d5f2f0)}.ds-btn-cv:focus-visible{outline:2px solid var(--accent,#006967);outline-offset:3px}"
     },
     {
       "name": "Icon button",
@@ -371,7 +375,7 @@
       "refersTo": "link",
       "description": "Every link is Deep Teal and underlined, so no link depends on colour alone.",
       "html": "<p class=\"ds-text\">Read the <a class=\"ds-link\" href=\"#\">PDF</a> or download the <a class=\"ds-link\" href=\"#\">BibTeX</a>.</p>",
-      "css": ".ds-text{font:400 1.0625rem/1.6 var(--sans,'Hanken Grotesk',system-ui,sans-serif);color:var(--ink,#101d21)}.ds-link{color:var(--accent,#006967);text-decoration:underline 1px;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,var(--accent,#006967) 45%,transparent)}.ds-link:hover{text-decoration-color:currentColor}.ds-link:focus-visible{outline:2px solid var(--accent,#006967);outline-offset:3px;border-radius:2px}"
+      "css": ".ds-text{font-weight:400;font-size:var(--text-body,1.0625rem);line-height:1.6;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif);color:var(--ink,#101d21)}.ds-link{color:var(--accent,#006967);text-decoration:underline 1px;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,var(--accent,#006967) 45%,transparent)}.ds-link:hover{text-decoration-color:currentColor}.ds-link:focus-visible{outline:2px solid var(--accent,#006967);outline-offset:3px;border-radius:2px}"
     },
     {
       "name": "Top-bar navigation",
@@ -379,7 +383,7 @@
       "refersTo": "nav-link",
       "description": "Muted section links; the section in view turns ink with a 2px Deep Teal underline. Scrolls sideways on phones and keeps the current link in view.",
       "html": "<nav class=\"ds-nav\" aria-label=\"Sections\"><a href=\"#\">Research</a><a href=\"#\" aria-current=\"true\">Publications</a><a href=\"#\">Awards</a><a href=\"#\">Teaching</a></nav>",
-      "css": ".ds-nav{display:flex;gap:1.35rem;font:500 .92rem/1 var(--sans,'Hanken Grotesk',system-ui,sans-serif)}.ds-nav a{padding:.35rem 0;color:var(--muted,#4f5e62);text-decoration:none}.ds-nav a:hover{color:var(--ink,#101d21)}.ds-nav a[aria-current=true]{color:var(--ink,#101d21);box-shadow:inset 0 -2px 0 var(--accent,#006967)}"
+      "css": ".ds-nav{display:flex;gap:1.35rem;font-weight:500;font-size:var(--text-small,.9375rem);line-height:1;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif)}.ds-nav a{padding:.35rem 0;color:var(--muted,#4f5e62);text-decoration:none}.ds-nav a:hover{color:var(--ink,#101d21)}.ds-nav a[aria-current=true]{color:var(--ink,#101d21);box-shadow:inset 0 -2px 0 var(--accent,#006967)}"
     },
     {
       "name": "Quick facts card",
@@ -387,7 +391,7 @@
       "refersTo": "card",
       "description": "The one card on the first screen: hairline border, 6px corners, a serif title and label/value pairs computed from the content files.",
       "html": "<aside class=\"ds-facts\"><h2>Quick facts</h2><dl><div><dt>Ph.D. completion</dt><dd>Expected December 2027</dd></div><div><dt>Publications</dt><dd>6 papers: 5 ICML, 1 AIJ</dd></div></dl></aside>",
-      "css": ".ds-facts{width:16rem;background:var(--card,#fff);border:1px solid var(--faint,#d4dfdf);border-radius:6px;padding:1.1rem 1.2rem 1.2rem;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif)}.ds-facts h2{margin:0 0 .85rem;font:500 1.1rem/1.2 var(--serif,'Newsreader',Georgia,serif);color:var(--ink,#101d21)}.ds-facts dl{display:grid;gap:.75rem;margin:0}.ds-facts dt{font-size:.82rem;font-weight:600;color:var(--ink,#101d21)}.ds-facts dd{margin:.05rem 0 0;font-size:.92rem;line-height:1.45;color:var(--muted,#4f5e62)}"
+      "css": ".ds-facts{width:16rem;background:var(--card,#fff);border:1px solid var(--faint,#d4dfdf);border-radius:6px;padding:1.1rem 1.2rem 1.2rem;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif)}.ds-facts h2{margin:0 0 .85rem;font-weight:500;font-size:var(--text-title,1.2rem);line-height:1.2;font-family:var(--serif,'Newsreader',Georgia,serif);letter-spacing:-.005em;color:var(--ink,#101d21)}.ds-facts dl{display:grid;gap:.75rem;margin:0}.ds-facts dt{font-size:var(--text-label,.85rem);font-weight:600;color:var(--ink,#101d21)}.ds-facts dd{margin:.05rem 0 0;font-size:var(--text-small,.9375rem);line-height:1.45;color:var(--muted,#4f5e62)}"
     },
     {
       "name": "Publication entry",
@@ -395,7 +399,7 @@
       "refersTo": "publication",
       "description": "Signature component: muted label (C5) on the date column, serif title, authors with your name underlined in Deep Teal, bold venue, underlined links.",
       "html": "<div class=\"ds-pub\"><a class=\"ds-pub-label\" href=\"#\">C5</a><div><p class=\"ds-pub-title\">Online Compatible Reward Identification from Preference Feedback</p><p class=\"ds-pub-authors\"><strong>Simone Drago</strong>, Marco Mussi, Alberto Maria Metelli</p><p class=\"ds-pub-meta\"><b>ICML 2026</b><a href=\"#\">PDF</a><a href=\"#\">PMLR</a><a href=\"#\">BibTeX</a></p></div></div>",
-      "css": ".ds-pub{display:grid;grid-template-columns:3rem minmax(0,1fr);column-gap:1rem;align-items:baseline;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif);max-width:40rem}.ds-pub-label{justify-self:end;font:650 .86rem/1 var(--sans,'Hanken Grotesk',sans-serif);font-variant-numeric:tabular-nums;letter-spacing:.02em;color:var(--muted,#4f5e62);text-decoration:none}.ds-pub-title{margin:0;font:500 1.2rem/1.3 var(--serif,'Newsreader',Georgia,serif);color:var(--ink,#101d21);text-wrap:balance}.ds-pub-authors{margin:.3rem 0 0;font-size:.95rem;color:var(--muted,#4f5e62)}.ds-pub-authors strong{color:var(--ink,#101d21);font-weight:650;text-decoration:underline 2px var(--accent,#006967);text-underline-offset:.22em}.ds-pub-meta{margin:.3rem 0 0;font-size:.93rem;display:flex;flex-wrap:wrap;gap:.2rem .85rem;color:var(--ink,#101d21)}.ds-pub-meta b{font-weight:600}.ds-pub-meta a{font-weight:550;font-size:.9rem;color:var(--accent,#006967);text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,var(--accent,#006967) 45%,transparent)}"
+      "css": ".ds-pub{display:grid;grid-template-columns:3rem minmax(0,1fr);column-gap:1rem;align-items:baseline;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif);max-width:40rem}.ds-pub-label{justify-self:end;font-weight:600;font-size:var(--text-label,.85rem);line-height:1;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif);font-variant-numeric:tabular-nums;letter-spacing:.02em;color:var(--muted,#4f5e62);text-decoration:none}.ds-pub-title{margin:0;font-weight:500;font-size:var(--text-title,1.2rem);line-height:1.3;font-family:var(--serif,'Newsreader',Georgia,serif);letter-spacing:-.005em;color:var(--ink,#101d21);text-wrap:balance}.ds-pub-authors{margin:.3rem 0 0;font-size:var(--text-small,.9375rem);color:var(--muted,#4f5e62)}.ds-pub-authors strong{color:var(--ink,#101d21);font-weight:600;text-decoration:underline 2px var(--accent,#006967);text-underline-offset:.22em}.ds-pub-meta{margin:.3rem 0 0;font-size:var(--text-small,.9375rem);display:flex;flex-wrap:wrap;gap:.2rem .85rem;color:var(--ink,#101d21)}.ds-pub-meta b{font-weight:600}.ds-pub-meta a{font-weight:500;color:var(--accent,#006967);text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,var(--accent,#006967) 45%,transparent)}"
     },
     {
       "name": "Section band",
@@ -403,7 +407,7 @@
       "refersTo": "section-band",
       "description": "A full-width Mint Wash band with hairline top and bottom borders, used for Research; other sections sit on Paper White, separated by a hairline divider with a small dot.",
       "html": "<section class=\"ds-band\"><h2>Research interests</h2></section>",
-      "css": ".ds-band{background:var(--band,#e6f5f5);border-block:1px solid var(--faint,#d4dfdf);padding:2.5rem 1.5rem}.ds-band h2{margin:0;font:400 2.05rem/1.1 var(--serif,'Newsreader',Georgia,serif);letter-spacing:-.01em;color:var(--ink,#101d21)}"
+      "css": ".ds-band{background:var(--band,#e6f5f5);border-block:1px solid var(--faint,#d4dfdf);padding:2.5rem 1.5rem}.ds-band h2{margin:0;font-weight:400;font-size:var(--text-headline,2.05rem);line-height:1.1;font-family:var(--serif,'Newsreader',Georgia,serif);letter-spacing:-.01em;color:var(--ink,#101d21)}"
     }
   ],
   "narrative": {
@@ -432,6 +436,11 @@
         "name": "The Spine Rule",
         "section": "typography",
         "body": "Dates and paper labels sit in the left column with tabular figures; content sits in the 45rem text column to its right."
+      },
+      {
+        "name": "The One Scale Rule",
+        "section": "typography",
+        "body": "Every font size is one of the eight --text-* tokens in static/style.css; a new element takes an existing role instead of a new size. Sans weights are 400, 500 and 600; serif 400 and 500."
       },
       {
         "name": "The Flat Rule",

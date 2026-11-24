@@ -36,6 +36,21 @@
   src: url(fonts/hanken-grotesk-latin-wght-italic.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* Stand-ins while the fonts load: Georgia and Arial with Newsreader's and Hanken Grotesk's widths and
+   line metrics (Georgia scaled to match at title size; Arial already matches in width), so the text
+   doesn't reflow when the real fonts arrive. */
+@font-face {
+  font-family: "Newsreader Fallback"; src: local("Georgia");
+  size-adjust: 91.5%; ascent-override: 80.3%; descent-override: 29%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Newsreader Fallback"; font-style: italic; src: local("Georgia Italic"), local("Georgia-Italic");
+  size-adjust: 82.2%; ascent-override: 89.4%; descent-override: 32.2%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Hanken Grotesk Fallback"; src: local("Arial"), local("ArialMT");
+  size-adjust: 100%; ascent-override: 100%; descent-override: 30.3%; line-gap-override: 0%;
+}
 
 
 /* ------------------------------------------------------------------
@@ -61,8 +76,19 @@
   /* Outline of round buttons: derived from the theme, about 3:1 against the page in both. */
   --control: color-mix(in srgb, var(--muted) 70%, var(--bg));
 
-  --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --serif: "Newsreader", "Newsreader Fallback", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: "Hanken Grotesk", "Hanken Grotesk Fallback", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Type scale: every font size on the page is one of these (DESIGN.md, Typography, says which goes where).
+     Serif for what names something, sans for what you read through. Weights: sans 400 / 500 / 600, serif 400 / 500. */
+  --text-display: clamp(2.6rem, 2rem + 3.6vw, 4.1rem);  /* your name */
+  --text-headline: 2.05rem;                             /* section titles */
+  --text-lead: clamp(1.45rem, 1.15rem + 1vw, 1.9rem);   /* the research question */
+  --text-subtitle: 1.3rem;    /* the position line, and the name in the top bar */
+  --text-title: 1.2rem;       /* titles of papers, theses and research topics; Quick facts (1.125rem on phones) */
+  --text-body: 1.0625rem;     /* running text */
+  --text-small: 0.9375rem;    /* secondary text: authors, details, links, navigation */
+  --text-label: 0.85rem;      /* dates, paper labels, years, captions, small print */
 
   --gutter: 8rem;      /* the left column with dates and paper labels */
   --gap: 2rem;
@@ -109,7 +135,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font: 400 1.0625rem/1.6 var(--sans);
+  font-weight: 400; font-size: var(--text-body); line-height: 1.6; font-family: var(--sans);
   font-kerning: normal;
   text-rendering: optimizeLegibility;
   transition: background-color .25s, color .25s;
@@ -176,12 +202,12 @@ p, li, dd, figcaption { text-wrap: pretty; }
   display: flex; align-items: center; gap: 1.5rem;
 }
 .topbar-name {
-  font: 500 1.4rem/1.2 var(--serif); letter-spacing: -0.005em; color: var(--ink); text-decoration: none; white-space: nowrap;
+  font-weight: 500; font-size: var(--text-subtitle); line-height: 1.2; font-family: var(--serif); letter-spacing: -0.005em; color: var(--ink); text-decoration: none; white-space: nowrap;
 }
 .topbar-nav { margin-left: auto; min-width: 0; }
 .topbar-nav ul {
   display: flex; gap: 1.35rem; overflow-x: auto; scrollbar-width: none;
-  font-size: 0.92rem; font-weight: 500;
+  font-size: var(--text-small); font-weight: 500;
 }
 .topbar-nav ul::-webkit-scrollbar { display: none; }
 .topbar-nav a {
@@ -204,7 +230,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .topbar-cv {
   flex: none; display: inline-flex; align-items: center; gap: 0.4rem;
   height: 2.25rem; padding: 0 0.95rem 0 0.8rem;
-  font: 550 0.92rem/1 var(--sans); color: var(--accent); text-decoration: none;
+  font-weight: 500; font-size: var(--text-small); line-height: 1; font-family: var(--sans); color: var(--accent); text-decoration: none;
   border: 1px solid color-mix(in srgb, var(--accent) 70%, var(--bg)); border-radius: 999px;
   transition: border-color .2s, background-color .2s;
 }
@@ -244,13 +270,13 @@ p, li, dd, figcaption { text-wrap: pretty; }
 @keyframes draw { from { stroke-dashoffset: 1; } }
 
 .name {
-  font: 400 clamp(2.6rem, 2rem + 3.6vw, 4.1rem)/1 var(--serif);
+  font-weight: 400; font-size: var(--text-display); line-height: 1; font-family: var(--serif);
   font-variation-settings: "opsz" 72;
   letter-spacing: -0.02em;
   margin-bottom: 0.65rem;
 }
 .position {
-  font: italic 400 1.3rem/1.35 var(--serif);
+  font-style: italic; font-weight: 400; font-size: var(--text-subtitle); line-height: 1.35; font-family: var(--serif);
   font-variation-settings: "opsz" 24;
   color: var(--muted);
   margin-bottom: 1.6rem;
@@ -258,7 +284,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .position a { color: inherit; }
 /* The research question: the second thing a visitor reads, after the name. */
 .question {
-  font: 400 clamp(1.45rem, 1.15rem + 1vw, 1.9rem)/1.25 var(--serif);
+  font-weight: 400; font-size: var(--text-lead); line-height: 1.25; font-family: var(--serif);
   font-variation-settings: "opsz" 36;
   letter-spacing: -0.012em;
   color: var(--ink);
@@ -271,16 +297,16 @@ p, li, dd, figcaption { text-wrap: pretty; }
 /* Bio and links, with the Quick facts panel beside them on wide screens */
 .intro.has-facts { display: grid; grid-template-columns: minmax(0, 1fr) 16rem; gap: 2.5rem; align-items: start; }
 .facts { padding: 1.1rem 1.2rem 1.2rem; }
-.facts-title { font: 500 1.1rem/1.2 var(--serif); font-variation-settings: "opsz" 20; color: var(--ink); margin-bottom: 0.85rem; }
+.facts-title { font-weight: 500; font-size: var(--text-title); line-height: 1.2; font-family: var(--serif); font-variation-settings: "opsz" 20; letter-spacing: -0.005em; color: var(--ink); margin-bottom: 0.85rem; }
 .facts dl { display: grid; gap: 0.75rem; margin: 0; }
-.facts dt { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
-.facts dd { margin: 0.05rem 0 0; font-size: 0.92rem; line-height: 1.45; color: var(--muted); }
+.facts dt { font-size: var(--text-label); font-weight: 600; color: var(--ink); }
+.facts dd { margin: 0.05rem 0 0; font-size: var(--text-small); line-height: 1.45; color: var(--muted); }
 .bio p + p { margin-top: 0.8em; }
 
 .links {
   display: flex; flex-wrap: wrap; gap: 0.55rem 1.5rem;
   margin-top: 1.5rem;
-  font-weight: 550; font-size: 0.95rem;
+  font-weight: 500; font-size: var(--text-small);
 }
 .links a {
   display: inline-flex; align-items: center; gap: 0.45rem;
@@ -297,7 +323,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .ticker { position: relative; --tick: 7s; --head: 2rem; --head-gap: 0.6rem; --slide-x: 0px; --slide-y: 0.8rem; }
 .ticker-head { height: var(--head); align-items: center; margin-bottom: var(--head-gap); }
 /* A link to all news, styled like every other link. */
-.ticker-label { justify-self: end; font-size: 0.88rem; font-weight: 600; }
+.ticker-label { justify-self: end; font-size: var(--text-label); font-weight: 600; }
 .ticker-controls { grid-column: 2; display: none; align-items: center; gap: 0.4rem; padding-left: 1.1rem; }
 .ticker.is-ready .ticker-controls { display: flex; }
 .ticker-nav {
@@ -314,7 +340,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .ticker-pause .icon-play, .ticker-pause.is-off .icon-pause { display: none; }
 .ticker-pause.is-off .icon-play { display: block; }
 .ticker-count {
-  margin-left: 0.5rem; font-size: 0.82rem; color: var(--muted);
+  margin-left: 0.5rem; font-size: var(--text-label); color: var(--muted);
   font-variant-numeric: tabular-nums lining-nums; letter-spacing: 0.04em;
 }
 
@@ -372,12 +398,12 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .section-title {
   margin-left: calc(var(--gutter) + var(--gap));
   margin-bottom: 1.6rem;
-  font: 400 2.05rem/1.1 var(--serif);
+  font-weight: 400; font-size: var(--text-headline); line-height: 1.1; font-family: var(--serif);
   font-variation-settings: "opsz" 48;
   letter-spacing: -0.01em;
 }
 .count {
-  font: 500 1rem/1 var(--sans); color: var(--muted);
+  font-weight: 500; font-size: var(--text-small); line-height: 1; font-family: var(--sans); color: var(--muted);
   margin-left: 0.3rem;
   font-variant-numeric: lining-nums tabular-nums;
 }
@@ -389,13 +415,13 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .entries { display: grid; gap: 1.15rem; }
 .when {
   text-align: right;
-  font-size: 0.88rem; line-height: 1.5; padding-top: 0.12rem;
+  font-size: var(--text-label); line-height: 1.5; padding-top: 0.12rem;
   color: var(--muted);
   font-variant-numeric: tabular-nums lining-nums;
 }
 .headline { font-weight: 600; }
-.details { color: var(--muted); font-size: 0.95rem; margin-top: 0.15rem; }
-.more { margin-top: 0.4rem; font-weight: 550; font-size: 0.95rem; }
+.details { color: var(--muted); font-size: var(--text-small); margin-top: 0.15rem; }
+.more { margin-top: 0.4rem; font-weight: 500; font-size: var(--text-small); }
 
 /* Cards: research interests and Quick facts */
 .card {
@@ -407,8 +433,8 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .lede { max-width: 38em; color: var(--muted); margin-top: -0.6rem; margin-bottom: 1.6rem; }
 .interests { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; }
 .interest-icon { width: 1.6rem; height: 1.6rem; color: var(--muted); margin-bottom: 0.7rem; }
-.interest-title { font: 600 1rem/1.35 var(--sans); margin-bottom: 0.3rem; }
-.interest-text { font-size: 0.93rem; color: var(--muted); }
+.interest-title { font-weight: 600; font-size: var(--text-body); line-height: 1.35; font-family: var(--sans); margin-bottom: 0.3rem; }
+.interest-text { font-size: var(--text-small); color: var(--muted); }
 
 /* With the figure: the Pareto front on the left, the topics as plain text beside it. */
 .research.has-figure {
@@ -417,10 +443,10 @@ p, li, dd, figcaption { text-wrap: pretty; }
 }
 .has-figure .interests { grid-template-columns: 1fr; gap: 1.6rem; padding-top: 0.6rem; }
 .has-figure .interest-title {
-  font: 500 1.25rem/1.25 var(--serif); font-variation-settings: "opsz" 24;
+  font-weight: 500; font-size: var(--text-title); line-height: 1.25; font-family: var(--serif); font-variation-settings: "opsz" 20;
   letter-spacing: -0.005em; margin-bottom: 0.4rem;
 }
-.has-figure .interest-text { font-size: 0.97rem; max-width: 34em; }
+.has-figure .interest-text { max-width: 34em; }
 .research-figure { margin: 0; }
 .figure-plot { width: 100%; height: auto; overflow: visible; }
 .figure-plot .axis, .figure-plot .axis-tip { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.55; }
@@ -432,7 +458,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .figure-plot .link { fill: none; stroke: var(--ink); stroke-width: 1.1; stroke-dasharray: 3 3.5; opacity: 0.7; }
 .figure-plot .mark { font: 600 14px var(--sans); fill: var(--ink); }
 .figure-plot .query { font: italic 500 20px var(--serif); fill: var(--ink); }
-.research-figure figcaption { margin-top: 0.9rem; font-size: 0.88rem; line-height: 1.5; color: var(--muted); }
+.research-figure figcaption { margin-top: 0.9rem; font-size: var(--text-label); line-height: 1.5; color: var(--muted); }
 /* The one moment of motion: when the figure scrolls into view, the front draws itself and
    A, B and the question appear. Without JavaScript, or with reduced motion, it is simply there. */
 .research-figure.will-draw .stair { stroke-dashoffset: 1; }
@@ -446,7 +472,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .group-title + .entries { margin-top: 0.8rem; }
 .entries + .supervision-title { margin-top: 2.4rem; }
 .supervision-title { margin-bottom: 1.1rem; }
-.thesis-title { font: 500 1.1rem/1.35 var(--serif); font-variation-settings: "opsz" 20; }
+.thesis-title { font-weight: 500; font-size: var(--text-title); line-height: 1.3; font-family: var(--serif); font-variation-settings: "opsz" 20; letter-spacing: -0.005em; }
 .thesis-title.in-progress { font-style: italic; color: var(--muted); }
 
 /* News: a timeline on the axis between the dates and the text */
@@ -474,11 +500,11 @@ p, li, dd, figcaption { text-wrap: pretty; }
    Publications: labels C1, J1, ... in the gutter, grouped by year
    ------------------------------------------------------------------ */
 .pub-group + .pub-group { margin-top: 2.8rem; }
-.group-title { margin-bottom: 0.4rem; font: 600 1.05rem/1.3 var(--sans); }
+.group-title { margin-bottom: 0.4rem; font-weight: 600; font-size: var(--text-body); line-height: 1.3; font-family: var(--sans); }
 .pub-year {
   display: flex; align-items: center; gap: 0.75rem;
   margin-top: 1rem; margin-bottom: 1rem;
-  font: 650 0.85rem/1 var(--sans); letter-spacing: 0.02em;
+  font-weight: 600; font-size: var(--text-label); line-height: 1; font-family: var(--sans); letter-spacing: 0.02em;
   color: var(--muted);
   font-variant-numeric: tabular-nums lining-nums;
 }
@@ -488,7 +514,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .pub { align-items: baseline; }
 .pub-label {
   justify-self: end;
-  font: 650 0.86rem/1 var(--sans);
+  font-weight: 600; font-size: var(--text-label); line-height: 1; font-family: var(--sans);
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.02em;
   color: var(--muted);
@@ -499,14 +525,14 @@ p, li, dd, figcaption { text-wrap: pretty; }
 }
 .pub-label:hover, .pub:target .pub-label { background: var(--accent-soft); }
 .pub-title {
-  font: 500 1.2rem/1.3 var(--serif);
+  font-weight: 500; font-size: var(--text-title); line-height: 1.3; font-family: var(--serif);
   font-variation-settings: "opsz" 20;
-  letter-spacing: -0.003em;
+  letter-spacing: -0.005em;
   text-wrap: balance;
 }
-.pub-authors { margin-top: 0.3rem; font-size: 0.95rem; color: var(--muted); }
+.pub-authors { margin-top: 0.3rem; font-size: var(--text-small); color: var(--muted); }
 .pub-authors .me {
-  color: var(--ink); font-weight: 650;
+  color: var(--ink); font-weight: 600;
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
@@ -514,14 +540,15 @@ p, li, dd, figcaption { text-wrap: pretty; }
 }
 .eq { color: var(--ink); margin-left: 0.04em; }
 .pub-meta {
-  margin-top: 0.3rem; font-size: 0.93rem;
+  margin-top: 0.3rem; font-size: var(--text-small);
   display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.9rem; row-gap: 0.2rem;
 }
 .venue { font-weight: 600; }
-.award { color: var(--accent); font: italic 500 1rem/1.3 var(--serif); }
+/* The serif's lowercase is about 15% smaller than the sans's, so the italic is set a step larger to sit level with it. */
+.award { color: var(--accent); font: italic 500 1.07em/1.3 var(--serif); }
 .pub-links { display: inline-flex; flex-wrap: wrap; gap: 0.2rem 0.85rem; }
 .pub-links a, .toggle {
-  font: 550 0.9rem/1.4 var(--sans);
+  font-weight: 500; font-size: var(--text-small); line-height: 1.4; font-family: var(--sans);
   color: var(--accent);
 }
 /* The links keep their underline, so they never depend on colour alone; the toggle has its chevron. */
@@ -538,15 +565,15 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .toggle[aria-expanded="true"]::after { rotate: -135deg; translate: 0 0.1em; }
 .panel { margin-top: 0.75rem; }
 .abstract p {
-  font-size: 0.95rem; color: var(--muted); max-width: 40em;
+  font-size: var(--text-small); color: var(--muted); max-width: 40em;
   padding-left: 0.9rem; border-left: 2px solid var(--faint);
 }
 .pub-foot {
   margin-top: 2rem;
   display: flex; flex-wrap: wrap; gap: 0.3rem 1.5rem;
-  font-size: 0.9rem; color: var(--muted);
+  font-size: var(--text-small); color: var(--muted);
 }
-.pub-foot a { font-weight: 550; }
+.pub-foot a { font-weight: 500; }
 
 /* ------------------------------------------------------------------
    Get in touch, and the news archive page
@@ -558,8 +585,8 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .contact .section-title { margin-left: 0; margin-bottom: 0.8rem; }
 .contact-text { color: var(--muted); max-width: 32em; margin: 0 auto 1.6rem; }
 .contact .links { margin-top: 0; }
-.updated { margin-top: 2.5rem; font-size: 0.85rem; color: var(--muted); }
-.copyright { margin-top: 0.3rem; font-size: 0.85rem; color: var(--muted); }
+.updated { margin-top: 2.5rem; font-size: var(--text-label); color: var(--muted); }
+.copyright { margin-top: 0.3rem; font-size: var(--text-label); color: var(--muted); }
 .page-title { margin-top: 0.5rem; }
 
 /* ------------------------------------------------------------------
@@ -581,7 +608,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 }
 
 @media (max-width: 760px) {
-  :root { --gutter: 2.6rem; --gap: 0.9rem; }
+  :root { --gutter: 2.6rem; --gap: 0.9rem; --text-title: 1.125rem; }
   .topbar-inner { flex-wrap: wrap; row-gap: 0; padding-top: 0.55rem; }
   .topbar-name { flex: 1; }
   .topbar-nav { order: 3; flex-basis: 100%; margin: 0; }
@@ -593,7 +620,6 @@ p, li, dd, figcaption { text-wrap: pretty; }
   html { scroll-padding-top: calc(6rem + env(safe-area-inset-top, 0px)); }
   .masthead { display: block; padding-top: 2.25rem; }
   .masthead-mark { width: 8.5rem; padding: 0; margin-bottom: 1.4rem; }
-  .topbar-name { font-size: 1.25rem; }
   .section { padding-block: 3.25rem; }
   .section-title, .lede, .research, .group-title, .pub-year, .pub-foot, .more { margin-left: 0; }
   .research.has-figure { grid-template-columns: 1fr; gap: 2rem; }
@@ -611,7 +637,6 @@ p, li, dd, figcaption { text-wrap: pretty; }
   .timeline > li { display: block; padding-left: 1.5rem; }
   .timeline > li::before { left: 4px; top: 0.7rem; }
   .timeline > li::after { left: 0; top: 0.45rem; }
-  .pub-title { font-size: 1.12rem; }
 }
 
 /* Touch screens: small text links get a finger-sized hit area; the layout doesn't move. */

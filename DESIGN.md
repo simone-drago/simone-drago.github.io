@@ -20,48 +20,53 @@ colors:
   hairline-night: "#293e45"
 typography:
   display:
-    fontFamily: "Newsreader, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
+    fontFamily: "Newsreader, Newsreader Fallback, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
     fontSize: "clamp(2.6rem, 2rem + 3.6vw, 4.1rem)"
     fontWeight: 400
     lineHeight: 1
     letterSpacing: "-0.02em"
     fontVariation: "\"opsz\" 72"
   lead:
-    fontFamily: "Newsreader, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
+    fontFamily: "Newsreader, Newsreader Fallback, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
     fontSize: "clamp(1.45rem, 1.15rem + 1vw, 1.9rem)"
     fontWeight: 400
     lineHeight: 1.25
     letterSpacing: "-0.012em"
     fontVariation: "\"opsz\" 36"
   headline:
-    fontFamily: "Newsreader, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
+    fontFamily: "Newsreader, Newsreader Fallback, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
     fontSize: "2.05rem"
     fontWeight: 400
     lineHeight: 1.1
     letterSpacing: "-0.01em"
     fontVariation: "\"opsz\" 48"
   subtitle:
-    fontFamily: "Newsreader, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
+    fontFamily: "Newsreader, Newsreader Fallback, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
     fontSize: "1.3rem"
     fontWeight: 400
     lineHeight: 1.35
     fontVariation: "\"opsz\" 24"
   title:
-    fontFamily: "Newsreader, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
+    fontFamily: "Newsreader, Newsreader Fallback, Iowan Old Style, Palatino Linotype, Palatino, Georgia, serif"
     fontSize: "1.2rem"
     fontWeight: 500
     lineHeight: 1.3
-    letterSpacing: "-0.003em"
+    letterSpacing: "-0.005em"
     fontVariation: "\"opsz\" 20"
   body:
-    fontFamily: "Hanken Grotesk, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+    fontFamily: "Hanken Grotesk, Hanken Grotesk Fallback, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
     fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.6
+  small:
+    fontFamily: "Hanken Grotesk, Hanken Grotesk Fallback, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+    fontSize: "0.9375rem"
+    fontWeight: 400
+    lineHeight: 1.6
   label:
-    fontFamily: "Hanken Grotesk, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
-    fontSize: "0.86rem"
-    fontWeight: 650
+    fontFamily: "Hanken Grotesk, Hanken Grotesk Fallback, system-ui, -apple-system, Segoe UI, Roboto, sans-serif"
+    fontSize: "0.85rem"
+    fontWeight: 600
     lineHeight: 1
     letterSpacing: "0.02em"
     fontFeature: "\"tnum\""
@@ -81,7 +86,7 @@ spacing:
 components:
   button-cv:
     textColor: "{colors.deep-teal}"
-    typography: "{typography.label}"
+    typography: "{typography.small}"
     rounded: "{rounded.full}"
     height: "2.25rem"
     padding: "0 0.95rem 0 0.8rem"
@@ -162,19 +167,24 @@ All tokens live at the top of `static/style.css`: the light block and two dark b
 **Display Font:** Newsreader (with Iowan Old Style, Palatino, Georgia)
 **Body Font:** Hanken Grotesk (with system-ui, Segoe UI, Roboto)
 
-**Character:** a scholarly serif with optical sizes for everything that names something, against a plain, warm grotesque for everything you read through. Both are self-hosted; the site makes no font requests to anyone.
+**Character:** a scholarly serif with optical sizes for everything that names something, against a plain, warm grotesque for everything you read through. Both are self-hosted; the site makes no font requests to anyone. While they load, two stand-ins hold the layout still: *Newsreader Fallback* (Georgia scaled to 91.5%, matched at title size) and *Hanken Grotesk Fallback* (Arial, which already matches in width, with Hanken's line metrics).
 
 ### Hierarchy
 - **Display** (400, clamp(2.6rem, 2rem + 3.6vw, 4.1rem), line-height 1, opsz 72): your name in the header, nowhere else.
-- **Subtitle** (italic 400, 1.3rem, 1.35, Muted Slate): the position line under your name.
+- **Subtitle** (italic 400, 1.3rem, 1.35, Muted Slate): the position line under your name. The same size, roman 500 in Ink, sets your name in the top bar.
 - **Lead** (400, clamp(1.45rem, 1.15rem + 1vw, 1.9rem), 1.25, Ink, balanced): the research question. The second thing a visitor reads.
 - **Headline** (400, 2.05rem, 1.1, opsz 48): section titles.
-- **Title** (500, 1.2rem, 1.3, opsz 20, balanced): paper titles; thesis and research-topic titles use the same face at 1.1–1.25rem; the Quick facts heading at 1.1rem.
+- **Title** (500, 1.2rem, 1.3, opsz 20, -0.005em, balanced): every title of a work: papers, theses and research topics; also the Quick facts heading. On phones (760px and below) it steps to 1.125rem, all titles together.
 - **Body** (400, 1.0625rem, 1.6): the bio, details and all running text, at most 38em wide. Paragraphs use `text-wrap: pretty`, so no word sits alone on a last line.
-- **Label** (650, 0.85–0.86rem, letter-spacing 0.02em, tabular figures, Muted Slate): paper labels (C5), year rules and dates on the spine.
+- **Small** (400, 0.9375rem, 1.6): secondary text: authors, the venue line, details, abstracts, research-topic text, the link row, navigation and the CV button. Links and controls in it use 500.
+- **Label** (0.85rem, tabular figures, Muted Slate): dates on the spine, the figure caption and the footer small print at 400; paper labels (C5), year rules and Quick facts terms at 600 with 0.02em tracking.
+
+**Weights.** Hanken Grotesk uses three: 400 for reading, 500 for links and controls (colour and underline already mark them), 600 for item headings and labels. Item headings (a role, degree, course or group title) are Body size at 600. Newsreader uses 400 and 500.
 
 ### Named Rules
 **The Spine Rule.** Dates and paper labels sit in the left column with tabular figures, right-aligned; content sits in the text column to its right.
+
+**The One Scale Rule.** Every font size is one of the eight `--text-*` tokens at the top of `static/style.css` (display, headline, lead, subtitle, title, body, small, label). A new element takes an existing role; it never gets a size of its own.
 
 ## Layout
 
@@ -222,7 +232,7 @@ Precise and quiet: hairline outlines, underlined links, no shadows.
 - Used for the Quick facts panel, and for the research topics only when the figure is turned off.
 
 ### Navigation
-- **Style:** Hanken Grotesk 500, 0.92rem, Muted Slate; hover turns Ink.
+- **Style:** Hanken Grotesk 500 at Small (0.9375rem), Muted Slate; hover turns Ink.
 - **Current section:** Ink with a 2px Deep Teal underline, set as the visitor scrolls.
 - **Mobile:** a sideways-scrolling row under the name, faded at the right edge, that slides to keep the current link visible.
 
