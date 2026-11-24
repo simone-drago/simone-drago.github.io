@@ -1,14 +1,20 @@
+# Awards and service (reviewing, organizing). The section is titled "Awards & service"
+# (see `titles` in config.yml).
 # Fields: title, date (required); details, url (optional).
+# Sorted newest first; entries with the same date keep the order of this file.
 
 - title: Top Reviewer, NeurIPS 2026
   date: 2026
-  details: Top reviewers at Advances on Neural Information Processing Systems.
+  details: Among the top reviewers at the Conference on Neural Information Processing Systems.
 - title: Gold Reviewer, ICML 2026
   date: 2026
   details: Top 25% of reviewers at the International Conference on Machine Learning.
+- title: Co-organizer, Reinforcement Learning Summer School (RLSS 2026)
+  date: 2026
+  details: A ten-day summer school with about 150 participants from industry and academia. Coordinated the selection, communication, and onboarding of the speakers.
 - title: Young Researcher Best Publication Award
   date: 2025
-  details: Politecnico di Milano, for the best journal publications of the year.
+  details: Politecnico di Milano, for the best journal publications of the year. Awarded for the AIJ paper on factored-reward bandits.
 - title: Best Freshman Award
   date: 2018
   details: Politecnico di Milano scholarship for the best first-year students (A.Y. 2017/18).

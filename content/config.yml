@@ -22,17 +22,20 @@ cv_pdf: static/cv_simone_drago.pdf   # empty: no CV link
 # The Quick facts panel next to your bio. Remove all entries to hide it.
 # In values, {publications} is replaced by the number of publications (the categories listed in
 # publications.count below); also available: {conference}, {journal}, {workshop}, {preprint},
-# {underreview}, and {all} for every paper on the site. Quote values that start with {.
+# {underreview}, and {all} for every paper on the site. {venues} lists the same papers by venue,
+# e.g. "5 ICML, 1 AIJ" (each paper's venue in papers.bib, without year or track).
+# {teaching_years} is the number of academic years in teaching.yml, {theses} the number of
+# theses in supervision.yml. Quote values that start with {.
 facts_title: Quick facts
 facts:
-  - label: Position
-    value: Ph.D. student (expected Dec. 2027)
+  - label: Ph.D. completion
+    value: Expected December 2027
   - label: Location
     value: Milan, Italy
   - label: Publications
-    value: "{publications} papers ({conference} conference, {journal} journal)"
+    value: "{publications} papers: {venues}"
   - label: Teaching
-    value: 3 years as teaching assistant & 4 co-supervised students
+    value: "{teaching_years} years as teaching assistant & {theses} co-supervised students"
 
 # How your name is written in papers.bib, so it is highlighted in author lists.
 # Matching uses surname + first initial and ignores accents.
@@ -48,8 +51,8 @@ me:
 #          subtitle: ICML, NeurIPS
 #          start: 2025
 #          end: present
-sections: [research, publications, education, experience, teaching, news] # extracurricula, awards
-titles: {}        # e.g. {service: Academic service, extracurricular: Beyond research}
+sections: [research, publications, awards, education, experience, teaching, news] # also available: extracurricular
+titles: {awards: "Awards & service"}        # e.g. {service: Academic service, extracurricular: Beyond research}
 bands: [research, news]     # sections drawn on a tinted band; the others are split by a thin divider
 news_ticker: 5       # latest items, rotating under your bio (0 turns it off)
 news_limit: 10       # items in the News section; news.html lists them all

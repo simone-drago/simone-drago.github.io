@@ -2,8 +2,7 @@
 # safety, interpretability, robot, data, teaching.
 
 intro: |
-  **"How can we learn when humans provide feedback on multi-objective problems?"**\
-  I am addressing this research question by introducing *incomparability* in RLHF, from theoretical guarantees to deployable algorithms.
+  **"How can we learn when humans provide feedback on multi-objective problems?"**
 
 items:
   - title: Reinforcement Learning from Human Feedback

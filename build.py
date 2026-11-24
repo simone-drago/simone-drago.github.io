@@ -672,14 +672,41 @@ LINK_ICONS = [("scholar.google", "scholar"), ("github.com", "github"), ("linkedi
               ("orcid.org", "orcid")]
 
 
-def load_facts(cfg: dict, papers: list[dict], theses: int = 0) -> list[dict]:
+def venue_summary(papers: list[dict], counted: list[str]) -> str:
+    """The counted papers grouped by venue, most first: "5 ICML, 1 AIJ".
+
+    A venue is the paper's displayed venue without its track or year, so
+    "ICML 2025, Position Paper Track" counts as ICML.
+    """
+    tally: dict[str, int] = {}
+    for p in papers:
+        if p["category"] in counted:
+            name = re.sub(r"\s*\b(19|20)\d{2}\b\s*$", "", p["venue"].split(",")[0]).strip()
+            tally[name] = tally.get(name, 0) + 1
+    return ", ".join(f"{n} {name}" for name, n in sorted(tally.items(), key=lambda kv: -kv[1]))
+
+
+def teaching_years(items: list[dict]) -> int:
+    """Distinct academic years in teaching.yml: start 2025, end 2026 is one year;
+    two courses in the same year count once."""
+    years: set[int] = set()
+    for it in items:
+        start, end = it.get("start"), it.get("end")
+        if not start or start == PRESENT:
+            continue
+        last = dt.date.today().year if end == PRESENT else (end[0] if end else start[0] + 1)
+        years.update(range(start[0], max(last, start[0] + 1)))
+    return len(years)
+
+
+def load_facts(cfg: dict, papers: list[dict], theses: int = 0, teaching: int = 0) -> list[dict]:
     """The Quick facts panel. Values may use {publications}, {conference}, {journal}, ..."""
     counted = (cfg.get("publications") or {}).get("count", ["conference", "journal"])
     for cat in counted:
         if cat not in CATEGORIES:
             error(f"content/config.yml: publications.count has unknown category {cat!r}")
     counts = {"publications": sum(p["category"] in counted for p in papers), "all": len(papers),
-              "theses": theses}
+              "venues": venue_summary(papers, counted), "theses": theses, "teaching_years": teaching}
     for cat in CATEGORIES:
         counts[cat] = sum(p["category"] == cat for p in papers)
     facts = []
@@ -776,7 +803,8 @@ def build() -> bool:
     sections = []
     pubs, any_equal, papers = load_publications(cfg) if "publications" in (cfg.get("sections") or SECTION_TITLES) \
         else ([], False, [])
-    facts = load_facts(cfg, papers, theses=len(load_section("supervision")))
+    facts = load_facts(cfg, papers, theses=len(load_section("supervision")),
+                       teaching=teaching_years(load_section("teaching")))
     for name in cfg.get("sections") or list(SECTION_TITLES):
         titles = cfg.get("titles") or {}
         title = str(titles.get(name) or SECTION_TITLES.get(name) or name.replace("_", " ").capitalize())
