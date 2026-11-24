@@ -130,7 +130,7 @@
    Base
    ------------------------------------------------------------------ */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + env(safe-area-inset-top, 0px)); }
+html { scrollbar-color: color-mix(in srgb, var(--muted) 45%, var(--bg)) var(--bg); -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--bar) + env(safe-area-inset-top, 0px)); }
 body {
   margin: 0;
   background: var(--bg);
@@ -207,7 +207,13 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .topbar-nav { margin-left: auto; min-width: 0; }
 .topbar-nav ul {
   display: flex; gap: 1.35rem; overflow-x: auto; scrollbar-width: none;
+  padding: 0.35rem; margin: -0.35rem;   /* room inside the scroller for focus rings, which it would clip */
   font-size: var(--text-small); font-weight: 500;
+}
+/* While more links lie past the right edge (narrow screens), the row fades out there (set by site.js). */
+.topbar-nav ul.is-clipped {
+  -webkit-mask-image: linear-gradient(to right, #000 88%, transparent);
+  mask-image: linear-gradient(to right, #000 88%, transparent);
 }
 .topbar-nav ul::-webkit-scrollbar { display: none; }
 .topbar-nav a {
@@ -592,14 +598,6 @@ p, li, dd, figcaption { text-wrap: pretty; }
 /* ------------------------------------------------------------------
    Small screens: the gutter folds away (paper labels keep a narrow one)
    ------------------------------------------------------------------ */
-@media (max-width: 1100px) {
-  .topbar-nav ul {
-    -webkit-mask-image: linear-gradient(to right, #000 88%, transparent);
-    mask-image: linear-gradient(to right, #000 88%, transparent);
-    padding-right: 1.5rem;
-  }
-}
-
 @media (max-width: 1000px) {
   .masthead-mark { width: 100%; margin-left: 0; }
   .intro.has-facts { display: block; }
@@ -612,8 +610,8 @@ p, li, dd, figcaption { text-wrap: pretty; }
   .topbar-inner { flex-wrap: wrap; row-gap: 0; padding-top: 0.55rem; }
   .topbar-name { flex: 1; }
   .topbar-nav { order: 3; flex-basis: 100%; margin: 0; }
-  .topbar-nav ul {
-    gap: 1.25rem; padding-bottom: 0.2rem;
+  .topbar-nav ul { gap: 1.25rem; padding-bottom: 0.55rem; }
+  .topbar-nav ul.is-clipped {
     -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
     mask-image: linear-gradient(to right, #000 85%, transparent);
   }

@@ -144,16 +144,25 @@ function setUpThemeToggle(btn) {
   tintBrowser();
 }
 
-// Underline the top-bar link of the section currently in view.
+// Underline the top-bar link of the section currently in view. On narrow screens the links scroll
+// sideways, and the row fades out at the right edge only while more links lie that way.
 function setUpNav(nav) {
-  if (!nav || !("IntersectionObserver" in window)) return;
+  const strip = nav && nav.querySelector("ul");
+  if (!strip) return;
+  const fade = () => strip.classList.toggle("is-clipped", strip.scrollWidth - strip.clientWidth - strip.scrollLeft > 2);
+  strip.addEventListener("scroll", fade, { passive: true });
+  if ("ResizeObserver" in window) new ResizeObserver(fade).observe(strip);
+  else window.addEventListener("resize", fade);
+  if (document.fonts) document.fonts.ready.then(fade);   // the web fonts change the links' widths
+  fade();
+
+  if (!("IntersectionObserver" in window)) return;
   const links = new Map();
   for (const a of nav.querySelectorAll("a")) {
     const id = a.hash.slice(1);
     if (id && a.pathname === location.pathname && document.getElementById(id)) links.set(id, a);
   }
   const visible = new Set();
-  const strip = nav.querySelector("ul");
   const still = matchMedia("(prefers-reduced-motion: reduce)");
   let shown;
   // On phones the links scroll sideways: bring the underlined one into view (clear of the fade on the right).

@@ -234,7 +234,7 @@ Precise and quiet: hairline outlines, underlined links, no shadows.
 ### Navigation
 - **Style:** Hanken Grotesk 500 at Small (0.9375rem), Muted Slate; hover turns Ink.
 - **Current section:** Ink with a 2px Deep Teal underline, set as the visitor scrolls.
-- **Mobile:** a sideways-scrolling row under the name, faded at the right edge, that slides to keep the current link visible.
+- **Mobile:** a sideways-scrolling row under the name that slides to keep the current link visible. Its right edge fades only while more links lie that way, so a row that fits never looks cut off. The row keeps room inside for focus rings.
 
 ### Publication entry (signature)
 The muted label (C5, J1, W1, P1) on the spine; the title in the serif, balanced; authors in Muted Slate with your name in Ink, bold, underlined 2px in Deep Teal; the venue in bold Ink; then underlined links and an Abstract toggle with a chevron. Equal contribution is an asterisk read aloud as "equal contribution". Each entry has a permalink and a BibTeX download.
