@@ -286,11 +286,8 @@ a:hover { text-decoration-color: currentColor; }
    header and items slide sideways. --tick is how long each item stays. */
 .ticker { position: relative; --tick: 7s; --head: 2rem; --head-gap: 0.6rem; --slide-x: 0px; --slide-y: 0.8rem; }
 .ticker-head { height: var(--head); align-items: center; margin-bottom: var(--head-gap); }
-.ticker-label {
-  justify-self: end;
-  font-size: 0.88rem; font-weight: 600; color: var(--ink); text-decoration: none;
-}
-.ticker-label:hover { text-decoration: underline; }
+/* A link to all news, styled like every other link. */
+.ticker-label { justify-self: end; font-size: 0.88rem; font-weight: 600; }
 .ticker-controls { grid-column: 2; display: none; align-items: center; gap: 0.4rem; padding-left: 1.1rem; }
 .ticker.is-ready .ticker-controls { display: flex; }
 .ticker-nav {
@@ -374,7 +371,7 @@ a:hover { text-decoration-color: currentColor; }
   margin-left: 0.3rem;
   font-variant-numeric: lining-nums tabular-nums;
 }
-.lede, .interests, .cards, .group-title, .pub-year, .pub-foot, .more {
+.lede, .interests, .group-title, .pub-year, .pub-foot, .more {
   margin-left: calc(var(--gutter) + var(--gap));
 }
 
@@ -390,7 +387,7 @@ a:hover { text-decoration-color: currentColor; }
 .details { color: var(--muted); font-size: 0.95rem; margin-top: 0.15rem; }
 .more { margin-top: 0.4rem; font-weight: 550; font-size: 0.95rem; }
 
-/* Cards: research interests and teaching */
+/* Cards: research interests and Quick facts */
 .card {
   background: var(--card);
   border: 1px solid var(--faint);
@@ -403,19 +400,10 @@ a:hover { text-decoration-color: currentColor; }
 .interest-title { font: 600 1rem/1.35 var(--sans); margin-bottom: 0.3rem; }
 .interest-text { font-size: 0.93rem; color: var(--muted); }
 
-.cards { display: grid; gap: 0.9rem; }
-.teach-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
-.pill {
-  flex: none;
-  font: 600 0.8rem/1 var(--sans); color: var(--muted);
-  background: var(--band);
-  padding: 0.42rem 0.7rem; border-radius: 999px;
-  font-variant-numeric: tabular-nums lining-nums;
-}
-.teach .details { margin-top: 0.5rem; }
-.cards + .supervision-title { margin-top: 2.4rem; }
+/* Teaching: courses, then thesis supervision, both as rows on the date column */
+.group-title + .entries { margin-top: 0.8rem; }
+.entries + .supervision-title { margin-top: 2.4rem; }
 .supervision-title { margin-bottom: 1.1rem; }
-.group-title + .cards { margin-top: 0.8rem; }
 .thesis-title { font: 500 1.1rem/1.35 var(--serif); font-variation-settings: "opsz" 20; }
 .thesis-title.in-progress { font-style: italic; color: var(--muted); }
 
@@ -565,7 +553,7 @@ a:hover { text-decoration-color: currentColor; }
   .masthead-mark { width: 8.5rem; padding: 0; margin-bottom: 1.4rem; }
   .topbar-name { font-size: 1.25rem; }
   .section { padding-block: 3.25rem; }
-  .section-title, .lede, .interests, .cards, .group-title, .pub-year, .pub-foot, .more { margin-left: 0; }
+  .section-title, .lede, .interests, .group-title, .pub-year, .pub-foot, .more { margin-left: 0; }
   .entries .row, .ticker-item.row { display: block; }
   .when { display: block; text-align: left; padding: 0; margin-bottom: 0.1rem; }
   .ticker { --slide-x: 1.25rem; --slide-y: 0px; }
@@ -579,7 +567,6 @@ a:hover { text-decoration-color: currentColor; }
   .timeline > li { display: block; padding-left: 1.5rem; }
   .timeline > li::before { left: 4px; top: 0.7rem; }
   .timeline > li::after { left: 0; top: 0.45rem; }
-  .teach-head { flex-direction: column-reverse; gap: 0.6rem; }
   .pub-title { font-size: 1.12rem; }
 }
 

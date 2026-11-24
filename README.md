@@ -18,7 +18,7 @@ Sections: `sections:` in `config.yml` sets which sections appear and in what ord
 
 Text in the YAML files accepts Markdown (`[link](https://...)`, `**bold**`, `*italic*`). Wrap a value in quotes if it contains a colon. Entries are sorted by date automatically, so their order in the file doesn't matter.
 
-News appears in three places: the latest `news_ticker` items (default 5) rotate under the bio, the latest `news_limit` (default 10) are listed in the News section, and `news.html` lists everything. Both numbers are in `config.yml`.
+News: the latest `news_ticker` items (default 5) rotate under the bio, and `news.html` lists everything. Add `news` to `sections` to also list the latest `news_limit` (default 10) in a News section on the home page. Both numbers are in `config.yml`.
 
 Links in `config.yml` get an icon from their URL (Google Scholar, GitHub, LinkedIn, ORCID; anything else gets a link icon). Set `icon:` on a link to choose one yourself.
 

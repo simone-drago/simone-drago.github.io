@@ -36,7 +36,7 @@
     screens, horizontal in the header on phones); the arrows step back and forth. -#}
 <section class="ticker" aria-label="Latest news" aria-roledescription="carousel">
   <div class="ticker-head row">
-    <a class="ticker-label" href="#news">Latest news</a>
+    <a class="ticker-label" href="{% if sections | selectattr('id', 'equalto', 'news') | list %}#news{% else %}news.html{% endif %}">Latest news</a>
     {% if ticker | length > 1 %}
     <span class="ticker-bar" aria-hidden="true"><span></span></span>
     <div class="ticker-controls">
@@ -122,21 +122,21 @@
     </p>
 
   {% elif s.id == "teaching" %}
-    {% if s["items"] and s.supervision %}<h3 class="group-title">Courses</h3>{% endif %}
-    <ul class="cards" role="list">
+    {% if s["items"] %}
+    {% if s.supervision %}<h3 class="group-title">Courses</h3>{% endif %}
+    <ul class="entries" role="list">
       {% for e in s["items"] %}
-      <li class="card teach">
-        <div class="teach-head">
-          <div>
-            <p class="headline">{{ maybe_link(e.course, e.url) }}</p>
-            <p class="where">{{ e.role }}, {{ e.institution }}</p>
-          </div>
-          <span class="pill">{{ gutter_date(e.when) }}</span>
+      <li class="row">
+        <span class="when">{{ gutter_date(e.when) }}</span>
+        <div class="what">
+          <p class="headline">{{ maybe_link(e.course, e.url) }}</p>
+          <p class="where">{{ e.role }}, {{ e.institution }}</p>
+          {% if e.details %}<p class="details">{{ e.details }}</p>{% endif %}
         </div>
-        {% if e.details %}<p class="details">{{ e.details }}</p>{% endif %}
       </li>
       {% endfor %}
     </ul>
+    {% endif %}
     {% if s.supervision %}
     <h3 class="group-title supervision-title">Thesis supervision</h3>
     <ul class="entries" role="list">

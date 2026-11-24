@@ -53,12 +53,13 @@ me:
 #          subtitle: ICML, NeurIPS
 #          start: 2025
 #          end: present
-sections: [research, publications, awards, education, experience, teaching, news] # also available: extracurricular
+sections: [research, publications, awards, education, experience, teaching] # also available: news, extracurricular
 titles: {awards: "Awards & service"}        # e.g. {service: Academic service, extracurricular: Beyond research}
 nav_titles: {awards: Awards}    # shorter labels for the top bar (default: the section's heading)
-bands: [research, news]     # sections drawn on a tinted band; the others are split by a thin divider
-news_ticker: 5       # latest items, rotating under your bio (0 turns it off)
-news_limit: 10       # items in the News section; news.html lists them all
+bands: [research]     # sections drawn on a tinted band; the others are split by a thin divider
+news_ticker: 5       # latest items, rotating under your bio (1: just the newest, still; 0 turns it off).
+                     # Its "Latest news" label links to the News section if shown, else to news.html.
+news_limit: 10       # items in the News section, when it's in `sections`; news.html lists them all
 
 # The "Get in touch" section at the bottom of every page.
 contact: Feel free to reach out about research and collaboration opportunities.
