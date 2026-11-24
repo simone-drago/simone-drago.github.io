@@ -58,6 +58,8 @@
   --accent: #006967;
   --accent-strong: #005553;
   --accent-soft: #d5f2f0;
+  /* Outline of round buttons: derived from the theme, about 3:1 against the page in both. */
+  --control: color-mix(in srgb, var(--muted) 70%, var(--bg));
 
   --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --sans: "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -127,6 +129,14 @@ a {
 a:hover { text-decoration-color: currentColor; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 ::selection { background: var(--accent-soft); }
+/* No lone word on the last line of a paragraph; headings split into even lines. */
+p, li, dd, figcaption { text-wrap: pretty; }
+.section-title, .interest-title, .question { text-wrap: balance; }
+/* Read by screen readers, not shown. */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; border: 0;
+}
 
 .skip {
   position: absolute; left: var(--edge); top: -3rem; z-index: 20;
@@ -185,7 +195,7 @@ a:hover { text-decoration-color: currentColor; }
   flex: none; display: grid; place-items: center;
   width: 2.25rem; height: 2.25rem; padding: 0;
   color: var(--ink); background: transparent;
-  border: 1px solid var(--faint); border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--control); border-radius: 999px; cursor: pointer;
   transition: border-color .2s, background-color .2s;
 }
 .theme-toggle:hover { border-color: var(--accent); background: var(--accent-soft); }
@@ -195,7 +205,7 @@ a:hover { text-decoration-color: currentColor; }
   flex: none; display: inline-flex; align-items: center; gap: 0.4rem;
   height: 2.25rem; padding: 0 0.95rem 0 0.8rem;
   font: 550 0.92rem/1 var(--sans); color: var(--accent); text-decoration: none;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--faint)); border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 70%, var(--bg)); border-radius: 999px;
   transition: border-color .2s, background-color .2s;
 }
 .topbar-cv .icon { width: 1rem; height: 1rem; }
@@ -294,7 +304,7 @@ a:hover { text-decoration-color: currentColor; }
   display: grid; place-items: center; flex: none;
   width: 1.75rem; height: 1.75rem; padding: 0;
   color: var(--ink); background: transparent;
-  border: 1px solid var(--faint); border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--control); border-radius: 999px; cursor: pointer;
   transition: border-color .2s, background-color .2s;
 }
 .ticker-nav:hover { border-color: var(--accent); background: var(--accent-soft); }
@@ -492,7 +502,7 @@ a:hover { text-decoration-color: currentColor; }
   font: 500 1.2rem/1.3 var(--serif);
   font-variation-settings: "opsz" 20;
   letter-spacing: -0.003em;
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 .pub-authors { margin-top: 0.3rem; font-size: 0.95rem; color: var(--muted); }
 .pub-authors .me {
@@ -602,6 +612,14 @@ a:hover { text-decoration-color: currentColor; }
   .timeline > li::before { left: 4px; top: 0.7rem; }
   .timeline > li::after { left: 0; top: 0.45rem; }
   .pub-title { font-size: 1.12rem; }
+}
+
+/* Touch screens: small text links get a finger-sized hit area; the layout doesn't move. */
+@media (pointer: coarse) {
+  .pub-links a, .toggle, .pub-foot a, .more a, .ticker-label {
+    padding: 0.55rem 0.3rem; margin: -0.55rem -0.3rem;
+  }
+  .ticker-nav { width: 2.25rem; height: 2.25rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

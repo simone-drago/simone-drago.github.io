@@ -96,13 +96,13 @@
       <ol class="pubs" role="list">
         {% for p in y["items"] %}
         <li class="pub row" id="{{ p.label }}">
-          <a class="pub-label" href="#{{ p.label }}" aria-label="{{ p.label }}">{{ p.label }}</a>
+          <a class="pub-label" href="#{{ p.label }}" aria-label="Link to paper {{ p.label }}">{{ p.label }}</a>
           <div class="pub-body">
             <p class="pub-title">{{ p.title }}</p>
             <p class="pub-authors">
               {%- for a in p.authors -%}
                 {%- if a.me %}<strong class="me">{{ a.name }}</strong>{% else %}{{ a.name }}{% endif -%}
-                {%- if a.equal %}<span class="eq" title="Equal contribution">*</span>{% endif -%}
+                {%- if a.equal %}<span class="eq" title="Equal contribution" aria-hidden="true">*</span><span class="visually-hidden"> (equal contribution)</span>{% endif -%}
                 {%- if not loop.last %}, {% endif -%}
               {%- endfor -%}
             </p>
@@ -126,7 +126,7 @@
     </div>
     {% endfor %}
     <p class="pub-foot">
-      {% if any_equal %}<span><span class="eq">*</span> Equal contribution</span>{% endif %}
+      {% if any_equal %}<span><span class="eq" aria-hidden="true">*</span> Equal contribution</span>{% endif %}
       <a href="bib/publications.bib" download>All publications as BibTeX</a>
     </p>
 
