@@ -1,0 +1,464 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-19T14:42:59+00:00",
+  "title": "Design System: Simone Drago",
+  "extensions": {
+    "colorMeta": {
+      "deep-teal": {
+        "role": "primary",
+        "displayName": "Deep Teal",
+        "canonical": "#006967",
+        "oklch": "oklch(47.1% 0.081 192)",
+        "purpose": "Links, the CV button, your name underline, award badges, current nav item, focus (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 192)",
+          "oklch(26.4% 0.029 192)",
+          "oklch(37.9% 0.050 192)",
+          "oklch(49.3% 0.070 192)",
+          "oklch(60.7% 0.070 192)",
+          "oklch(72.1% 0.050 192)",
+          "oklch(83.6% 0.029 192)",
+          "oklch(95.0% 0.012 192)"
+        ]
+      },
+      "deep-teal-night": {
+        "role": "primary",
+        "displayName": "Deep Teal (night)",
+        "canonical": "#77d4cc",
+        "oklch": "oklch(81.0% 0.090 188)",
+        "purpose": "The same jobs in the dark theme",
+        "tonalRamp": [
+          "oklch(15.0% 0.013 188)",
+          "oklch(26.4% 0.033 188)",
+          "oklch(37.9% 0.056 188)",
+          "oklch(49.3% 0.078 188)",
+          "oklch(60.7% 0.078 188)",
+          "oklch(72.1% 0.056 188)",
+          "oklch(83.6% 0.033 188)",
+          "oklch(95.0% 0.013 188)"
+        ]
+      },
+      "teal-tint": {
+        "role": "primary",
+        "displayName": "Teal Tint",
+        "canonical": "#d5f2f0",
+        "oklch": "oklch(94.0% 0.030 192)",
+        "purpose": "Hover fill of buttons, text selection, targeted paper label (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 192)",
+          "oklch(26.4% 0.011 192)",
+          "oklch(37.9% 0.019 192)",
+          "oklch(49.3% 0.027 192)",
+          "oklch(60.7% 0.027 192)",
+          "oklch(72.1% 0.019 192)",
+          "oklch(83.6% 0.011 192)",
+          "oklch(95.0% 0.005 192)"
+        ]
+      },
+      "teal-tint-night": {
+        "role": "primary",
+        "displayName": "Teal Tint (night)",
+        "canonical": "#093b3b",
+        "oklch": "oklch(32.1% 0.050 195)",
+        "purpose": "Hover fill and selection (dark)",
+        "tonalRamp": [
+          "oklch(15.0% 0.008 195)",
+          "oklch(26.4% 0.018 195)",
+          "oklch(37.9% 0.031 195)",
+          "oklch(49.3% 0.044 195)",
+          "oklch(60.7% 0.044 195)",
+          "oklch(72.1% 0.031 195)",
+          "oklch(83.6% 0.018 195)",
+          "oklch(95.0% 0.008 195)"
+        ]
+      },
+      "paper-white": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "#fbfdfd",
+        "oklch": "oklch(99.3% 0.002 197)",
+        "purpose": "Page background (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 197)",
+          "oklch(26.4% 0.004 197)",
+          "oklch(37.9% 0.007 197)",
+          "oklch(49.3% 0.010 197)",
+          "oklch(60.7% 0.010 197)",
+          "oklch(72.1% 0.007 197)",
+          "oklch(83.6% 0.004 197)",
+          "oklch(95.0% 0.002 197)"
+        ]
+      },
+      "mint-wash": {
+        "role": "neutral",
+        "displayName": "Mint Wash",
+        "canonical": "#e6f5f5",
+        "oklch": "oklch(95.9% 0.016 197)",
+        "purpose": "Tinted bands, e.g. Research (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 197)",
+          "oklch(26.4% 0.006 197)",
+          "oklch(37.9% 0.010 197)",
+          "oklch(49.3% 0.014 197)",
+          "oklch(60.7% 0.014 197)",
+          "oklch(72.1% 0.010 197)",
+          "oklch(83.6% 0.006 197)",
+          "oklch(95.0% 0.002 197)"
+        ]
+      },
+      "card-white": {
+        "role": "neutral",
+        "displayName": "Card White",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 90)",
+        "purpose": "Quick facts and research cards (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 90)",
+          "oklch(26.4% 0.004 90)",
+          "oklch(37.9% 0.007 90)",
+          "oklch(49.3% 0.010 90)",
+          "oklch(60.7% 0.010 90)",
+          "oklch(72.1% 0.007 90)",
+          "oklch(83.6% 0.004 90)",
+          "oklch(95.0% 0.002 90)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#101d21",
+        "oklch": "oklch(22.1% 0.020 219)",
+        "purpose": "Body text and headings (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 219)",
+          "oklch(26.4% 0.007 219)",
+          "oklch(37.9% 0.012 219)",
+          "oklch(49.3% 0.017 219)",
+          "oklch(60.7% 0.017 219)",
+          "oklch(72.1% 0.012 219)",
+          "oklch(83.6% 0.007 219)",
+          "oklch(95.0% 0.003 219)"
+        ]
+      },
+      "muted-slate": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "#4f5e62",
+        "oklch": "oklch(47.1% 0.020 216)",
+        "purpose": "Secondary text, dates, labels, icons (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 216)",
+          "oklch(26.4% 0.007 216)",
+          "oklch(37.9% 0.012 216)",
+          "oklch(49.3% 0.017 216)",
+          "oklch(60.7% 0.017 216)",
+          "oklch(72.1% 0.012 216)",
+          "oklch(83.6% 0.007 216)",
+          "oklch(95.0% 0.003 216)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#d4dfdf",
+        "oklch": "oklch(89.5% 0.012 197)",
+        "purpose": "Borders and dividers (light)",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 197)",
+          "oklch(26.4% 0.004 197)",
+          "oklch(37.9% 0.007 197)",
+          "oklch(49.3% 0.010 197)",
+          "oklch(60.7% 0.010 197)",
+          "oklch(72.1% 0.007 197)",
+          "oklch(83.6% 0.004 197)",
+          "oklch(95.0% 0.002 197)"
+        ]
+      },
+      "petrol-night": {
+        "role": "neutral",
+        "displayName": "Petrol Night",
+        "canonical": "#09171c",
+        "oklch": "oklch(19.4% 0.022 223)",
+        "purpose": "Page background (dark)",
+        "tonalRamp": [
+          "oklch(15.0% 0.003 223)",
+          "oklch(26.4% 0.008 223)",
+          "oklch(37.9% 0.014 223)",
+          "oklch(49.3% 0.019 223)",
+          "oklch(60.7% 0.019 223)",
+          "oklch(72.1% 0.014 223)",
+          "oklch(83.6% 0.008 223)",
+          "oklch(95.0% 0.003 223)"
+        ]
+      },
+      "petrol-band": {
+        "role": "neutral",
+        "displayName": "Petrol Band",
+        "canonical": "#0d1f24",
+        "oklch": "oklch(22.6% 0.026 218)",
+        "purpose": "Tinted bands (dark)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 218)",
+          "oklch(26.4% 0.009 218)",
+          "oklch(37.9% 0.016 218)",
+          "oklch(49.3% 0.022 218)",
+          "oklch(60.7% 0.022 218)",
+          "oklch(72.1% 0.016 218)",
+          "oklch(83.6% 0.009 218)",
+          "oklch(95.0% 0.004 218)"
+        ]
+      },
+      "petrol-card": {
+        "role": "neutral",
+        "displayName": "Petrol Card",
+        "canonical": "#12262c",
+        "oklch": "oklch(25.5% 0.028 219)",
+        "purpose": "Cards (dark)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 219)",
+          "oklch(26.4% 0.010 219)",
+          "oklch(37.9% 0.017 219)",
+          "oklch(49.3% 0.025 219)",
+          "oklch(60.7% 0.025 219)",
+          "oklch(72.1% 0.017 219)",
+          "oklch(83.6% 0.010 219)",
+          "oklch(95.0% 0.004 219)"
+        ]
+      },
+      "ink-night": {
+        "role": "neutral",
+        "displayName": "Ink (night)",
+        "canonical": "#e4edef",
+        "oklch": "oklch(94.0% 0.010 213)",
+        "purpose": "Body text and headings (dark)",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 213)",
+          "oklch(26.4% 0.004 213)",
+          "oklch(37.9% 0.007 213)",
+          "oklch(49.3% 0.010 213)",
+          "oklch(60.7% 0.010 213)",
+          "oklch(72.1% 0.007 213)",
+          "oklch(83.6% 0.004 213)",
+          "oklch(95.0% 0.002 213)"
+        ]
+      },
+      "muted-night": {
+        "role": "neutral",
+        "displayName": "Muted Slate (night)",
+        "canonical": "#a3b9bd",
+        "oklch": "oklch(77.0% 0.025 210)",
+        "purpose": "Secondary text (dark)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 210)",
+          "oklch(26.4% 0.009 210)",
+          "oklch(37.9% 0.015 210)",
+          "oklch(49.3% 0.022 210)",
+          "oklch(60.7% 0.022 210)",
+          "oklch(72.1% 0.015 210)",
+          "oklch(83.6% 0.009 210)",
+          "oklch(95.0% 0.004 210)"
+        ]
+      },
+      "hairline-night": {
+        "role": "neutral",
+        "displayName": "Hairline (night)",
+        "canonical": "#293e45",
+        "oklch": "oklch(34.9% 0.029 221)",
+        "purpose": "Borders and dividers (dark)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 221)",
+          "oklch(26.4% 0.011 221)",
+          "oklch(37.9% 0.018 221)",
+          "oklch(49.3% 0.025 221)",
+          "oklch(60.7% 0.025 221)",
+          "oklch(72.1% 0.018 221)",
+          "oklch(83.6% 0.011 221)",
+          "oklch(95.0% 0.004 221)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Your name in the header, nowhere else."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "The research question under the position line."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "The italic position line under your name."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Paper, thesis and research-topic titles; the Quick facts heading."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Bio, details and all running text."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Paper labels (C5), year rules, dates on the spine; tabular figures."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "figure-draw",
+        "value": "stroke-dashoffset 1.3s cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "The one authored moment: the research figure's Pareto front draws itself when first scrolled into view; marks fade in after (0.5s ease-out, 1.0-1.5s delay)."
+      },
+      {
+        "name": "ticker",
+        "value": "7s per item; opacity/transform .4s ease",
+        "purpose": "The rotating latest-news line; pauses on hover, keyboard focus, the Pause button, or a tap on an arrow (phones)."
+      },
+      {
+        "name": "state",
+        "value": "border-color, background-color .2s",
+        "purpose": "Hover on round buttons."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "All animation and transitions off; the ticker never advances; the figure is simply drawn."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "nav-fade",
+        "value": "1100px",
+        "purpose": "Top-bar links fade at the right edge and scroll sideways."
+      },
+      {
+        "name": "facts-below",
+        "value": "1000px",
+        "purpose": "Quick facts move under the bio; the photo stops hanging into the margin."
+      },
+      {
+        "name": "phone",
+        "value": "760px",
+        "purpose": "The date column folds away; the nav wraps to its own row; the research figure stacks above the topics."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "CV button",
+      "kind": "button",
+      "refersTo": "button-cv",
+      "description": "The page's one primary action, in the top bar next to the theme switch; the only accent on the first screen.",
+      "html": "<a class=\"ds-btn-cv\" href=\"#\"><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z\"/><path d=\"M14 3v5h5\"/><path d=\"M9 13h6M9 16.5h4\"/></svg><span>CV</span></a>",
+      "css": ".ds-btn-cv{display:inline-flex;align-items:center;gap:.4rem;height:2.25rem;padding:0 .95rem 0 .8rem;font:550 .92rem/1 var(--sans,'Hanken Grotesk',system-ui,sans-serif);color:var(--accent,#006967);text-decoration:none;border:1px solid color-mix(in srgb,var(--accent,#006967) 70%,var(--bg,#fbfdfd));border-radius:999px;transition:border-color .2s,background-color .2s}.ds-btn-cv:hover{border-color:var(--accent,#006967);background:var(--accent-soft,#d5f2f0)}.ds-btn-cv:focus-visible{outline:2px solid var(--accent,#006967);outline-offset:3px}"
+    },
+    {
+      "name": "Icon button",
+      "kind": "button",
+      "refersTo": "button-icon",
+      "description": "Round outlined button for the theme switch and the news ticker controls; outline about 3:1 against the page.",
+      "html": "<button class=\"ds-btn-icon\" type=\"button\" aria-label=\"Switch to dark theme\"><svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z\"/></svg></button>",
+      "css": ".ds-btn-icon{display:grid;place-items:center;width:2.25rem;height:2.25rem;padding:0;color:var(--ink,#101d21);background:transparent;border:1px solid var(--control,#838e90);border-radius:999px;cursor:pointer;transition:border-color .2s,background-color .2s}.ds-btn-icon:hover{border-color:var(--accent,#006967);background:var(--accent-soft,#d5f2f0)}.ds-btn-icon:focus-visible{outline:2px solid var(--accent,#006967);outline-offset:3px}"
+    },
+    {
+      "name": "Text link",
+      "kind": "custom",
+      "refersTo": "link",
+      "description": "Every link is Deep Teal and underlined, so no link depends on colour alone.",
+      "html": "<p class=\"ds-text\">Read the <a class=\"ds-link\" href=\"#\">PDF</a> or download the <a class=\"ds-link\" href=\"#\">BibTeX</a>.</p>",
+      "css": ".ds-text{font:400 1.0625rem/1.6 var(--sans,'Hanken Grotesk',system-ui,sans-serif);color:var(--ink,#101d21)}.ds-link{color:var(--accent,#006967);text-decoration:underline 1px;text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,var(--accent,#006967) 45%,transparent)}.ds-link:hover{text-decoration-color:currentColor}.ds-link:focus-visible{outline:2px solid var(--accent,#006967);outline-offset:3px;border-radius:2px}"
+    },
+    {
+      "name": "Top-bar navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Muted section links; the section in view turns ink with a 2px Deep Teal underline. Scrolls sideways on phones and keeps the current link in view.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Sections\"><a href=\"#\">Research</a><a href=\"#\" aria-current=\"true\">Publications</a><a href=\"#\">Awards</a><a href=\"#\">Teaching</a></nav>",
+      "css": ".ds-nav{display:flex;gap:1.35rem;font:500 .92rem/1 var(--sans,'Hanken Grotesk',system-ui,sans-serif)}.ds-nav a{padding:.35rem 0;color:var(--muted,#4f5e62);text-decoration:none}.ds-nav a:hover{color:var(--ink,#101d21)}.ds-nav a[aria-current=true]{color:var(--ink,#101d21);box-shadow:inset 0 -2px 0 var(--accent,#006967)}"
+    },
+    {
+      "name": "Quick facts card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "The one card on the first screen: hairline border, 6px corners, a serif title and label/value pairs computed from the content files.",
+      "html": "<aside class=\"ds-facts\"><h2>Quick facts</h2><dl><div><dt>Ph.D. completion</dt><dd>Expected December 2027</dd></div><div><dt>Publications</dt><dd>6 papers: 5 ICML, 1 AIJ</dd></div></dl></aside>",
+      "css": ".ds-facts{width:16rem;background:var(--card,#fff);border:1px solid var(--faint,#d4dfdf);border-radius:6px;padding:1.1rem 1.2rem 1.2rem;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif)}.ds-facts h2{margin:0 0 .85rem;font:500 1.1rem/1.2 var(--serif,'Newsreader',Georgia,serif);color:var(--ink,#101d21)}.ds-facts dl{display:grid;gap:.75rem;margin:0}.ds-facts dt{font-size:.82rem;font-weight:600;color:var(--ink,#101d21)}.ds-facts dd{margin:.05rem 0 0;font-size:.92rem;line-height:1.45;color:var(--muted,#4f5e62)}"
+    },
+    {
+      "name": "Publication entry",
+      "kind": "custom",
+      "refersTo": "publication",
+      "description": "Signature component: muted label (C5) on the date column, serif title, authors with your name underlined in Deep Teal, bold venue, underlined links.",
+      "html": "<div class=\"ds-pub\"><a class=\"ds-pub-label\" href=\"#\">C5</a><div><p class=\"ds-pub-title\">Online Compatible Reward Identification from Preference Feedback</p><p class=\"ds-pub-authors\"><strong>Simone Drago</strong>, Marco Mussi, Alberto Maria Metelli</p><p class=\"ds-pub-meta\"><b>ICML 2026</b><a href=\"#\">PDF</a><a href=\"#\">PMLR</a><a href=\"#\">BibTeX</a></p></div></div>",
+      "css": ".ds-pub{display:grid;grid-template-columns:3rem minmax(0,1fr);column-gap:1rem;align-items:baseline;font-family:var(--sans,'Hanken Grotesk',system-ui,sans-serif);max-width:40rem}.ds-pub-label{justify-self:end;font:650 .86rem/1 var(--sans,'Hanken Grotesk',sans-serif);font-variant-numeric:tabular-nums;letter-spacing:.02em;color:var(--muted,#4f5e62);text-decoration:none}.ds-pub-title{margin:0;font:500 1.2rem/1.3 var(--serif,'Newsreader',Georgia,serif);color:var(--ink,#101d21);text-wrap:balance}.ds-pub-authors{margin:.3rem 0 0;font-size:.95rem;color:var(--muted,#4f5e62)}.ds-pub-authors strong{color:var(--ink,#101d21);font-weight:650;text-decoration:underline 2px var(--accent,#006967);text-underline-offset:.22em}.ds-pub-meta{margin:.3rem 0 0;font-size:.93rem;display:flex;flex-wrap:wrap;gap:.2rem .85rem;color:var(--ink,#101d21)}.ds-pub-meta b{font-weight:600}.ds-pub-meta a{font-weight:550;font-size:.9rem;color:var(--accent,#006967);text-underline-offset:.2em;text-decoration-color:color-mix(in srgb,var(--accent,#006967) 45%,transparent)}"
+    },
+    {
+      "name": "Section band",
+      "kind": "custom",
+      "refersTo": "section-band",
+      "description": "A full-width Mint Wash band with hairline top and bottom borders, used for Research; other sections sit on Paper White, separated by a hairline divider with a small dot.",
+      "html": "<section class=\"ds-band\"><h2>Research interests</h2></section>",
+      "css": ".ds-band{background:var(--band,#e6f5f5);border-block:1px solid var(--faint,#d4dfdf);padding:2.5rem 1.5rem}.ds-band h2{margin:0;font:400 2.05rem/1.1 var(--serif,'Newsreader',Georgia,serif);letter-spacing:-.01em;color:var(--ink,#101d21)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Record",
+    "overview": "The site is a researcher's record set quietly: the research question, the papers and their venues carry the page, and the design stays out of the way. Colour is rare and always means something, type does the ranking, and there is one moment of motion. It serves a hiring committee skimming for a few minutes as well as a reader checking every claim.",
+    "keyCharacteristics": [
+      "One accent, Deep Teal, with a short fixed list of jobs",
+      "Near-white page with Mint Wash bands; a deep Petrol Night in dark mode",
+      "Newsreader serif for names, titles and the question; Hanken Grotesk for everything else",
+      "A date and label column (the spine) running down every list",
+      "Flat: hairlines and tonal bands, no shadows",
+      "Every link underlined; every text colour 4.5:1 or more in both themes"
+    ],
+    "rules": [
+      {
+        "name": "The Rare Teal Rule",
+        "section": "colors",
+        "body": "Deep Teal does six jobs only: links, the CV button, your name in author lists, award badges, the current section in the top bar, focus and selection. Labels, years, icons, dots and dividers stay ink or muted."
+      },
+      {
+        "name": "The Underline Rule",
+        "section": "colors",
+        "body": "Every link is underlined. Colour never carries meaning alone."
+      },
+      {
+        "name": "The Spine Rule",
+        "section": "typography",
+        "body": "Dates and paper labels sit in the left column with tabular figures; content sits in the 45rem text column to its right."
+      },
+      {
+        "name": "The Flat Rule",
+        "section": "elevation",
+        "body": "No shadows for depth. Surfaces separate by tone (Mint Wash bands) and 1px hairlines."
+      },
+      {
+        "name": "The One Moment Rule",
+        "section": "motion",
+        "body": "One authored animation (the research figure) plus the news ticker. Nothing else moves; reduced motion turns everything off."
+      }
+    ],
+    "dos": [
+      "Do keep Deep Teal to its six jobs",
+      "Do underline every link",
+      "Do keep text at 4.5:1 or more on page, band and card in both themes",
+      "Do put dates and labels on the spine with tabular figures",
+      "Do drive new features from fields in content/, documented in the README",
+      "Do keep the two dark-theme token blocks and the theme-color tags in sync"
+    ],
+    "donts": [
+      "Don't add glows, radial gradients or decorative backgrounds",
+      "Don't use the accent on labels, years, icons, dots or other decoration",
+      "Don't use shadows for depth",
+      "Don't add fonts, icon fonts, CDNs or any third-party request",
+      "Don't use cards for lists; rows on the spine do that job",
+      "Don't add motion beyond the figure and the ticker"
+    ]
+  }
+}
