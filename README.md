@@ -10,11 +10,11 @@ Everything you normally touch is in `content/`:
 |---|---|
 | `config.yml` | name, position, links, photo, CV PDF, section order, tinted sections, contact text, publication options |
 | `bio.md` | the paragraph under your name (Markdown) |
-| `research.yml` | the Research interests section: a one-line intro and one card per topic, each with an icon |
+| `research.yml` | your research question (shown in large type under your name), and the Research interests section: an optional intro and one card per topic, each with an icon |
 | `papers.bib` | publications (plain BibTeX; see the comment at the top for the extra fields) |
 | `news.yml`, `education.yml`, `experience.yml`, `teaching.yml`, `awards.yml`, `extracurricular.yml` | one list entry per item |
 
-Sections: `sections:` in `config.yml` sets which sections appear and in what order (the top bar follows it). To hide one, remove it from the list. To add your own, create `content/<name>.yml` (entries with `title`, and optionally `subtitle`, `date` or `start`/`end`, `location`, `details`, `url`), add `<name>` to `sections`, and give it a heading under `titles:`.
+Sections: `sections:` in `config.yml` sets which sections appear and in what order (the top bar follows it). To hide one, remove it from the list. To add your own, create `content/<name>.yml` (entries with `title`, and optionally `subtitle`, `date` or `start`/`end`, `location`, `details`, `url`), add `<name>` to `sections`, and give it a heading under `titles:`. The top bar uses the heading too; give it a shorter label under `nav_titles:` (e.g. `{awards: Awards}`).
 
 Text in the YAML files accepts Markdown (`[link](https://...)`, `**bold**`, `*italic*`). Wrap a value in quotes if it contains a colon. Entries are sorted by date automatically, so their order in the file doesn't matter.
 

@@ -127,6 +127,17 @@ function setUpNav(nav) {
     if (id && a.pathname === location.pathname && document.getElementById(id)) links.set(id, a);
   }
   const visible = new Set();
+  const strip = nav.querySelector("ul");
+  const still = matchMedia("(prefers-reduced-motion: reduce)");
+  let shown;
+  // On phones the links scroll sideways: bring the underlined one into view (clear of the fade on the right).
+  const reveal = (a) => {
+    if (strip.scrollWidth <= strip.clientWidth) return;
+    const r = a.getBoundingClientRect(), s = strip.getBoundingClientRect();
+    if (r.left < s.left || r.right > s.right - s.width * 0.18) {
+      strip.scrollBy({ left: r.left - s.left - 4, behavior: still.matches ? "auto" : "smooth" });
+    }
+  };
   const spy = new IntersectionObserver((entries) => {
     for (const e of entries) e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id);
     const current = [...links.keys()].find((id) => visible.has(id));
@@ -134,6 +145,8 @@ function setUpNav(nav) {
       if (id === current) a.setAttribute("aria-current", "true");
       else a.removeAttribute("aria-current");
     }
+    if (current && current !== shown) reveal(links.get(current));
+    shown = current;
   }, { rootMargin: "-20% 0px -70% 0px" });
   for (const id of links.keys()) spy.observe(document.getElementById(id));
 }

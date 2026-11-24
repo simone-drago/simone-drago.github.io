@@ -35,7 +35,9 @@ facts:
   - label: Publications
     value: "{publications} papers: {venues}"
   - label: Teaching
-    value: "{teaching_years} years as teaching assistant & {theses} co-supervised students"
+    value: "{teaching_years} years as teaching assistant"
+  - label: Supervision
+    value: "{theses} co-supervised students"
 
 # How your name is written in papers.bib, so it is highlighted in author lists.
 # Matching uses surname + first initial and ignores accents.
@@ -53,6 +55,7 @@ me:
 #          end: present
 sections: [research, publications, awards, education, experience, teaching, news] # also available: extracurricular
 titles: {awards: "Awards & service"}        # e.g. {service: Academic service, extracurricular: Beyond research}
+nav_titles: {awards: Awards}    # shorter labels for the top bar (default: the section's heading)
 bands: [research, news]     # sections drawn on a tinted band; the others are split by a thin divider
 news_ticker: 5       # latest items, rotating under your bio (0 turns it off)
 news_limit: 10       # items in the News section; news.html lists them all

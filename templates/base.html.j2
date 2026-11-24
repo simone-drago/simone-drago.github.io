@@ -38,6 +38,7 @@
         <li><a href="{{ home }}#contact">Contact</a></li>
       </ul>
     </nav>
+    {% if site.cv_pdf %}<a class="topbar-cv" href="{{ site.cv_pdf }}">{{ icon("cv") }}<span>CV</span></a>{% endif %}
     <button type="button" class="theme-toggle" aria-label="Switch to dark theme" title="Switch between light and dark">
       {{ icon("moon", "icon icon-moon") }}{{ icon("sun", "icon icon-sun") }}
     </button>

@@ -630,12 +630,15 @@ def load_research() -> dict | None:
         return None
     rel = path.relative_to(ROOT)
     if not isinstance(data, dict) or not isinstance(data.get("items"), list):
-        error(f"{rel}: expected an optional 'intro' and a list of 'items'")
+        error(f"{rel}: expected an optional 'question' and 'intro', and a list of 'items'")
         return None
-    intro = None
-    if data.get("intro"):
-        if check_text(data["intro"], f"{rel}, intro"):
-            intro = md_inline(str(data["intro"]).strip())
+    unknown = set(data) - {"question", "intro", "items"}
+    if unknown:
+        error(f"{rel}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: question, intro, items")
+    text = {}
+    for field in ("question", "intro"):
+        if data.get(field) and check_text(data[field], f"{rel}, {field}"):
+            text[field] = md_inline(str(data[field]).strip())
     items = []
     for i, raw in enumerate(data["items"], 1):
         where = f"{rel}, item {i}"
@@ -652,7 +655,8 @@ def load_research() -> dict | None:
         if check_text(raw["title"], f"{where}, title") and check_text(raw["text"], f"{where}, text"):
             items.append({"title": md_inline(str(raw["title"]).strip()),
                           "text": md_inline(str(raw["text"]).strip()), "icon": icon})
-    return {"intro": intro, "items": items} if items else None
+    # The question is shown in the masthead even when there are no cards.
+    return {"question": text.get("question"), "intro": text.get("intro"), "items": items}
 
 
 SECTION_TITLES = {
@@ -753,6 +757,9 @@ def load_config() -> dict:
     if not isinstance(cfg.get("titles") or {}, dict):
         error("content/config.yml: titles must be 'section: Title' pairs")
         cfg["titles"] = {}
+    if not isinstance(cfg.get("nav_titles") or {}, dict):
+        error("content/config.yml: nav_titles must be 'section: Label' pairs")
+        cfg["nav_titles"] = {}
     for key in ("position", "description", "email", "photo", "cv_pdf"):
         cfg.setdefault(key, None)
     cfg["links"] = cfg.get("links") or []
@@ -805,17 +812,19 @@ def build() -> bool:
         else ([], False, [])
     facts = load_facts(cfg, papers, theses=len(load_section("supervision")),
                        teaching=teaching_years(load_section("teaching")))
+    research = load_research()
     for name in cfg.get("sections") or list(SECTION_TITLES):
         titles = cfg.get("titles") or {}
         title = str(titles.get(name) or SECTION_TITLES.get(name) or name.replace("_", " ").capitalize())
-        nav = NAV_TITLES.get(name, title) if name not in titles else title
+        nav = str((cfg.get("nav_titles") or {}).get(name)
+                  or (title if name in titles else NAV_TITLES.get(name, title)))
         sec = {"id": name, "title": title, "nav": nav, "band": name in (cfg.get("bands") or [])}
         if name == "publications":
             if pubs:
                 sections.append(sec)
         elif name == "research":
-            sec["research"] = load_research()
-            if sec["research"]:
+            if research and research["items"]:
+                sec["research"] = research
                 sections.append(sec)
         elif name == "teaching":
             sec["items"] = load_section("teaching")
@@ -847,7 +856,7 @@ def build() -> bool:
     )
     index = env.get_template("index.html.j2").render(
         **common, home="", sections=sections, bio=bio, facts=facts, pubs=pubs, any_equal=any_equal,
-        ticker=news[:news_ticker], news_total=len(news),
+        ticker=news[:news_ticker], news_total=len(news), question=(research or {}).get("question"),
     )
     archive = env.get_template("news.html.j2").render(**common, home="index.html", sections=sections, news=news)
 

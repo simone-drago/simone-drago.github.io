@@ -1,8 +1,9 @@
+# question (optional): your research question, shown in large type under your name and position.
+# intro (optional): a line under the "Research interests" heading.
 # Fields per item: title, text (required); icon (optional): pareto, preference, theory,
 # safety, interpretability, robot, data, teaching.
 
-intro: |
-  **"How can we learn when humans provide feedback on multi-objective problems?"**
+question: How can we learn when humans provide feedback on multi-objective problems?
 
 items:
   - title: Reinforcement Learning from Human Feedback
