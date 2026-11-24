@@ -2,3 +2,6 @@ _site/
 __pycache__/
 .venv/
 .DS_Store
+
+# Impeccable product brief: private notes, kept on this machine only
+PRODUCT.md
