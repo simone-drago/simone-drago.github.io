@@ -685,5 +685,5 @@ p, li, dd, figcaption { text-wrap: pretty; }
   .masthead { display: block; padding-top: 0; }
   .section { padding-block: 1.25rem; border: 0; }
   .pub, .row, .card { break-inside: avoid; }
-  a { text-decoration: none; color: inherit; }
+  a, .links a span { text-decoration: none; color: inherit; }
 }
