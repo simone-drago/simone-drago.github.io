@@ -26,7 +26,7 @@ Photo and CV: put them in `static/` (e.g. `static/img/photo.jpg`, `static/cv.pdf
 
 ## Publications
 
-Papers are grouped by type and then by year (`layout: category-year`), or only by year with preprints last (`layout: year`). Either way, each paper is labelled by type and numbered from the oldest: C1, C2, ... (conference), J (journal), W (workshop), P (preprint), U (under review). The page lists the newest first.
+Papers are grouped by type, newest first (`layout: category`), by type and then by year (`layout: category-year`), or only by year with preprints last (`layout: year`). In every layout, each paper is labelled by type and numbered from the oldest: C1, C2, ... (conference), J (journal), W (workshop), P (preprint), U (under review). The page lists the newest first.
 
 - The type comes from the entry: `@inproceedings` is a conference paper (a workshop if the booktitle contains "Workshop"), `@article` is a journal paper (a preprint if the journal is arXiv), `@misc` is a preprint. `pubtype = {workshop}` (or conference, journal, preprint) forces it.
 - `status = {underreview}` puts a paper in "Under review": its venue is never shown and it has no BibTeX button. Turn the whole category off with `show_under_review: false` in `config.yml`. When the paper is accepted, delete the `status` line.

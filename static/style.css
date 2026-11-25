@@ -528,6 +528,7 @@ p, li, dd, figcaption { text-wrap: pretty; }
 }
 .pub-year::after { content: ""; flex: 1; height: 1px; background: var(--faint); }
 .pubs { display: grid; gap: 1.45rem; }
+.group-title + .pubs { margin-top: 0.8rem; }   /* no year heading between them (layout: category) */
 .pubs + .pub-year { margin-top: 1.8rem; }
 .pub { align-items: baseline; }
 .pub-label {

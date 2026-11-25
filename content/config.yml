@@ -24,6 +24,7 @@ cv_pdf: static/cv_simone_drago.pdf   # empty: no CV link
 # publications.count below); also available: {conference}, {journal}, {workshop}, {preprint},
 # {underreview}, and {all} for every paper on the site. {venues} lists the same papers by venue,
 # e.g. "5 ICML, 1 AIJ" (each paper's venue in papers.bib, without year or track).
+# {first_author} says how many of those papers list you first or equal-first: "all 6" or "4 of 6".
 # {teaching_years} is the number of academic years in teaching.yml, {theses} the number of
 # theses in supervision.yml. Quote values that start with {.
 facts_title: Quick facts
@@ -33,7 +34,9 @@ facts:
   - label: Location
     value: Milan, Italy
   - label: Publications
-    value: "{publications} papers: {venues}"
+    value: "{publications} conference and journal papers ({venues})"
+  - label: Authorship
+    value: "First or equal-first on {first_author}"
   - label: Teaching
     value: "{teaching_years} years as teaching assistant"
   - label: Supervision
@@ -70,4 +73,5 @@ publications:
   author_names: full       # full ("Simone Drago") or initials ("S. Drago")
   order: [conference, journal, workshop, preprint, underreview]
   count: [conference, journal]   # what {publications} counts in the Quick facts
-  layout: category-year    # category-year (by type, then year) or year (by year; preprints last)
+  layout: category         # category (by type, newest first), category-year (by type, then year)
+                           # or year (by year; preprints last)

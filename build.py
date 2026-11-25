@@ -566,8 +566,8 @@ def load_publications(cfg: dict) -> tuple[list[dict], bool, list[dict]]:
     selected_only = pcfg.get("selected_only", False)
 
     layout = pcfg.get("layout", "category-year")
-    if layout not in ("category-year", "year"):
-        error("config.yml: publications.layout must be 'category-year' or 'year'")
+    if layout not in ("category", "category-year", "year"):
+        error("config.yml: publications.layout must be 'category', 'category-year' or 'year'")
         layout = "category-year"
 
     shown = {}
@@ -605,8 +605,11 @@ def load_publications(cfg: dict) -> tuple[list[dict], bool, list[dict]]:
                 groups.append({"key": cat, "heading": CATEGORIES[cat][1],
                                "years": [{"year": None, "items": shown[cat]}]})
     else:
+        # By type; category-year also splits each type by year, category lists it newest first
+        # with no year headings (each venue line already carries the year).
         for cat, items in shown.items():
-            years = by_year(items) if cat != "underreview" else [{"year": None, "items": items}]
+            split = layout == "category-year" and cat != "underreview"
+            years = by_year(items) if split else [{"year": None, "items": items}]
             groups.append({"key": cat, "heading": CATEGORIES[cat][1], "years": years})
 
     any_equal = any(a["equal"] for items in shown.values() for p in items for a in p["authors"])
@@ -691,7 +694,21 @@ def venue_summary(papers: list[dict], counted: list[str]) -> str:
         if p["category"] in counted:
             name = re.sub(r"\s*\b(19|20)\d{2}\b\s*$", "", p["venue"].split(",")[0]).strip()
             tally[name] = tally.get(name, 0) + 1
-    return ", ".join(f"{n} {name}" for name, n in sorted(tally.items(), key=lambda kv: -kv[1]))
+    # A no-break space keeps each count with its venue ("5 ICML" never splits across lines).
+    return ", ".join(f"{n} {name}" for name, n in sorted(tally.items(), key=lambda kv: -kv[1]))
+
+
+def first_author_share(papers: list[dict], counted: list[str]) -> str:
+    """How many counted papers list you first or equal-first: "all 6", or "4 of 6".
+
+    Equal-first means the first author is marked as equal contribution and so are you.
+    """
+    pool = [p for p in papers if p["category"] in counted]
+    def leads(p):
+        a = p["authors"]
+        return bool(a) and (a[0]["me"] or (a[0]["equal"] and any(x["me"] and x["equal"] for x in a)))
+    n = sum(leads(p) for p in pool)
+    return f"all {n}" if n == len(pool) and n > 1 else f"{n} of {len(pool)}"
 
 
 def teaching_years(items: list[dict]) -> int:
@@ -714,7 +731,8 @@ def load_facts(cfg: dict, papers: list[dict], theses: int = 0, teaching: int = 0
         if cat not in CATEGORIES:
             error(f"content/config.yml: publications.count has unknown category {cat!r}")
     counts = {"publications": sum(p["category"] in counted for p in papers), "all": len(papers),
-              "venues": venue_summary(papers, counted), "theses": theses, "teaching_years": teaching}
+              "venues": venue_summary(papers, counted), "first_author": first_author_share(papers, counted),
+              "theses": theses, "teaching_years": teaching}
     for cat in CATEGORIES:
         counts[cat] = sum(p["category"] == cat for p in papers)
     facts = []
