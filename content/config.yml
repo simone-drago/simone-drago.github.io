@@ -31,6 +31,8 @@ facts_title: Quick facts
 facts:
   - label: Ph.D. completion
     value: Expected December 2027
+  - label: Open to
+    value: Research-scientist and postdoctoral roles, from early 2028
   - label: Location
     value: Milan, Italy
   - label: Publications
@@ -65,7 +67,7 @@ news_ticker: 5       # latest items, rotating under your bio (1: just the newest
 news_limit: 10       # items in the News section, when it's in `sections`; news.html lists them all
 
 # The "Get in touch" section at the bottom of every page.
-contact: Feel free to reach out about research and collaboration opportunities.
+contact: "I finish my Ph.D. in December 2027 and am open to research-scientist and postdoctoral roles from early 2028. I'm also happy to hear about research collaborations."
 
 publications:
   show_under_review: true

@@ -651,16 +651,21 @@ def load_research() -> dict | None:
         if not isinstance(raw, dict) or not raw.get("title") or not raw.get("text"):
             error(f"{where}: needs a title and a text")
             continue
-        unknown = set(raw) - {"title", "text", "icon"}
+        unknown = set(raw) - {"title", "text", "icon", "papers"}
         if unknown:
-            error(f"{where}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: title, text, icon")
+            error(f"{where}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: title, text, icon, papers")
         icon = raw.get("icon") or "theory"
         if icon not in ICONS:
             error(f"{where}: icon must be one of {', '.join(sorted(ICONS))}")
             icon = "theory"
+        refs = raw.get("papers") or []
+        if not isinstance(refs, list) or not all(isinstance(r, str) for r in refs):
+            error(f"{where}: papers must be a list of keys from papers.bib, e.g. [drago2026online]")
+            refs = []
         if check_text(raw["title"], f"{where}, title") and check_text(raw["text"], f"{where}, text"):
             items.append({"title": md_inline(str(raw["title"]).strip()),
-                          "text": md_inline(str(raw["text"]).strip()), "icon": icon})
+                          "text": md_inline(str(raw["text"]).strip()), "icon": icon,
+                          "papers": refs, "where": where})
     # The question is shown in the masthead even when there are no cards.
     return {"question": text.get("question"), "intro": text.get("intro"), "items": items,
             "figure": data.get("figure") is True, "figure_caption": text.get("figure_caption")}
@@ -835,6 +840,17 @@ def build() -> bool:
     facts = load_facts(cfg, papers, theses=len(load_section("supervision")),
                        teaching=teaching_years(load_section("teaching")))
     research = load_research()
+    # Each topic's papers (keys from papers.bib) become links to their entries in Publications.
+    shown_papers = {p["key"]: p for p in papers}
+    for it in (research or {}).get("items", []):
+        refs = []
+        for key in it["papers"] if papers else []:   # no Publications section: nothing to link to
+            if key in shown_papers:
+                refs.append({"label": shown_papers[key]["label"], "title": shown_papers[key]["title"]})
+            else:
+                error(f"{it['where']}: papers lists {key!r}, which isn't a key in papers.bib "
+                      "or isn't shown on the site")
+        it["papers"] = refs
     for name in cfg.get("sections") or list(SECTION_TITLES):
         titles = cfg.get("titles") or {}
         title = str(titles.get(name) or SECTION_TITLES.get(name) or name.replace("_", " ").capitalize())

@@ -301,7 +301,10 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .bio { max-width: 38em; }
 
 /* Bio and links, with the Quick facts panel beside them on wide screens */
-.intro.has-facts { display: grid; grid-template-columns: minmax(0, 1fr) 16rem; gap: 2.5rem; align-items: start; }
+.intro.has-facts { display: grid; grid-template-columns: minmax(0, 1fr) 16rem; grid-template-rows: auto 1fr; column-gap: 2.5rem; align-items: start; }
+/* The links follow the bio in the left column, so a tall facts card doesn't push them down. */
+.intro.has-facts .facts { grid-column: 2; grid-row: 1 / span 2; }
+.intro.has-facts .links { grid-column: 1; }
 .facts { padding: 1.1rem 1.2rem 1.2rem; }
 .facts-title { font-weight: 500; font-size: var(--text-title); line-height: 1.2; font-family: var(--serif); font-variation-settings: "opsz" 20; letter-spacing: -0.005em; color: var(--ink); margin-bottom: 0.85rem; }
 .facts dl { display: grid; gap: 0.75rem; margin: 0; }
@@ -462,6 +465,8 @@ p, li, dd, figcaption { text-wrap: pretty; }
   letter-spacing: -0.005em; margin-bottom: 0.4rem;
 }
 .has-figure .interest-text { max-width: 34em; }
+/* Links from a topic to its papers in Publications. */
+.interest-papers { margin-top: 0.35rem; font-size: var(--text-small); color: var(--muted); font-variant-numeric: tabular-nums; }
 .research-figure { margin: 0; }
 .figure-plot { width: 100%; height: auto; overflow: visible; }
 /* Axes and grey points at 0.7 keep 3:1 or more against the band in both themes (graphics a reader needs). */

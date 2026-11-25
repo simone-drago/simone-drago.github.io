@@ -10,7 +10,7 @@ Everything you normally touch is in `content/`:
 |---|---|
 | `config.yml` | name, position, links, photo, CV PDF, section order, tinted sections, contact text, publication options |
 | `bio.md` | the paragraph under your name (Markdown) |
-| `research.yml` | your research question (shown in large type under your name), and the Research interests section: an optional intro, an optional Pareto-front figure with its caption (`figure: true`), and one entry per topic (cards with icons when there is no figure) |
+| `research.yml` | your research question (shown in large type under your name), and the Research interests section: an optional intro, an optional Pareto-front figure with its caption (`figure: true`), and one entry per topic (cards with icons when there is no figure), each optionally linking to its papers (`papers: [key, ...]`, keys from `papers.bib`) |
 | `papers.bib` | publications (plain BibTeX; see the comment at the top for the extra fields) |
 | `news.yml`, `education.yml`, `experience.yml`, `teaching.yml`, `awards.yml`, `extracurricular.yml` | one list entry per item |
 

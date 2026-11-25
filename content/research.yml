@@ -3,7 +3,8 @@
 # figure (optional): true shows a Pareto-front figure beside the topics, with figure_caption
 #   under it (Markdown allowed). The topics are then plain text; without it they are cards with icons.
 # Fields per item: title, text (required); icon (optional, only shown without the figure):
-# pareto, preference, theory, safety, interpretability, robot, data, teaching.
+# pareto, preference, theory, safety, interpretability, robot, data, teaching;
+# papers (optional): keys from papers.bib, e.g. [drago2026online], shown as links to those entries.
 
 question: How can we learn when humans provide feedback on multi-objective problems?
 
@@ -14,6 +15,8 @@ items:
   - title: Reinforcement Learning from Human Feedback
     icon: preference
     text: Learning from comparisons instead of rewards. Rationality models, incomparable outcomes, and identifying rewards compatible with the observed preferences.
+    papers: [drago2026online, drago2025towards, drago2026generalizing]
   - title: Multi-Objective Reinforcement Learning
     icon: pareto
     text: Policies and rewards for problems with several, possibly conflicting, objectives, and recovering the trade-offs people actually care about.
+    papers: [drago2026generalizing]

@@ -243,6 +243,8 @@ Papers are grouped by type (conference, journal, workshop, preprints), newest fi
 ### Research figure (signature)
 A two-objective chart: Muted Slate axes and dominated points, the Pareto front as Deep Teal points on a staircase, and two front outcomes, A and B, circled in Ink and joined by a dashed arc with a question mark: neither dominates the other. The caption sits underneath in Muted Slate. Axes and grey points are drawn at 0.7 opacity, which keeps them at 3:1 or more against the band in both themes; they go to full strength when the visitor asks for more contrast, and the chart switches to system colours in high-contrast modes. The first time it scrolls into view, the staircase draws itself through the front (1.3s, exponential ease-out); the points, A, B and the question are there from the start, so a view that never scrolls still shows what the caption describes. Without JavaScript, with reduced motion, or when printed, the staircase is simply there. Turned on and captioned from `content/research.yml`.
 
+Beside it, each research topic ends with links to its papers ("Papers: C5, C3, W2") in Small Muted Slate; the labels are ordinary underlined links that jump to the entries in Publications, and their accessible names carry the paper titles.
+
 ### Latest-news ticker
 One news item at a time beside its date on the spine, with previous / pause / next controls, a counter and a thin Muted Slate progress bar. It pauses on hover, keyboard focus, the Pause button, or a tap on an arrow on phones; screen readers hear each item whenever it isn't rotating by itself. Its "Latest news" label links to the full archive.
 
