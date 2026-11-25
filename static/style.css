@@ -455,9 +455,10 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .has-figure .interest-text { max-width: 34em; }
 .research-figure { margin: 0; }
 .figure-plot { width: 100%; height: auto; overflow: visible; }
-.figure-plot .axis, .figure-plot .axis-tip { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.55; }
-.figure-plot .axis-label { font: 500 11px var(--sans); fill: var(--muted); }
-.figure-plot .dom circle { fill: var(--muted); opacity: 0.4; }
+/* Axes and grey points at 0.7 keep 3:1 or more against the band in both themes (graphics a reader needs). */
+.figure-plot .axis, .figure-plot .axis-tip { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.7; }
+.figure-plot .axis-label { font: 500 12px var(--sans); fill: var(--muted); }
+.figure-plot .dom circle { fill: var(--muted); opacity: 0.7; }
 .figure-plot .front circle { fill: var(--accent); }
 .figure-plot .stair { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
 .figure-plot .ring { fill: none; stroke: var(--ink); stroke-width: 1.3; }
@@ -465,14 +466,25 @@ p, li, dd, figcaption { text-wrap: pretty; }
 .figure-plot .mark { font: 600 14px var(--sans); fill: var(--ink); }
 .figure-plot .query { font: italic 500 20px var(--serif); fill: var(--ink); }
 .research-figure figcaption { margin-top: 0.9rem; font-size: var(--text-label); line-height: 1.5; color: var(--muted); }
-/* The one moment of motion: when the figure scrolls into view, the front draws itself and
-   A, B and the question appear. Without JavaScript, or with reduced motion, it is simply there. */
+/* The one moment of motion: the first time the figure scrolls into view, the staircase draws itself
+   through the front. The points, A, B and the question are there from the start, so a view that never
+   scrolls (a screenshot, a print preview) still shows what the caption describes. Without JavaScript,
+   or with reduced motion, the staircase is simply there. */
 .research-figure.will-draw .stair { stroke-dashoffset: 1; }
-.research-figure.will-draw :is(.ring, .link, .mark, .query) { opacity: 0; }
 .research-figure.is-drawn .stair { stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s cubic-bezier(.16, 1, .3, 1); }
-.research-figure.is-drawn :is(.ring, .mark) { opacity: 1; transition: opacity .5s ease-out 1s; }
-.research-figure.is-drawn .link { opacity: 0.7; transition: opacity .5s ease-out 1.3s; }
-.research-figure.is-drawn .query { opacity: 1; transition: opacity .5s ease-out 1.5s; }
+/* Visitors who ask for more contrast get the chart at full strength. */
+@media (prefers-contrast: more) {
+  .figure-plot :is(.axis, .axis-tip, .dom circle, .link) { opacity: 1; }
+}
+/* High-contrast modes replace page colours but not SVG fills and strokes: draw the chart in system
+   colours, with the front in the highlight colour so it still stands apart. */
+@media (forced-colors: active) {
+  .figure-plot :is(.axis, .axis-tip, .ring, .link) { stroke: CanvasText; opacity: 1; }
+  .figure-plot :is(.axis-label, .mark, .query, .dom circle) { fill: CanvasText; }
+  .figure-plot .dom circle { opacity: 1; }
+  .figure-plot .front circle { fill: Highlight; }
+  .figure-plot .stair { stroke: Highlight; }
+}
 
 /* Teaching: courses, then thesis supervision, both as rows on the date column */
 .group-title + .entries { margin-top: 0.8rem; }
@@ -654,7 +666,6 @@ p, li, dd, figcaption { text-wrap: pretty; }
 @media print {
   :root { --bg: #fff; --band: #fff; --card: #fff; --ink: #000; --muted: #333; --accent: #000; }
   .research-figure.will-draw .stair { stroke-dashoffset: 0; }   /* printed before it scrolled into view */
-  .research-figure.will-draw :is(.ring, .link, .mark, .query) { opacity: 1; }
   body { font-size: 10.5pt; }
   .topbar, .skip, .toggle, .panel, .ticker, .pub-foot, .more, .masthead-mark, .divider, .contact { display: none !important; }
   .masthead { display: block; padding-top: 0; }
