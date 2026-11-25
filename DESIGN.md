@@ -194,9 +194,9 @@ The header follows the reading order a hiring committee needs: name, position, r
 
 Sections are separated by rhythm and tone rather than boxes: 4.25rem of padding (3.25rem on phones), the Research section on a Mint Wash band, the others on the page split by a hairline divider with a small centre dot. Lists are rows on the spine (Education, Experience, Teaching, Awards & service, supervision), never cards.
 
-- **1100px:** the top-bar links fade at the right edge and scroll sideways.
+- **Any width:** when the top-bar links don't fit, they scroll sideways and fade at the right edge while more lie that way.
 - **1000px:** Quick facts move under the bio; the photo stops hanging into the left margin.
-- **760px:** the spine folds away and dates sit above their entries; the nav wraps to its own row and keeps the current section's link in view; the research figure stacks above the topics.
+- **760px:** the spine folds away and dates sit above their entries, on one line; the nav wraps to its own row and keeps the current section's link in view; the research figure stacks above the topics; the header's four links form a two-by-two grid.
 
 ## Elevation & Depth
 
@@ -212,6 +212,8 @@ Soft but sparing. Cards have 6px corners; buttons are fully round (pill or circl
 ## Components
 
 Precise and quiet: hairline outlines, underlined links, no shadows.
+
+**The One Moment Rule.** One authored animation (the research figure) plus the news ticker. Nothing else moves; reduced motion turns everything off.
 
 ### Buttons
 - **Shape:** fully round (999px), 2.25rem tall.
