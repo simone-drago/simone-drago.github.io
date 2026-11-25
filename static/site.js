@@ -18,13 +18,30 @@ document.addEventListener("DOMContentLoaded", () => {
   setUpTicker(document.querySelector(".ticker"));
   setUpThemeToggle(document.querySelector(".theme-toggle"));
   setUpNav(document.querySelector(".topbar-nav"));
+  setUpFigure(document.querySelector(".research-figure"));
 });
 
+// The research figure draws its front the first time it scrolls into view (see style.css).
+// Without IntersectionObserver, or with reduced motion, it stays fully drawn from the start.
+function setUpFigure(fig) {
+  if (!fig || !("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (fig.getBoundingClientRect().top < innerHeight) return;   // already on screen: no surprise motion
+  fig.classList.add("will-draw");
+  const seen = new IntersectionObserver((entries) => {
+    if (!entries.some((e) => e.isIntersecting)) return;
+    fig.classList.add("is-drawn");
+    seen.disconnect();
+  }, { threshold: 0.5 });
+  seen.observe(fig);
+}
+
 // Shows one news item at a time and moves on when the bar fills (its duration is --tick in
-// style.css). The arrows step back and forth and restart the bar; they never pause it.
+// style.css). The arrows step back and forth and restart the bar.
 // It pauses with the Pause button, while a mouse is over the news text, or while a keyboard
-// user is inside the ticker. Taps on a phone never pause it. With reduced motion it never
-// advances on its own.
+// user is inside the ticker. On a phone, tapping an arrow stops the rotation (the Play button
+// resumes it), so the item someone chose to read stays put. With reduced motion it never
+// advances on its own. Whenever it isn't rotating by itself, screen readers announce the item
+// that comes into view; while it rotates they stay quiet, as the carousel pattern recommends.
 function setUpTicker(ticker) {
   if (!ticker) return;
   const items = [...ticker.querySelectorAll(".ticker-item")];
@@ -64,15 +81,24 @@ function setUpTicker(ticker) {
     restartBar();
   };
   const sync = () => {
-    ticker.classList.toggle("is-paused", userPaused || hovered || focused);
+    const still = userPaused || hovered || focused;
+    ticker.classList.toggle("is-paused", still);
+    list.setAttribute("aria-live", still || reduced ? "polite" : "off");
     pause.classList.toggle("is-off", userPaused);
     pause.setAttribute("aria-label", userPaused ? "Resume news" : "Pause news");
     pause.title = userPaused ? "Resume" : "Pause";
   };
 
   bar.addEventListener("animationend", () => go(1));
-  prev.addEventListener("click", () => go(-1));
-  next.addEventListener("click", () => go(1));
+  let pointer = "";   // how the last arrow press started: "touch", "mouse", "pen", or "" (keyboard)
+  for (const [btn, step] of [[prev, -1], [next, 1]]) {
+    btn.addEventListener("pointerdown", (e) => { pointer = e.pointerType; });
+    btn.addEventListener("click", () => {
+      if (pointer === "touch" && !reduced) { userPaused = true; sync(); }
+      pointer = "";
+      go(step);
+    });
+  }
   pause.addEventListener("click", () => { userPaused = !userPaused; sync(); });
   // Only a real mouse pauses on hover: a tap on a phone also "enters", but never leaves.
   list.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { hovered = true; sync(); } });
@@ -118,15 +144,35 @@ function setUpThemeToggle(btn) {
   tintBrowser();
 }
 
-// Underline the top-bar link of the section currently in view.
+// Underline the top-bar link of the section currently in view. On narrow screens the links scroll
+// sideways, and the row fades out at the right edge only while more links lie that way.
 function setUpNav(nav) {
-  if (!nav || !("IntersectionObserver" in window)) return;
+  const strip = nav && nav.querySelector("ul");
+  if (!strip) return;
+  const fade = () => strip.classList.toggle("is-clipped", strip.scrollWidth - strip.clientWidth - strip.scrollLeft > 2);
+  strip.addEventListener("scroll", fade, { passive: true });
+  if ("ResizeObserver" in window) new ResizeObserver(fade).observe(strip);
+  else window.addEventListener("resize", fade);
+  if (document.fonts) document.fonts.ready.then(fade);   // the web fonts change the links' widths
+  fade();
+
+  if (!("IntersectionObserver" in window)) return;
   const links = new Map();
   for (const a of nav.querySelectorAll("a")) {
     const id = a.hash.slice(1);
     if (id && a.pathname === location.pathname && document.getElementById(id)) links.set(id, a);
   }
   const visible = new Set();
+  const still = matchMedia("(prefers-reduced-motion: reduce)");
+  let shown;
+  // On phones the links scroll sideways: bring the underlined one into view (clear of the fade on the right).
+  const reveal = (a) => {
+    if (strip.scrollWidth <= strip.clientWidth) return;
+    const r = a.getBoundingClientRect(), s = strip.getBoundingClientRect();
+    if (r.left < s.left || r.right > s.right - s.width * 0.18) {
+      strip.scrollBy({ left: r.left - s.left - 4, behavior: still.matches ? "auto" : "smooth" });
+    }
+  };
   const spy = new IntersectionObserver((entries) => {
     for (const e of entries) e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id);
     const current = [...links.keys()].find((id) => visible.has(id));
@@ -134,6 +180,8 @@ function setUpNav(nav) {
       if (id === current) a.setAttribute("aria-current", "true");
       else a.removeAttribute("aria-current");
     }
+    if (current && current !== shown) reveal(links.get(current));
+    shown = current;
   }, { rootMargin: "-20% 0px -70% 0px" });
   for (const id of links.keys()) spy.observe(document.getElementById(id));
 }

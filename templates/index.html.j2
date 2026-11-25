@@ -15,6 +15,7 @@
   <div class="masthead-text">
     <h1 class="name">{{ site.name }}</h1>
     {% if site.position %}<p class="position">{{ site.position | md }}</p>{% endif %}
+    {% if question %}<p class="question">{{ question }}</p>{% endif %}
     <div class="intro{% if facts %} has-facts{% endif %}">
       <div class="bio">{{ bio }}</div>
       {% if facts %}
@@ -25,8 +26,8 @@
         </dl>
       </aside>
       {% endif %}
+      {{ link_list(site, "links") }}
     </div>
-    {{ link_list(site, "links") }}
   </div>
 </header>
 
@@ -35,7 +36,7 @@
     screens, horizontal in the header on phones); the arrows step back and forth. -#}
 <section class="ticker" aria-label="Latest news" aria-roledescription="carousel">
   <div class="ticker-head row">
-    <a class="ticker-label" href="#news">Latest news</a>
+    <a class="ticker-label" href="{% if sections | selectattr('id', 'equalto', 'news') | list %}#news{% else %}news.html{% endif %}">Latest news</a>
     {% if ticker | length > 1 %}
     <span class="ticker-bar" aria-hidden="true"><span></span></span>
     <div class="ticker-controls">
@@ -67,15 +68,25 @@
 
   {% if s.id == "research" %}
     {% if s.research.intro %}<p class="lede">{{ s.research.intro }}</p>{% endif %}
-    <ul class="interests" role="list">
-      {% for it in s.research["items"] %}
-      <li class="card interest">
-        {{ icon(it.icon, "icon interest-icon") }}
-        <h3 class="interest-title">{{ it.title }}</h3>
-        <p class="interest-text">{{ it.text }}</p>
-      </li>
-      {% endfor %}
-    </ul>
+    {% set fig = s.research.figure %}
+    <div class="research{% if fig %} has-figure{% endif %}">
+      {% if fig %}
+      <figure class="research-figure">
+        {% include "research-figure.svg.j2" %}
+        {% if s.research.figure_caption %}<figcaption>{{ s.research.figure_caption }}</figcaption>{% endif %}
+      </figure>
+      {% endif %}
+      <ul class="interests" role="list">
+        {% for it in s.research["items"] %}
+        <li class="interest{% if not fig %} card{% endif %}">
+          {% if not fig %}{{ icon(it.icon, "icon interest-icon") }}{% endif %}
+          <h3 class="interest-title">{{ it.title }}</h3>
+          <p class="interest-text">{{ it.text }}</p>
+          {% if it.papers %}<p class="interest-papers">Papers: {% for p in it.papers %}<a href="#{{ p.label }}" title="{{ p.title | striptags }}" aria-label="{{ p.label }}: {{ p.title | striptags }}">{{ p.label }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
 
   {% elif s.id == "publications" %}
     {% for g in pubs %}
@@ -86,13 +97,13 @@
       <ol class="pubs" role="list">
         {% for p in y["items"] %}
         <li class="pub row" id="{{ p.label }}">
-          <a class="pub-label" href="#{{ p.label }}" aria-label="{{ p.label }}">{{ p.label }}</a>
+          <a class="pub-label" href="#{{ p.label }}" aria-label="Link to paper {{ p.label }}">{{ p.label }}</a>
           <div class="pub-body">
             <p class="pub-title">{{ p.title }}</p>
             <p class="pub-authors">
               {%- for a in p.authors -%}
                 {%- if a.me %}<strong class="me">{{ a.name }}</strong>{% else %}{{ a.name }}{% endif -%}
-                {%- if a.equal %}<span class="eq" title="Equal contribution">*</span>{% endif -%}
+                {%- if a.equal %}<span class="eq" title="Equal contribution" aria-hidden="true">*</span><span class="visually-hidden"> (equal contribution)</span>{% endif -%}
                 {%- if not loop.last %}, {% endif -%}
               {%- endfor -%}
             </p>
@@ -116,26 +127,26 @@
     </div>
     {% endfor %}
     <p class="pub-foot">
-      {% if any_equal %}<span><span class="eq">*</span> Equal contribution</span>{% endif %}
+      {% if any_equal %}<span><span class="eq" aria-hidden="true">*</span> Equal contribution</span>{% endif %}
       <a href="bib/publications.bib" download>All publications as BibTeX</a>
     </p>
 
   {% elif s.id == "teaching" %}
-    {% if s["items"] and s.supervision %}<h3 class="group-title">Courses</h3>{% endif %}
-    <ul class="cards" role="list">
+    {% if s["items"] %}
+    {% if s.supervision %}<h3 class="group-title">Courses</h3>{% endif %}
+    <ul class="entries" role="list">
       {% for e in s["items"] %}
-      <li class="card teach">
-        <div class="teach-head">
-          <div>
-            <p class="headline">{{ maybe_link(e.course, e.url) }}</p>
-            <p class="where">{{ e.role }}, {{ e.institution }}</p>
-          </div>
-          <span class="pill">{{ gutter_date(e.when) }}</span>
+      <li class="row">
+        <span class="when">{{ gutter_date(e.when) }}</span>
+        <div class="what">
+          <p class="headline">{{ maybe_link(e.course, e.url) }}</p>
+          <p class="where">{{ e.role }}, {{ e.institution }}</p>
+          {% if e.details %}<p class="details">{{ e.details }}</p>{% endif %}
         </div>
-        {% if e.details %}<p class="details">{{ e.details }}</p>{% endif %}
       </li>
       {% endfor %}
     </ul>
+    {% endif %}
     {% if s.supervision %}
     <h3 class="group-title supervision-title">Thesis supervision</h3>
     <ul class="entries" role="list">

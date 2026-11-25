@@ -10,15 +10,15 @@ Everything you normally touch is in `content/`:
 |---|---|
 | `config.yml` | name, position, links, photo, CV PDF, section order, tinted sections, contact text, publication options |
 | `bio.md` | the paragraph under your name (Markdown) |
-| `research.yml` | the Research interests section: a one-line intro and one card per topic, each with an icon |
+| `research.yml` | your research question (shown in large type under your name), and the Research interests section: an optional intro, an optional Pareto-front figure with its caption (`figure: true`), and one entry per topic (cards with icons when there is no figure), each optionally linking to its papers (`papers: [key, ...]`, keys from `papers.bib`) |
 | `papers.bib` | publications (plain BibTeX; see the comment at the top for the extra fields) |
 | `news.yml`, `education.yml`, `experience.yml`, `teaching.yml`, `awards.yml`, `extracurricular.yml` | one list entry per item |
 
-Sections: `sections:` in `config.yml` sets which sections appear and in what order (the top bar follows it). To hide one, remove it from the list. To add your own, create `content/<name>.yml` (entries with `title`, and optionally `subtitle`, `date` or `start`/`end`, `location`, `details`, `url`), add `<name>` to `sections`, and give it a heading under `titles:`.
+Sections: `sections:` in `config.yml` sets which sections appear and in what order (the top bar follows it). To hide one, remove it from the list. To add your own, create `content/<name>.yml` (entries with `title`, and optionally `subtitle`, `date` or `start`/`end`, `location`, `details`, `url`), add `<name>` to `sections`, and give it a heading under `titles:`. The top bar uses the heading too; give it a shorter label under `nav_titles:` (e.g. `{awards: Awards}`).
 
 Text in the YAML files accepts Markdown (`[link](https://...)`, `**bold**`, `*italic*`). Wrap a value in quotes if it contains a colon. Entries are sorted by date automatically, so their order in the file doesn't matter.
 
-News appears in three places: the latest `news_ticker` items (default 5) rotate under the bio, the latest `news_limit` (default 10) are listed in the News section, and `news.html` lists everything. Both numbers are in `config.yml`.
+News: the latest `news_ticker` items (default 5) rotate under the bio, and `news.html` lists everything. Add `news` to `sections` to also list the latest `news_limit` (default 10) in a News section on the home page. Both numbers are in `config.yml`.
 
 Links in `config.yml` get an icon from their URL (Google Scholar, GitHub, LinkedIn, ORCID; anything else gets a link icon). Set `icon:` on a link to choose one yourself.
 
@@ -26,7 +26,7 @@ Photo and CV: put them in `static/` (e.g. `static/img/photo.jpg`, `static/cv.pdf
 
 ## Publications
 
-Papers are grouped by type and then by year (`layout: category-year`), or only by year with preprints last (`layout: year`). Either way, each paper is labelled by type and numbered from the oldest: C1, C2, ... (conference), J (journal), W (workshop), P (preprint), U (under review). The page lists the newest first.
+Papers are grouped by type, newest first (`layout: category`), by type and then by year (`layout: category-year`), or only by year with preprints last (`layout: year`). In every layout, each paper is labelled by type and numbered from the oldest: C1, C2, ... (conference), J (journal), W (workshop), P (preprint), U (under review). The page lists the newest first.
 
 - The type comes from the entry: `@inproceedings` is a conference paper (a workshop if the booktitle contains "Workshop"), `@article` is a journal paper (a preprint if the journal is arXiv), `@misc` is a preprint. `pubtype = {workshop}` (or conference, journal, preprint) forces it.
 - `status = {underreview}` puts a paper in "Under review": its venue is never shown and it has no BibTeX button. Turn the whole category off with `show_under_review: false` in `config.yml`. When the paper is accepted, delete the `status` line.
@@ -57,4 +57,4 @@ One-time setup: repo **Settings → Pages → Build and deployment → Source: G
 
 ## Changing the look
 
-Colours, fonts and spacing are tokens at the top of `static/style.css`; the light and dark palettes are defined there side by side (change `--accent` in both). The button in the top bar switches theme; visitors who never press it get their system's setting. The layout is `templates/index.html.j2`. Fonts are self-hosted (Newsreader and Hanken Grotesk, SIL Open Font License), so the site makes no requests to Google.
+Colours, fonts and spacing are tokens at the top of `static/style.css`; the light and dark palettes are defined there side by side (the comment above them says what to change, including the two `theme-color` tags in `templates/base.html.j2`). The button in the top bar switches theme; visitors who never press it get their system's setting. The layout is `templates/index.html.j2`. The tab and home-screen icons (an SD monogram in deep teal) are image files in `static/icons/`: if you change the accent colour, replace them too, keeping the same file names. Fonts are self-hosted (Newsreader and Hanken Grotesk, SIL Open Font License), so the site makes no requests to Google.

@@ -9,8 +9,8 @@
   {#- viewport-fit=cover: on iPhones the page also fills the strip under the status bar, and the top bar
       covers it (see .topbar in style.css). Without it, in-app browsers such as Telegram's showed the
       page scrolling above the top bar. theme-color tints the browser's own bars to match. -#}
-  <meta name="theme-color" content="#fbfbfe" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#1b1f31" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fbfdfd" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#09171c" media="(prefers-color-scheme: dark)">
   <title>{% block title %}{{ site.name }}{% endblock %}</title>
   <meta name="description" content="{{ site.description or site.name }}">
   <meta property="og:title" content="{{ site.name }}">
@@ -20,7 +20,11 @@
     /* Apply the saved light/dark choice before the page paints. */
     try { var t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
-  <link rel="icon" href="data:,">  {# no tab icon (also stops browsers asking for /favicon.ico) #}
+  {# Tab and home-screen icons: the SD monogram in Newsreader (static/icons/). The SVG follows light/dark;
+      the .ico (sizes="32x32" keeps Chrome on the SVG) is for browsers without SVG icons. #}
+  <link rel="icon" href="static/icons/favicon.ico?v={{ version }}" sizes="32x32">
+  <link rel="icon" href="static/icons/icon.svg?v={{ version }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="static/icons/apple-touch-icon.png?v={{ version }}">
   <link rel="preload" href="static/fonts/newsreader-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="static/fonts/hanken-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="static/style.css?v={{ version }}">
@@ -38,6 +42,7 @@
         <li><a href="{{ home }}#contact">Contact</a></li>
       </ul>
     </nav>
+    {% if site.cv_pdf %}<a class="topbar-cv" href="{{ site.cv_pdf }}">{{ icon("cv") }}<span>CV</span></a>{% endif %}
     <button type="button" class="theme-toggle" aria-label="Switch to dark theme" title="Switch between light and dark">
       {{ icon("moon", "icon icon-moon") }}{{ icon("sun", "icon icon-sun") }}
     </button>

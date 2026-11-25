@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "_site/index.html"
+        ],
+        "createdAt": "2026-11-19T09:51:28.356Z",
+        "reason": "Claude decided (critique 2026-11-19): static-only finding on the tinted bands; rendered scans at 1440x900 and 390x844 in both themes show no cramped padding; the side inset comes from --edge via .section-inner, which static analysis can't resolve"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000",
+        "files": [
+          "static/style.css"
+        ],
+        "createdAt": "2026-11-24T16:17:57.673Z",
+        "reason": "Opaque stop of the nav fade's mask-image gradient: a mask reads only alpha, so this is not a visible colour."
+      }
+    ]
+  }
+}

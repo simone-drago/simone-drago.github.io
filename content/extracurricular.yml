@@ -1,9 +1,6 @@
 # Fields: activity, start (required); role, end, location, details, url (optional).
+# Co-organizing RLSS 2026 is listed in awards.yml, under Awards & service.
 
-- activity: Reinforcement Learning Summer School (RLSS 2026)
-  role: Co-organizer
-  start: 2026
-  details: A ten-day summer school with about 150 participants from industry and academia. Coordinated the selection, communication, and onboarding of the speakers.
 - activity: PoliMi Data Scientists
   role: Team member, then team manager
   start: 2021

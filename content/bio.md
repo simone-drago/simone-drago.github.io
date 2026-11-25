@@ -1,4 +1,3 @@
-I am a Ph.D. student in Information Technology in the Artificial Intelligence and Robotics Laboratory of Politecnico di Milano.
-My research focuses on bridging reinforcement learning from human feedback and multi-objective reinforcement learning, from theoretical guarantees to algorithm design.
+My research bridges reinforcement learning from human feedback and multi-objective reinforcement learning: learning from people's comparisons when outcomes trade off several objectives and some pairs can't be ranked. I work on it at the Artificial Intelligence and Robotics Laboratory of Politecnico di Milano, from theoretical guarantees to algorithms.
 
-I have worked on applied machine learning in industrial projects at Politecnico's AI research center and as part of my M.Sc. thesis work.
+Before my Ph.D., I worked on applied machine learning in industrial projects, ranging from autonomous planning and control to gas distribution networks and data-driven prediction of company behavior.

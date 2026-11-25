@@ -566,8 +566,8 @@ def load_publications(cfg: dict) -> tuple[list[dict], bool, list[dict]]:
     selected_only = pcfg.get("selected_only", False)
 
     layout = pcfg.get("layout", "category-year")
-    if layout not in ("category-year", "year"):
-        error("config.yml: publications.layout must be 'category-year' or 'year'")
+    if layout not in ("category", "category-year", "year"):
+        error("config.yml: publications.layout must be 'category', 'category-year' or 'year'")
         layout = "category-year"
 
     shown = {}
@@ -605,8 +605,11 @@ def load_publications(cfg: dict) -> tuple[list[dict], bool, list[dict]]:
                 groups.append({"key": cat, "heading": CATEGORIES[cat][1],
                                "years": [{"year": None, "items": shown[cat]}]})
     else:
+        # By type; category-year also splits each type by year, category lists it newest first
+        # with no year headings (each venue line already carries the year).
         for cat, items in shown.items():
-            years = by_year(items) if cat != "underreview" else [{"year": None, "items": items}]
+            split = layout == "category-year" and cat != "underreview"
+            years = by_year(items) if split else [{"year": None, "items": items}]
             groups.append({"key": cat, "heading": CATEGORIES[cat][1], "years": years})
 
     any_equal = any(a["equal"] for items in shown.values() for p in items for a in p["authors"])
@@ -630,29 +633,42 @@ def load_research() -> dict | None:
         return None
     rel = path.relative_to(ROOT)
     if not isinstance(data, dict) or not isinstance(data.get("items"), list):
-        error(f"{rel}: expected an optional 'intro' and a list of 'items'")
+        error(f"{rel}: expected an optional 'question' and 'intro', and a list of 'items'")
         return None
-    intro = None
-    if data.get("intro"):
-        if check_text(data["intro"], f"{rel}, intro"):
-            intro = md_inline(str(data["intro"]).strip())
+    allowed = ("question", "intro", "figure", "figure_caption", "items")
+    unknown = set(data) - set(allowed)
+    if unknown:
+        error(f"{rel}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: {', '.join(allowed)}")
+    if data.get("figure") not in (None, True, False):
+        error(f"{rel}: figure must be true or false")
+    text = {}
+    for field in ("question", "intro", "figure_caption"):
+        if data.get(field) and check_text(data[field], f"{rel}, {field}"):
+            text[field] = md_inline(str(data[field]).strip())
     items = []
     for i, raw in enumerate(data["items"], 1):
         where = f"{rel}, item {i}"
         if not isinstance(raw, dict) or not raw.get("title") or not raw.get("text"):
             error(f"{where}: needs a title and a text")
             continue
-        unknown = set(raw) - {"title", "text", "icon"}
+        unknown = set(raw) - {"title", "text", "icon", "papers"}
         if unknown:
-            error(f"{where}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: title, text, icon")
+            error(f"{where}: unknown field(s) {', '.join(sorted(unknown))}. Allowed: title, text, icon, papers")
         icon = raw.get("icon") or "theory"
         if icon not in ICONS:
             error(f"{where}: icon must be one of {', '.join(sorted(ICONS))}")
             icon = "theory"
+        refs = raw.get("papers") or []
+        if not isinstance(refs, list) or not all(isinstance(r, str) for r in refs):
+            error(f"{where}: papers must be a list of keys from papers.bib, e.g. [drago2026online]")
+            refs = []
         if check_text(raw["title"], f"{where}, title") and check_text(raw["text"], f"{where}, text"):
             items.append({"title": md_inline(str(raw["title"]).strip()),
-                          "text": md_inline(str(raw["text"]).strip()), "icon": icon})
-    return {"intro": intro, "items": items} if items else None
+                          "text": md_inline(str(raw["text"]).strip()), "icon": icon,
+                          "papers": refs, "where": where})
+    # The question is shown in the masthead even when there are no cards.
+    return {"question": text.get("question"), "intro": text.get("intro"), "items": items,
+            "figure": data.get("figure") is True, "figure_caption": text.get("figure_caption")}
 
 
 SECTION_TITLES = {
@@ -672,14 +688,56 @@ LINK_ICONS = [("scholar.google", "scholar"), ("github.com", "github"), ("linkedi
               ("orcid.org", "orcid")]
 
 
-def load_facts(cfg: dict, papers: list[dict], theses: int = 0) -> list[dict]:
+def venue_summary(papers: list[dict], counted: list[str]) -> str:
+    """The counted papers grouped by venue, most first: "5 ICML, 1 AIJ".
+
+    A venue is the paper's displayed venue without its track or year, so
+    "ICML 2025, Position Paper Track" counts as ICML.
+    """
+    tally: dict[str, int] = {}
+    for p in papers:
+        if p["category"] in counted:
+            name = re.sub(r"\s*\b(19|20)\d{2}\b\s*$", "", p["venue"].split(",")[0]).strip()
+            tally[name] = tally.get(name, 0) + 1
+    # A no-break space keeps each count with its venue ("5 ICML" never splits across lines).
+    return ", ".join(f"{n} {name}" for name, n in sorted(tally.items(), key=lambda kv: -kv[1]))
+
+
+def first_author_share(papers: list[dict], counted: list[str]) -> str:
+    """How many counted papers list you first or equal-first: "all 6", or "4 of 6".
+
+    Equal-first means the first author is marked as equal contribution and so are you.
+    """
+    pool = [p for p in papers if p["category"] in counted]
+    def leads(p):
+        a = p["authors"]
+        return bool(a) and (a[0]["me"] or (a[0]["equal"] and any(x["me"] and x["equal"] for x in a)))
+    n = sum(leads(p) for p in pool)
+    return f"all {n}" if n == len(pool) and n > 1 else f"{n} of {len(pool)}"
+
+
+def teaching_years(items: list[dict]) -> int:
+    """Distinct academic years in teaching.yml: start 2025, end 2026 is one year;
+    two courses in the same year count once."""
+    years: set[int] = set()
+    for it in items:
+        start, end = it.get("start"), it.get("end")
+        if not start or start == PRESENT:
+            continue
+        last = dt.date.today().year if end == PRESENT else (end[0] if end else start[0] + 1)
+        years.update(range(start[0], max(last, start[0] + 1)))
+    return len(years)
+
+
+def load_facts(cfg: dict, papers: list[dict], theses: int = 0, teaching: int = 0) -> list[dict]:
     """The Quick facts panel. Values may use {publications}, {conference}, {journal}, ..."""
     counted = (cfg.get("publications") or {}).get("count", ["conference", "journal"])
     for cat in counted:
         if cat not in CATEGORIES:
             error(f"content/config.yml: publications.count has unknown category {cat!r}")
     counts = {"publications": sum(p["category"] in counted for p in papers), "all": len(papers),
-              "theses": theses}
+              "venues": venue_summary(papers, counted), "first_author": first_author_share(papers, counted),
+              "theses": theses, "teaching_years": teaching}
     for cat in CATEGORIES:
         counts[cat] = sum(p["category"] == cat for p in papers)
     facts = []
@@ -726,6 +784,9 @@ def load_config() -> dict:
     if not isinstance(cfg.get("titles") or {}, dict):
         error("content/config.yml: titles must be 'section: Title' pairs")
         cfg["titles"] = {}
+    if not isinstance(cfg.get("nav_titles") or {}, dict):
+        error("content/config.yml: nav_titles must be 'section: Label' pairs")
+        cfg["nav_titles"] = {}
     for key in ("position", "description", "email", "photo", "cv_pdf"):
         cfg.setdefault(key, None)
     cfg["links"] = cfg.get("links") or []
@@ -776,18 +837,32 @@ def build() -> bool:
     sections = []
     pubs, any_equal, papers = load_publications(cfg) if "publications" in (cfg.get("sections") or SECTION_TITLES) \
         else ([], False, [])
-    facts = load_facts(cfg, papers, theses=len(load_section("supervision")))
+    facts = load_facts(cfg, papers, theses=len(load_section("supervision")),
+                       teaching=teaching_years(load_section("teaching")))
+    research = load_research()
+    # Each topic's papers (keys from papers.bib) become links to their entries in Publications.
+    shown_papers = {p["key"]: p for p in papers}
+    for it in (research or {}).get("items", []):
+        refs = []
+        for key in it["papers"] if papers else []:   # no Publications section: nothing to link to
+            if key in shown_papers:
+                refs.append({"label": shown_papers[key]["label"], "title": shown_papers[key]["title"]})
+            else:
+                error(f"{it['where']}: papers lists {key!r}, which isn't a key in papers.bib "
+                      "or isn't shown on the site")
+        it["papers"] = refs
     for name in cfg.get("sections") or list(SECTION_TITLES):
         titles = cfg.get("titles") or {}
         title = str(titles.get(name) or SECTION_TITLES.get(name) or name.replace("_", " ").capitalize())
-        nav = NAV_TITLES.get(name, title) if name not in titles else title
+        nav = str((cfg.get("nav_titles") or {}).get(name)
+                  or (title if name in titles else NAV_TITLES.get(name, title)))
         sec = {"id": name, "title": title, "nav": nav, "band": name in (cfg.get("bands") or [])}
         if name == "publications":
             if pubs:
                 sections.append(sec)
         elif name == "research":
-            sec["research"] = load_research()
-            if sec["research"]:
+            if research and research["items"]:
+                sec["research"] = research
                 sections.append(sec)
         elif name == "teaching":
             sec["items"] = load_section("teaching")
@@ -819,7 +894,7 @@ def build() -> bool:
     )
     index = env.get_template("index.html.j2").render(
         **common, home="", sections=sections, bio=bio, facts=facts, pubs=pubs, any_equal=any_equal,
-        ticker=news[:news_ticker], news_total=len(news),
+        ticker=news[:news_ticker], news_total=len(news), question=(research or {}).get("question"),
     )
     archive = env.get_template("news.html.j2").render(**common, home="index.html", sections=sections, news=news)
 
