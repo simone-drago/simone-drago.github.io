@@ -130,7 +130,7 @@ Restraint is the method, not the absence of one. Colour is rare and always means
 Confirmed rejections: the indigo, glow-lit "AI product" look the site started with; decorative colour on labels, icons and dividers; cards used as page structure.
 
 **Key Characteristics:**
-- One accent, Deep Teal, kept to six jobs
+- One accent, Deep Teal, kept to five jobs
 - A near-white page with Mint Wash bands; a deep Petrol Night in dark mode, composed rather than inverted
 - Serif for names, titles and the question; sans for reading and labels
 - A date and label column, the spine, running down every list
@@ -142,7 +142,7 @@ Confirmed rejections: the indigo, glow-lit "AI product" look the site started wi
 A restrained palette: neutral, faintly cool surfaces and one deep teal accent that appears only where it means something.
 
 ### Primary
-- **Deep Teal** (#006967; Deep Teal (night) #77d4cc in dark): links, the CV button, the underline under your name in author lists, award badges, the current section's underline in the top bar, focus rings and text selection. 6.4:1 on Paper White, 5.8:1 on Mint Wash; 10.5:1 on Petrol Night.
+- **Deep Teal** (#006967; Deep Teal (night) #77d4cc in dark): links, the CV button, award badges, the current section's underline in the top bar, focus rings and text selection. 6.4:1 on Paper White, 5.8:1 on Mint Wash; 10.5:1 on Petrol Night.
 - **Teal Tint** (#d5f2f0; #093b3b in dark): the hover fill of round buttons, text selection, and the background of a targeted paper label. Never a large area.
 
 ### Neutral
@@ -158,9 +158,9 @@ A restrained palette: neutral, faintly cool surfaces and one deep teal accent th
 All tokens live at the top of `static/style.css`: the light block and two dark blocks that must match. The two `theme-color` tags in `templates/base.html.j2` repeat the page colours for phone browser bars.
 
 ### Named Rules
-**The Rare Teal Rule.** Deep Teal does six jobs only: links, the CV button, your name in author lists, award badges, the current section in the top bar, focus and selection. Labels, years, icons, dots and dividers stay Ink or Muted Slate.
+**The Rare Teal Rule.** Deep Teal does five jobs only: links, the CV button, award badges, the current section in the top bar, focus and selection. Labels, years, icons, dots and dividers stay Ink or Muted Slate.
 
-**The Underline Rule.** Every link is underlined. Colour never carries meaning on its own.
+**The Underline Rule.** Every link is underlined, and nothing else is. The icon link rows (Email, CV, profiles) keep Ink text with a faint Ink underline, so the CV button stays the only accent on the first screen. The only exceptions are links that look like controls: the name and section links in the top bar, the CV button, and the paper labels (permalinks that tint on hover). Colour never carries meaning on its own.
 
 ## Typography
 
@@ -182,7 +182,7 @@ All tokens live at the top of `static/style.css`: the light block and two dark b
 **Weights.** Hanken Grotesk uses three: 400 for reading, 500 for links and controls (colour and underline already mark them), 600 for item headings and labels. Item headings (a role, degree, course or group title) are Body size at 600. Newsreader uses 400 and 500.
 
 ### Named Rules
-**The Spine Rule.** Dates and paper labels sit in the left column with tabular figures, right-aligned; content sits in the text column to its right.
+**The Spine Rule.** Dates and paper labels sit in the left column with tabular figures, right-aligned; content sits in the text column to its right. A date range stacks its start over its end, so every range in the column has the same shape; on phones the date sits above its entry on one line.
 
 **The One Scale Rule.** Every font size is one of the eight `--text-*` tokens at the top of `static/style.css` (display, headline, lead, subtitle, title, body, small, label). A new element takes an existing role; it never gets a size of its own.
 
@@ -237,7 +237,7 @@ Precise and quiet: hairline outlines, underlined links, no shadows.
 - **Mobile:** a sideways-scrolling row under the name that slides to keep the current link visible. Its right edge fades only while more links lie that way, so a row that fits never looks cut off. The row keeps room inside for focus rings.
 
 ### Publication entry (signature)
-The muted label (C5, J1, W1, P1) on the spine; the title in the serif, balanced; authors in Muted Slate with your name in Ink, bold, underlined 2px in Deep Teal; the venue in bold Ink; then underlined links and an Abstract toggle with a chevron. Equal contribution is an asterisk read aloud as "equal contribution". Each entry has a permalink and a BibTeX download.
+The muted label (C5, J1, W1, P1) on the spine; the title in the serif, balanced; authors in Muted Slate with your name in bold Ink (not underlined: it isn't a link); the venue in bold Ink; then underlined links and an Abstract toggle with a chevron. Equal contribution is an asterisk read aloud as "equal contribution". Each entry has a permalink and a BibTeX download.
 Papers are grouped by type (conference, journal, workshop, preprints), newest first, with no year headings: each venue line already carries the year (`publications.layout: category`).
 
 ### Research figure (signature)
@@ -249,7 +249,7 @@ One news item at a time beside its date on the spine, with previous / pause / ne
 ## Do's and Don'ts
 
 ### Do:
-- **Do** keep Deep Teal to its six jobs (The Rare Teal Rule).
+- **Do** keep Deep Teal to its five jobs (The Rare Teal Rule).
 - **Do** underline every link (The Underline Rule).
 - **Do** keep every text colour at 4.5:1 or more against page, band and card, in both themes; check new colours with a contrast tool before shipping.
 - **Do** put dates and labels on the spine, right-aligned, with tabular figures.
