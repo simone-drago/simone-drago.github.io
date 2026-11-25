@@ -176,7 +176,7 @@ All tokens live at the top of `static/style.css`: the light block and two dark b
 - **Headline** (400, 2.05rem, 1.1, opsz 48): section titles.
 - **Title** (500, 1.2rem, 1.3, opsz 20, -0.005em, balanced): every title of a work: papers, theses and research topics; also the Quick facts heading. On phones (760px and below) it steps to 1.125rem, all titles together.
 - **Body** (400, 1.0625rem, 1.6): the bio, details and all running text, at most 38em wide. Paragraphs use `text-wrap: pretty`, so no word sits alone on a last line.
-- **Small** (400, 0.9375rem, 1.6): secondary text: authors, the venue line, details, abstracts, research-topic text, the link row, navigation and the CV button. Links and controls in it use 500.
+- **Small** (400, 0.9375rem, 1.6): secondary text: authors, the venue line, the organisation line under each entry (in Ink), details, abstracts, research-topic text, the link row, navigation and the CV button. Links and controls in it use 500.
 - **Label** (0.85rem, tabular figures, Muted Slate): dates on the spine, the figure caption and the footer small print at 400; paper labels (C5), year rules and Quick facts terms at 600 with 0.02em tracking.
 
 **Weights.** Hanken Grotesk uses three: 400 for reading, 500 for links and controls (colour and underline already mark them), 600 for item headings and labels. Item headings (a role, degree, course or group title) are Body size at 600. Newsreader uses 400 and 500.

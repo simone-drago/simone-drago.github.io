@@ -437,7 +437,9 @@ p, li, dd, figcaption { text-wrap: pretty; }
 /* A range stacks its start over its end, so every range in the column has the same shape
    (on phones the date sits above the entry, on one line). */
 .when .nowrap + .nowrap { display: block; }
+/* Each row falls in weight: the role or degree, then where (Small, Ink), then the details (Small, muted). */
 .headline { font-weight: 600; }
+.where { font-size: var(--text-small); }
 .details { color: var(--muted); font-size: var(--text-small); margin-top: 0.15rem; }
 .more { margin-top: 0.4rem; font-weight: 500; font-size: var(--text-small); }
 

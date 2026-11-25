@@ -13,4 +13,4 @@
   start: 2022-07
   end: 2023-05
   details: |
-    ML pipeline for autonomous UAV trajectory planning trained on simulator data, cutting planning time from hours to seconds.
+    Cut autonomous UAV trajectory planning from hours to seconds with an ML pipeline trained on simulator data.

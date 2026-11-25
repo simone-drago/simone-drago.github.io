@@ -58,7 +58,7 @@ me:
 #          subtitle: ICML, NeurIPS
 #          start: 2025
 #          end: present
-sections: [research, publications, awards, education, experience, teaching] # also available: news, extracurricular
+sections: [research, publications, experience, awards, education, teaching] # also available: news, extracurricular
 titles: {awards: "Awards & service"}        # e.g. {service: Academic service, extracurricular: Beyond research}
 nav_titles: {awards: Awards}    # shorter labels for the top bar (default: the section's heading)
 bands: [research]     # sections drawn on a tinted band; the others are split by a thin divider
